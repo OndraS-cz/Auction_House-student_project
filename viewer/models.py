@@ -5,23 +5,23 @@ from django.forms import IntegerField
 
 
 class Cities(Model):
-    name = CharField(max_length=20)
+    name = CharField(max_length=20, null=False)
 
 
 class HouseType(Model):
-    property_type = CharField(max_length=10)
+    property_type = CharField(max_length=10, null=False)
 
 
 class GroundType(Model):
-    property_type = CharField(max_length=30)
+    property_type = CharField(max_length=30, null=False)
 
 
 class ApartmentType(Model):
-    property_type = CharField(max_length=30)
+    property_type = CharField(max_length=30, null=False)
 
 
 class House(Model):
-    name = CharField(max_length=50)
+    name = CharField(max_length=50, null=False)
     area = IntegerField(null=False)
     property_type = ForeignKey(HouseType, null=False, blank=False, on_delete=SET_NULL)
     plot_area = IntegerField(null=False)
@@ -35,7 +35,7 @@ class Ground(Model):
 
 
 class Apartment(Model):
-    name = CharField(max_length=50)
+    name = CharField(max_length=50, null=False)
     property_type = ForeignKey(ApartmentType, null=False, blank=False, on_delete=SET_NULL)
     area = IntegerField(null=False)
 
@@ -49,7 +49,7 @@ class PropertyType(Model):
 class Property(Model):
     property = ManyToManyField(PropertyType)
     city = ForeignKey(Cities, null=False, blank=False, on_delete=SET_NULL)
-    address = CharField(max_length=50)
+    address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
     min_bit = IntegerField(null=False)
