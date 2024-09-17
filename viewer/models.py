@@ -1,7 +1,7 @@
 from django.db import models
 
-# Create your models here.
-
+from django.db.models import Model, CharField, DateTimeField, ForeignKey
+from django.forms import IntegerField
 
 
 class Mesta(Model):
