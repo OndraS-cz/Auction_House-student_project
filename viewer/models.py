@@ -4,49 +4,57 @@ from django.db.models import Model, CharField, DateTimeField, ForeignKey
 from django.forms import IntegerField
 
 
-class Mesta(Model):
-    nazev = CharField(max_length=20)
+class Cities(Model):
+    name = CharField(max_length=20)
 
 # Create your models here.
-class Typ_domu(Model):
-    typ_domu = CharField(max_length=10)
+class House_type(Model):
+    property_type = CharField(max_length=10)
+
+class Holding_type(Model):
+    property_type = CharField(max_length=30)
+
+class Apartment_type(Model):
+    property_type = CharField(max_length=30)
 
 
-class Typ_nemovitosti(Model):
-    typ_nemovitosti = CharField(max_length=30)
-
-
-
-
-class Dum(Model):
-    jmeno = CharField(max_length=50)
-    rozloha = CharField(max_length=50)
-    rozloha_parcely = IntegerField(null=False)
-    rozloha_zahrady = IntegerField(null=False)
-
-
-class Pozemek(Model):
-    jmeno = CharField(max_length=50)
-    typ_pozemku = CharField(max_length=50)
-    rozloha_pozemku = IntegerField(null=False)
-
-class Byt(Model):
-    jmeno = CharField(max_length=50)
-    typ = ForeignKey(Typ_domu)
-    rozloha = CharField(max_length=50)
+class Property_type(Model):
+    property =
 
 
 
 
 
+class House(Model):
+    name = CharField(max_length=50)
+    area = CharField(max_length=50)
+    property_type = ForeignKey(House_type)
+    plot_area = IntegerField(null=False)
+    garden_area = IntegerField(null=False)
 
 
-class Nemovitost(Model):
-    nemovitost = ForeignKey(Typ_nemovitosti)
-    mesto = ForeignKey(Mesta)
-    adresa = CharField(max_length=50)
-    odhadovana_hodnota = IntegerField(null=False)
-    drazebni_jistota = IntegerField(null=False)
-    min_prihoz = IntegerField(null=False)
-    podání = IntegerField(null=False)
-    datum_drazby = DateTimeField(null=False)
+class Holding(Model):
+    name = CharField(max_length=50)
+    property_type = ForeignKey(Holding_type)
+    property_area = IntegerField(null=False)
+
+class Apartment(Model):
+    name = CharField(max_length=50)
+    property_type = ForeignKey(Apartment_type)
+    area = CharField(max_length=50)
+
+
+
+
+
+
+
+class property(Model):
+    property = ForeignKey(Typ_nemovitosti)
+    city = ForeignKey(Cities)
+    adress = CharField(max_length=50)
+    estimate_value = IntegerField(null=False)
+    auction_assurance = IntegerField(null=False)
+    min_bit = IntegerField(null=False)
+    bit = IntegerField(null=False)
+    date_auction = DateTimeField(null=False)
