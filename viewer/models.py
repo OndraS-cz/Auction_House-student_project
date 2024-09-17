@@ -7,50 +7,45 @@ from django.forms import IntegerField
 class Cities(Model):
     name = CharField(max_length=20)
 
-# Create your models here.
-class House_type(Model):
+
+class HouseType(Model):
     property_type = CharField(max_length=10)
 
-class Ground_type(Model):
+
+class GroundType(Model):
     property_type = CharField(max_length=30)
 
-class Apartment_type(Model):
+
+class ApartmentType(Model):
     property_type = CharField(max_length=30)
 
 
-class Property_type(Model):
-    property =
-
-
-
+class PropertyType(Model):
+    property = CharField(max_length=30)
 
 
 class House(Model):
     name = CharField(max_length=50)
     area = IntegerField(null=False)
-    property_type = ForeignKey(House_type)
+    property_type = ForeignKey(HouseType)
     plot_area = IntegerField(null=False)
     garden_area = IntegerField(null=False)
 
 
-class Holding(Model):
+class Ground(Model):
     name = CharField(max_length=50)
-    property_type = ForeignKey(Ground_type)
+    property_type = ForeignKey(GroundType)
     property_area = IntegerField(null=False)
+
 
 class Apartment(Model):
     name = CharField(max_length=50)
-    property_type = ForeignKey(Apartment_type)
+    property_type = ForeignKey(ApartmentType)
     area = IntegerField(null=False)
 
 
-
-
-
-
-
-class property(Model):
-    property = ForeignKey(Typ_nemovitosti)
+class Property(Model):
+    property = ForeignKey(PropertyType)
     city = ForeignKey(Cities)
     address = CharField(max_length=50)
     estimate_value = IntegerField(null=False)
