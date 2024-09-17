@@ -11,7 +11,7 @@ class Cities(Model):
 class House_type(Model):
     property_type = CharField(max_length=10)
 
-class Holding_type(Model):
+class Ground_type(Model):
     property_type = CharField(max_length=30)
 
 class Apartment_type(Model):
@@ -27,7 +27,7 @@ class Property_type(Model):
 
 class House(Model):
     name = CharField(max_length=50)
-    area = CharField(max_length=50)
+    area = IntegerField(null=False)
     property_type = ForeignKey(House_type)
     plot_area = IntegerField(null=False)
     garden_area = IntegerField(null=False)
@@ -35,13 +35,13 @@ class House(Model):
 
 class Holding(Model):
     name = CharField(max_length=50)
-    property_type = ForeignKey(Holding_type)
+    property_type = ForeignKey(Ground_type)
     property_area = IntegerField(null=False)
 
 class Apartment(Model):
     name = CharField(max_length=50)
     property_type = ForeignKey(Apartment_type)
-    area = CharField(max_length=50)
+    area = IntegerField(null=False)
 
 
 
@@ -52,7 +52,7 @@ class Apartment(Model):
 class property(Model):
     property = ForeignKey(Typ_nemovitosti)
     city = ForeignKey(Cities)
-    adress = CharField(max_length=50)
+    address = CharField(max_length=50)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
     min_bit = IntegerField(null=False)
