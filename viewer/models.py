@@ -5,7 +5,7 @@ from django.forms import IntegerField
 
 
 class Mesta(Model):
-    název = CharField(max_length=20)
+    nazev = CharField(max_length=20)
 
 # Create your models here.
 class Typ_domu(Model):
@@ -34,6 +34,7 @@ class Byt(Model):
     jmeno = CharField(max_length=50)
     typ = ForeignKey(Typ_domu)
     rozloha = CharField(max_length=50)
+
 
 
 
