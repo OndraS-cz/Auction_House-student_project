@@ -22,7 +22,7 @@ class ApartmentType(Model):
 
 class House(Model):
     name = CharField(max_length=50, null=False)
-    area = IntegerField(null=False)
+    area = IntegerField(null=False, blank=False)
     property_type = ForeignKey(HouseType, null=False, blank=False, on_delete=SET_NULL)
     plot_area = IntegerField(null=False)
     garden_area = IntegerField(null=False)
@@ -55,3 +55,13 @@ class Property(Model):
     min_bit = IntegerField(null=False)
     bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
+
+
+class Bid(Model):
+    property = ForeignKey(Property, on_delete=models.CASCADE)
+    bidder_name = CharField(max_length=255)
+    bid_amount = IntegerField(max_digits=10)
+    bid_date = DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return f"{self.bidder_name} - {self.bid_amount} Kč"
