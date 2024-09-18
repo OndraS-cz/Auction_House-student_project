@@ -64,3 +64,9 @@ class Bid(Model):
 
     def __str__(self):
         return f"{self.bidder_name} - {self.bid_amount} Kč"
+
+    def anonymizovat_jmeno(self):
+        if len(self.bidder_name) <= 2:
+            return self.bidder_name  # pokud je nickname příliš krátký, vrať ho celý
+        else:
+            return self.bidder_name[0] + '*' * (len(self.bidder_name) - 2) + self.bidder_name[-1]
