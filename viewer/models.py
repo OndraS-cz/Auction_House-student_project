@@ -55,6 +55,10 @@ class Property(Model):
     bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
+    def loc_time(self):
+        local = time.localtime()
+        return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
+
 
 class Bid(Model):
     property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
@@ -70,3 +74,4 @@ class Bid(Model):
             return self.bidder_name  # pokud je nickname příliš krátký, vrať ho celý
         else:
             return self.bidder_name[0] + '*' * (len(self.bidder_name) - 2) + self.bidder_name[-1]
+
