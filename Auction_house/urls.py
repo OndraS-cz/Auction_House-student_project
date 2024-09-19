@@ -20,4 +20,5 @@ from viewer.views import *
 urlpatterns = [
     path('admin/', admin.site.urls),
 
+    path('detail/<pk>/', detail, name='detail'),
 ]
