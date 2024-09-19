@@ -60,16 +60,20 @@ class Property(Model):
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
 
     def time_to(self):
-        year = self.date_auction[6:9]
-        month = self.date_auction[0:1]
-        day = self.date_auction[3:4]
-        hour = self.date_auction[11:12]
-        minute = self.date_auction[14:15]
-        then = datetime(year, month, day, hour, minute)
+        #date_auction = "10-20-2024 15:30"
+        year = self.date_auction[6:10]
+        month = self.date_auction[0:2]
+        day = self.date_auction[3:5]
+        hour = self.date_auction[11:13]
+        minute = self.date_auction[14:16]
+        #subjects = [month, day, hour, minute]
+        #print(year, month, day, hour, minute)
+        then = datetime(int(year), int(month), int(day), int(hour), int(minute))
         now = datetime.now()
-        time_diference = now - then
+        time_diference = then - now
 
         return time_diference
+
 
 class Bid(Model):
     property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
