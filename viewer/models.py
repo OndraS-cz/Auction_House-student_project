@@ -1,6 +1,7 @@
 from django.db import models
 
-from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyToManyField, SET_NULL, IntegerField
+from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyToManyField, SET_NULL
+from django.forms import IntegerField
 
 
 class Cities(Model):
@@ -22,32 +23,32 @@ class ApartmentType(Model):
 class House(Model):
     name = CharField(max_length=50, null=False)
     area = IntegerField(null=False, blank=False)
-    property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses_type')
+    property_type = ForeignKey(HouseType, null=False, blank=False, on_delete=SET_NULL)
     plot_area = IntegerField(null=False)
     garden_area = IntegerField(null=False)
 
 
 class Ground(Model):
     name = CharField(max_length=50)
-    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
+    property_type = ForeignKey(GroundType, null=False, blank=False, on_delete=SET_NULL)
     property_area = IntegerField(null=False)
 
 
 class Apartment(Model):
     name = CharField(max_length=50, null=False)
-    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
+    property_type = ForeignKey(ApartmentType, null=False, blank=False, on_delete=SET_NULL)
     area = IntegerField(null=False)
 
 
 class PropertyType(Model):
-    house = ForeignKey(House, null=True, blank=True, on_delete=SET_NULL, related_name='house')
-    ground = ForeignKey(Ground, null=True, blank=True, on_delete=SET_NULL, related_name='ground')
-    apartment = ForeignKey(Apartment, null=True, blank=True, on_delete=SET_NULL, related_name='apartment')
+    house = ForeignKey(House, null=False, blank=False, on_delete=SET_NULL)
+    ground = ForeignKey(Ground, null=False, blank=False, on_delete=SET_NULL)
+    apartment = ForeignKey(Apartment, null=False, blank=False, on_delete=SET_NULL)
 
 
 class Property(Model):
     property = ManyToManyField(PropertyType)
-    city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
+    city = ForeignKey(Cities, null=False, blank=False, on_delete=SET_NULL)
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
@@ -57,10 +58,11 @@ class Property(Model):
 
 
 class Bid(Model):
-    property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
+    property = ForeignKey(Property, on_delete=models.CASCADE)
     bidder_name = CharField(max_length=255)
-    bid_amount = IntegerField(null=False)
+    bid_amount = IntegerField(max_digits=10)
     bid_date = DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.bidder_name} - {self.bid_amount} Kč"
+
