@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Byty</h1>
+    <ul>
+        {% for apartment in apartments %}
+            <li><a href="{% url 'apartment' apartment.id %}"> {{ apartment }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

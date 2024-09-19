@@ -1,0 +1,10 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<form method="POST">
+    {% csrf_token %}
+    <table>{{ form.as_table }}</table>
+    <br>
+    <input id="id_submit" type="submit" value="Uložit" class="btn btn-primary">
+</form>
+{% endblock %}
