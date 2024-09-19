@@ -1,5 +1,6 @@
 from django.shortcuts import render
 
+from viewer.models import Property
+
+
 # Create your views here.
-def ten_cas(request):
-    return render(request, 'ten_cas.html')
