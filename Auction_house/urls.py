@@ -17,6 +17,26 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from viewer.models import ApartmentType, GroundType, HouseType, Cities, House, Ground, Apartment, PropertyType, \
+    Property, Bid
+from viewer.views import home
+
+"""admin.site.register(Cities)
+admin.site.register(HouseType)
+admin.site.register(GroundType)
+admin.site.register(ApartmentType)
+admin.site.register(House)
+admin.site.register(Ground)
+admin.site.register(Apartment)
+admin.site.register(PropertyType)
+admin.site.register(Property)
+admin.site.register(Bid)"""
+
+
 urlpatterns = [
     path('admin/', admin.site.urls),
+
+    path('', home, name='home'),
+
+
 ]
