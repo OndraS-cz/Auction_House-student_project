@@ -20,13 +20,40 @@ class Cities(Model):
 class HouseType(Model):
     property_type = CharField(max_length=10, null=False)
 
+    class Meta:
+        ordering = ['property_type']
+
+    def __repr__(self):
+        return f"HouseType(name={self.property_type})"
+
+    def __str__(self):
+        return f"{self.property_type}"
+
 
 class GroundType(Model):
     property_type = CharField(max_length=30, null=False)
 
+    class Meta:
+        ordering = ['property_type']
+
+    def __repr__(self):
+        return f"GroundType(name={self.property_type})"
+
+    def __str__(self):
+        return f"{self.property_type}"
+
 
 class ApartmentType(Model):
     property_type = CharField(max_length=30, null=False)
+
+    class Meta:
+        ordering = ['property_type']
+
+    def __repr__(self):
+        return f"ApartmentType(name={self.property_type})"
+
+    def __str__(self):
+        return f"{self.property_type}"
 
 
 class House(Model):
@@ -36,17 +63,44 @@ class House(Model):
     plot_area = IntegerField(null=False)
     garden_area = IntegerField(null=False)
 
+    class Meta:
+        ordering = ['name']
+
+    def __repr__(self):
+        return f"House(name={self.name})"
+
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Ground(Model):
     name = CharField(max_length=50)
     property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
     property_area = IntegerField(null=False)
 
+    class Meta:
+        ordering = ['name']
+
+    def __repr__(self):
+        return f"Ground(name={self.name})"
+
+    def __str__(self):
+        return f"{self.name}"
+
 
 class Apartment(Model):
     name = CharField(max_length=50, null=False)
     property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
     area = IntegerField(null=False)
+
+    class Meta:
+        ordering = ['name']
+
+    def __repr__(self):
+        return f"Apartment(name={self.name})"
+
+    def __str__(self):
+        return f"{self.name}"
 
 
 class PropertyType(Model):
@@ -64,6 +118,15 @@ class Property(Model):
     min_bit = IntegerField(null=False)
     bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
+
+    class Meta:
+        verbose_name_plural = "Properties"
+
+    def __repr__(self):
+        return f"Property(name={self.property})"
+
+    def __str__(self):
+        return f"{self.property}"
 
 
 class Bid(Model):
