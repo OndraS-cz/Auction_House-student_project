@@ -18,7 +18,7 @@ class Cities(Model):
 
 
 class HouseType(Model):
-    property_type = CharField(max_length=10, null=False)
+    property_type = CharField(max_length=15, null=False)
 
     class Meta:
         ordering = ['property_type']
@@ -58,10 +58,10 @@ class ApartmentType(Model):
 
 class House(Model):
     name = CharField(max_length=50, null=False)
-    area = IntegerField(null=False, blank=False)
-    property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses_type')
-    plot_area = IntegerField(null=False)
-    garden_area = IntegerField(null=False)
+    area = IntegerField(null=True, blank=True)
+    property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses')
+    plot_area = IntegerField(null=True, blank=True)
+    garden_area = IntegerField(null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -75,7 +75,7 @@ class House(Model):
 
 class Ground(Model):
     name = CharField(max_length=50)
-    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
+    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds')
     property_area = IntegerField(null=False)
 
     class Meta:
@@ -90,7 +90,7 @@ class Ground(Model):
 
 class Apartment(Model):
     name = CharField(max_length=50, null=False)
-    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
+    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments')
     area = IntegerField(null=False)
 
     class Meta:
@@ -130,9 +130,9 @@ class Property(Model):
 
 
 class Bid(Model):
-    property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
+    property = ForeignKey(Property, on_delete=models.CASCADE)
     bidder_name = CharField(max_length=255)
-    bid_amount = IntegerField(null=False)
+    bid_amount = IntegerField()
     bid_date = DateTimeField(auto_now_add=True)
 
     def __str__(self):
