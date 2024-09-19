@@ -55,6 +55,21 @@ class Property(Model):
     bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
+    def loc_time(self):
+        local = time.localtime()
+        return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
+
+    def time_to(self):
+        year = self.date_auction[6:9]
+        month = self.date_auction[0:1]
+        day = self.date_auction[3:4]
+        hour = self.date_auction[11:12]
+        minute = self.date_auction[14:15]
+        then = datetime(year, month, day, hour, minute)
+        now = datetime.now()
+        time_diference = now - then
+
+        return time_diference
 
 class Bid(Model):
     property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
@@ -64,3 +79,9 @@ class Bid(Model):
 
     def __str__(self):
         return f"{self.bidder_name} - {self.bid_amount} Kč"
+
+    def anonymizovat_jmeno(self):
+        if len(self.bidder_name) <= 2:
+            return self.bidder_name  # pokud je nickname příliš krátký, vrať ho celý
+        else:
+            return self.bidder_name[0] + '*' * (len(self.bidder_name) - 2) + self.bidder_name[-1]
