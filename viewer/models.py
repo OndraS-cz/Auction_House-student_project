@@ -6,6 +6,16 @@ from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyTo
 class Cities(Model):
     name = CharField(max_length=20, null=False)
 
+    class Meta:
+        verbose_name_plural = "Cities"
+        ordering = ['name']
+
+    def __repr__(self):
+        return f"City(name={self.name})"
+
+    def __str__(self):
+        return f"{self.name}"
+
 
 class HouseType(Model):
     property_type = CharField(max_length=10, null=False)
