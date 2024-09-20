@@ -47,7 +47,7 @@ class PropertyType(Model):
 
 
 class Property(Model):
-    property = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='city')
+    property = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
