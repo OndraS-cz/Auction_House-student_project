@@ -7,17 +7,29 @@ from time import localtime
 class Cities(Model):
     name = CharField(max_length=20, null=False)
 
+    def __str__(self):
+        return self.name
+
 
 class HouseType(Model):
     property_type = CharField(max_length=10, null=False)
+
+    def __str__(self):
+        return self.property_type
 
 
 class GroundType(Model):
     property_type = CharField(max_length=30, null=False)
 
+    def __str__(self):
+        return self.property_type
+
 
 class ApartmentType(Model):
     property_type = CharField(max_length=30, null=False)
+
+    def __str__(self):
+        return self.property_type
 
 
 class House(Model):
@@ -27,17 +39,26 @@ class House(Model):
     plot_area = IntegerField(null=False)
     garden_area = IntegerField(null=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Ground(Model):
     name = CharField(max_length=50)
     property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
     property_area = IntegerField(null=False)
 
+    def __str__(self):
+        return self.name
+
 
 class Apartment(Model):
     name = CharField(max_length=50, null=False)
     property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
     area = IntegerField(null=False)
+
+    def __str__(self):
+        return self.name
 
 
 class PropertyType(Model):
@@ -47,7 +68,7 @@ class PropertyType(Model):
 
 
 class Property(Model):
-    property = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
+    holding = ManyToManyField(PropertyType)
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
@@ -55,6 +76,9 @@ class Property(Model):
     min_bit = IntegerField(null=False)
     bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
+
+    def __str__(self):
+        return self.address
 
     def loc_time(self):
         local = time.localtime()
