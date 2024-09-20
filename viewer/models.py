@@ -115,12 +115,12 @@ class Property(Model):
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
-    min_bit = IntegerField(null=False)
-    bit = IntegerField(null=False)
+    min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
     class Meta:
         verbose_name_plural = "Properties"
+
 
     def __repr__(self):
         return f"Property(name={self.property})"

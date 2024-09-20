@@ -1,6 +1,8 @@
 from django.shortcuts import render
+from django.views import View
+from django.views.generic import TemplateView, ListView
 
-from viewer.models import House, Apartment
+from viewer.models import House, Apartment, Ground
 
 
 def home(request):
@@ -11,8 +13,90 @@ def houses(request):
     context = {'houses': houses_}
     return render(request, 'houses.html', context)
 
+def house(request, pk):
+    if House.objects.filter(id=pk).exists():
+        house_ = House.objects.get(id=pk)
+        context = {'house': house_}
+        return render(request, 'house.html', context)
+    return grounds(request)
+
+
+class HousesView(View):
+    def get(self, request):
+        houses_ = House.objects.all()
+        context = {'houses': houses_}
+        return render(request, "houses.html", context)
+
+
+## TemplateView class
+class HousesTemplateView(TemplateView):
+    template_name = "houses.html"
+    extra_context = {'houses': House.objects.all()}
+
+
+class HousesListView(ListView):
+    template_name = "houses.html"
+    model = House
+    context_object_name = 'houses'
 
 def apartments(request):
     apartments_ = Apartment.objects.all()
     context = {'apartments': apartments_}
     return render(request, 'apartments.html', context)
+
+def apartment(request, pk):
+    if Apartment.objects.filter(id=pk).exists():
+        apartment_ = Apartment.objects.get(id=pk)
+        context = {'apartment': apartment_}
+        return render(request, 'apartment.html', context)
+    return grounds(request)
+
+
+class ApartmentsView(View):
+    def get(self, request):
+        apartments_ = Apartment.objects.all()
+        context = {'apartments': apartments_}
+        return render(request, "apartments.html", context)
+
+
+class ApartmentsTemplateView(TemplateView):
+    template_name = "apartments.html"
+    extra_context = {'apartments': Apartment.objects.all()}
+
+
+class ApartmentsListView(ListView):
+    template_name = "apartments.html"
+    model = Apartment
+    context_object_name = 'apartments'
+
+
+def grounds(request):
+    grounds_ = Ground.objects.all()
+    context = {'grounds': grounds_}
+    return render(request, 'grounds.html', context)
+
+def ground(request, pk):
+    if Ground.objects.filter(id=pk).exists():
+        ground_ = Ground.objects.get(id=pk)
+        context = {'ground': ground_}
+        return render(request, 'ground.html', context)
+    return grounds(request)
+
+
+class GroundsView(View):
+    def get(self, request):
+        grounds_ = Ground.objects.all()
+        context = {'grounds': grounds_}
+        return render(request, "grounds.html", context)
+
+
+## TemplateView class
+class GroundsTemplateView(TemplateView):
+    template_name = "grounds.html"
+    extra_context = {'grounds': Ground.objects.all()}
+
+
+class GroundsListView(ListView):
+    template_name = "grounds.html"
+    model = Ground
+    context_object_name = 'grounds'
