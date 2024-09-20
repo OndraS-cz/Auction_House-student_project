@@ -2,6 +2,7 @@ from django.db import models
 
 from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyToManyField, SET_NULL, IntegerField
 
+from time import localtime
 
 class Cities(Model):
     name = CharField(max_length=20, null=False)
