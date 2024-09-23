@@ -18,7 +18,7 @@ from django.contrib import admin
 from django.urls import path
 
 from viewer.views import home, GroundsListView, ground, HousesListView, house, \
-    ApartmentsListView, apartment
+    ApartmentsListView, apartment, AuctionsListView, auction
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -32,5 +32,8 @@ urlpatterns = [
 
     path('grounds/', GroundsListView.as_view(), name='grounds'),
     path('ground/<pk>/', ground, name='ground'),
+
+    path('auctions/', AuctionsListView.as_view(), name='auctions'),
+    path('auction/<pk>/', auction, name='auction'),
 
 ]

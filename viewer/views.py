@@ -2,7 +2,7 @@ from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, ListView
 
-from viewer.models import House, Apartment, Ground
+from viewer.models import House, Apartment, Ground, Auction
 
 
 def home(request):
@@ -28,7 +28,6 @@ class HousesView(View):
         return render(request, "houses.html", context)
 
 
-## TemplateView class
 class HousesTemplateView(TemplateView):
     template_name = "houses.html"
     extra_context = {'houses': House.objects.all()}
@@ -90,7 +89,6 @@ class GroundsView(View):
         return render(request, "grounds.html", context)
 
 
-## TemplateView class
 class GroundsTemplateView(TemplateView):
     template_name = "grounds.html"
     extra_context = {'grounds': Ground.objects.all()}
@@ -100,3 +98,34 @@ class GroundsListView(ListView):
     template_name = "grounds.html"
     model = Ground
     context_object_name = 'grounds'
+
+
+def auctions(request):
+    auctions_ = Auction.objects.all()
+    context = {'auctions': auctions_}
+    return render(request, 'auctions.html', context)
+
+def auction(request, pk):
+    if Auction.objects.filter(id=pk).exists():
+        auction_ = Auction.objects.get(id=pk)
+        context = {'auction': auction_}
+        return render(request, 'auction.html', context)
+    return grounds(request)
+
+
+class AuctionView(View):
+    def get(self, request):
+        auctions_ = Auction.objects.all()
+        context = {'auctions': auctions_}
+        return render(request, "auctions.html", context)
+
+
+class AuctionsTemplateView(TemplateView):
+    template_name = "auctions.html"
+    extra_context = {'auctions': Auction.objects.all()}
+
+
+class AuctionsListView(ListView):
+    template_name = "auctions.html"
+    model = Auction
+    context_object_name = 'auctions'
