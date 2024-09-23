@@ -3,8 +3,8 @@
 {% block content %}
 <h1>Aukce</h1>
     <ul>
-        {% for property in properties %}
-            <li><a href="{% url 'property' property.id %}"> {{ property }} </a>
+        {% for auction in auctions %}
+            <li><a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
             </li>
         {% endfor %}
     </ul>
