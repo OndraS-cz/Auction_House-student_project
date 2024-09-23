@@ -108,6 +108,14 @@ class PropertyType(Model):
     ground = ForeignKey(Ground, null=True, blank=True, on_delete=SET_NULL, related_name='ground')
     apartment = ForeignKey(Apartment, null=True, blank=True, on_delete=SET_NULL, related_name='apartment')
 
+    def __str__(self):
+        if self.house:
+            return f"{self.house}"
+        if self.ground:
+            return f"{self.ground}"
+        if self.apartment:
+            return f"{self.apartment}"
+
 
 class Property(Model):
     property = ManyToManyField(PropertyType)

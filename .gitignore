@@ -1,2 +1,3 @@
 /.venv/
 /Auction_house/secret_key.py
+/db.sqlite3/
