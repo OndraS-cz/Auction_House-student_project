@@ -1,6 +1,6 @@
 from django.db import models
 
-from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyToManyField, SET_NULL, IntegerField
+from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField
 
 import time
 
@@ -60,7 +60,7 @@ class ApartmentType(Model):
 
 
 class House(Model):
-    name = CharField(max_length=50, null=False)
+    name = CharField(max_length=150, null=False)
     area = IntegerField(null=True, blank=True)
     property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses')
     plot_area = IntegerField(null=True, blank=True)
@@ -77,8 +77,8 @@ class House(Model):
 
 
 class Ground(Model):
-    name = CharField(max_length=50)
-    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
+    name = CharField(max_length=150)
+    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds')
     property_area = IntegerField(null=False)
 
     class Meta:
@@ -92,8 +92,8 @@ class Ground(Model):
 
 
 class Apartment(Model):
-    name = CharField(max_length=50, null=False)
-    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
+    name = CharField(max_length=150, null=False)
+    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments')
     area = IntegerField(null=False)
 
     class Meta:
@@ -111,15 +111,22 @@ class PropertyType(Model):
     ground = ForeignKey(Ground, null=True, blank=True, on_delete=SET_NULL, related_name='ground')
     apartment = ForeignKey(Apartment, null=True, blank=True, on_delete=SET_NULL, related_name='apartment')
 
+    def __str__(self):
+        if self.house:
+            return f"{self.house}"
+        if self.ground:
+            return f"{self.ground}"
+        if self.apartment:
+            return f"{self.apartment}"
 
-class Property(Model):
-    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
+
+class Auction(Model):
+    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='auction')
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
-    min_bit = IntegerField(null=False)
-    bit = IntegerField(null=False)
+    min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
     def __str__(self):
@@ -129,7 +136,8 @@ class Property(Model):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
     class Meta:
-        verbose_name_plural = "Properties"
+        verbose_name_plural = "Auctions"
+
 
     def time_to(self):
         #date_auction = "10-20-2024 15:30"
@@ -144,14 +152,14 @@ class Property(Model):
         now = datetime.datetime.now()
         time_diference = then - now
     def __repr__(self):
-        return f"Property(name={self.property})"
+        return f"Auction(name={self.address})"
 
     def __str__(self):
-        return f"{self.property}"
+        return f"{self.property_type}"
 
 
 class Bid(Model):
-    property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
+    auction = ForeignKey(Auction, null=True, blank=True, on_delete=models.CASCADE)
     bidder_name = CharField(max_length=255)
     bid_amount = IntegerField(null=False)
     bid_date = DateTimeField(auto_now_add=True)
