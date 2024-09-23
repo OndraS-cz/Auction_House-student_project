@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Vložení dat</h1>
+    <ul>
+        <li><a href="{% url 'insert_houses' %}"> Dům </a></li>
+        <li><a href="{% url 'insert_apartments' %}"> Byt </a></li>
+        <li><a href="{% url 'insert_grounds' %}"> Pozemek </a></li>
+        <li><a href="{% url 'insert_property_type' %}"> Typ pozemku </a></li>
+        <li><a href="{% url 'insert_auction' %}"> aukci </a></li>
+
+    </ul>
+{% endblock %}

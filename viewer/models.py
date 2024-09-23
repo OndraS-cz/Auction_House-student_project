@@ -111,6 +111,13 @@ class PropertyType(Model):
     ground = ForeignKey(Ground, null=True, blank=True, on_delete=SET_NULL, related_name='ground')
     apartment = ForeignKey(Apartment, null=True, blank=True, on_delete=SET_NULL, related_name='apartment')
 
+    def __str__(self):
+        if self.house:
+            return f"{self.house}"
+        if self.ground:
+            return f"{self.ground}"
+        if self.apartment:
+            return f"{self.apartment}"
 
 class Property(Model):
     property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
@@ -119,7 +126,6 @@ class Property(Model):
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
     min_bit = IntegerField(null=False)
-    bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
     def __str__(self):
@@ -144,10 +150,10 @@ class Property(Model):
         now = datetime.datetime.now()
         time_diference = then - now
     def __repr__(self):
-        return f"Property(name={self.property})"
+        return f"Property(name={self.address})"
 
     def __str__(self):
-        return f"{self.property}"
+        return f"{self.address}"
 
 
 class Bid(Model):
