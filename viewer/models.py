@@ -2,7 +2,9 @@ from django.db import models
 
 from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyToManyField, SET_NULL, IntegerField
 
-from time import localtime
+import time
+
+import datetime
 
 class Cities(Model):
     name = CharField(max_length=20, null=False)
@@ -68,7 +70,7 @@ class PropertyType(Model):
 
 
 class Property(Model):
-    holding = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='holding')
+    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
@@ -86,15 +88,15 @@ class Property(Model):
 
     def time_to(self):
         #date_auction = "10-20-2024 15:30"
-        year = self.date_auction[6:10]
-        month = self.date_auction[0:2]
-        day = self.date_auction[3:5]
-        hour = self.date_auction[11:13]
-        minute = self.date_auction[14:16]
+        year = self.date_auction.year
+        month = self.date_auction.month
+        day = self.date_auction.day
+        hour = self.date_auction.hour
+        minute = self.date_auction.minute
         #subjects = [month, day, hour, minute]
         #print(year, month, day, hour, minute)
-        then = datetime(int(year), int(month), int(day), int(hour), int(minute))
-        now = datetime.now()
+        then = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
+        now = datetime.datetime.now()
         time_diference = then - now
 
         return time_diference
