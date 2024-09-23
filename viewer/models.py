@@ -2,6 +2,9 @@ from django.db import models
 
 from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyToManyField, SET_NULL, IntegerField
 
+import time
+
+import datetime
 
 class Cities(Model):
     name = CharField(max_length=20, null=False)
@@ -75,7 +78,7 @@ class House(Model):
 
 class Ground(Model):
     name = CharField(max_length=50)
-    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds')
+    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
     property_area = IntegerField(null=False)
 
     class Meta:
@@ -90,7 +93,7 @@ class Ground(Model):
 
 class Apartment(Model):
     name = CharField(max_length=50, null=False)
-    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments')
+    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
     area = IntegerField(null=False)
 
     class Meta:
@@ -110,7 +113,7 @@ class PropertyType(Model):
 
 
 class Property(Model):
-    property = ManyToManyField(PropertyType)
+    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
@@ -119,9 +122,27 @@ class Property(Model):
     bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
+    def __str__(self):
+        return self.address
+
+    def loc_time(self):
+        local = time.localtime()
+        return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
     class Meta:
         verbose_name_plural = "Properties"
 
+    def time_to(self):
+        #date_auction = "10-20-2024 15:30"
+        year = self.date_auction.year
+        month = self.date_auction.month
+        day = self.date_auction.day
+        hour = self.date_auction.hour
+        minute = self.date_auction.minute
+        #subjects = [month, day, hour, minute]
+        #print(year, month, day, hour, minute)
+        then = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
+        now = datetime.datetime.now()
+        time_diference = then - now
     def __repr__(self):
         return f"Property(name={self.property})"
 
@@ -130,11 +151,16 @@ class Property(Model):
 
 
 class Bid(Model):
-    property = ForeignKey(Property, on_delete=models.CASCADE)
+    property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
     bidder_name = CharField(max_length=255)
-    bid_amount = IntegerField()
+    bid_amount = IntegerField(null=False)
     bid_date = DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return f"{self.bidder_name} - {self.bid_amount} Kč"
 
+    def anonymizovat_jmeno(self):
+        if len(self.bidder_name) <= 2:
+            return self.bidder_name  # pokud je nickname příliš krátký, vrať ho celý
+        else:
+            return self.bidder_name[0] + '*' * (len(self.bidder_name) - 2) + self.bidder_name[-1]
