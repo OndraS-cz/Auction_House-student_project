@@ -129,14 +129,10 @@ class Auction(Model):
     min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
-    def __str__(self):
-        return self.address
 
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
-    class Meta:
-        verbose_name_plural = "Auctions"
 
 
     def time_to(self):
@@ -151,6 +147,10 @@ class Auction(Model):
         then = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
         now = datetime.datetime.now()
         time_diference = then - now
+
+    class Meta:
+        verbose_name_plural = "Auctions"
+
     def __repr__(self):
         return f"Auction(name={self.address})"
 
