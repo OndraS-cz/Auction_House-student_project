@@ -146,7 +146,7 @@ class Auction(Model):
         #print(year, month, day, hour, minute)
         then = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
         now = datetime.datetime.now()
-        time_diference = then - now
+        time_difference = then - now
 
     class Meta:
         verbose_name_plural = "Auctions"
