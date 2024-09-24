@@ -1,7 +1,8 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Model, ImageField
 from django.shortcuts import render
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView
 
 from viewer.models import House, Apartment, Ground, Auction
 
@@ -132,5 +133,17 @@ class AuctionsListView(ListView):
     context_object_name = 'auctions'
 
 
-class Image(Model):
-    image = ImageField(upload_to='images/', default=None, null=False, blank=False)
+"""class ImageCreateView(PermissionRequiredMixin, CreateView):
+    template_name = 'form_image.html'
+    form_class = ImageModelForm
+    success_url = reverse_lazy('home')
+    permission_required = 'viewer.add_image'
+
+    def form_invalid(self, form):
+        LOGGER.warning('User provided invalid data.')
+        return super().form_invalid(form)
+
+
+class ImageDetailView(DetailView):
+    model = Image
+    template_name = 'image.html'"""
