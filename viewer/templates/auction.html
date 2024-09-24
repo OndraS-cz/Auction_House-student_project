@@ -1,31 +1,38 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ property.property_type }}</h1>
-<div class="property-details">
-    <div class="property-property_type">
+<h1>{{ auction.property_type }}</h1>
+<div class="auction-images">
+    {% for image in auction.images.all %}
+        <span class="auction-image">
+            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+        </span>
+    {% endfor %}
+</div>
+<div class="auction-details">
+    <div class="auction-property_type">
         <strong>Adresa nemovitosti:</strong>
-        {{ property.address }} {{ property.city }}
+        {{ auction.address }}
     </div>
 
-    <div class="property-value">
+    <div class="auction-value">
         <strong>Odhad ceny nemovitosti:</strong>
-            {{ property.estimate_value }} Kč
+            {{ auction.estimate_value }} Kč
     </div>
 
-    <div class="property-assurance">
+    <div class="auction-assurance">
         <strong>Dražební jistota:</strong>
-            {{ property.auction_assurance }} Kč
+            {{ auction.auction_assurance }} Kč
     </div>
 
-    <div class="property-min_bid">
+    <div class="auction-min_bid">
         <strong>Minimální příhoz:</strong>
-            {{ property.min_bid }} Kč
+            {{ auction.min_bid }} Kč
     </div>
 
-    <div class="property-date_auction">
+    <div class="auction-date_auction">
         <strong>Datum dražby:</strong>
-            {{ property.date_auction }}
+            {{ auction.date_auction }}
     </div>
 </div>
 {% endblock %}

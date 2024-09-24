@@ -1,3 +1,4 @@
+from django.db.models import Model, ImageField
 from django.shortcuts import render
 from django.views import View
 from django.views.generic import TemplateView, ListView
@@ -129,3 +130,7 @@ class AuctionsListView(ListView):
     template_name = "auctions.html"
     model = Auction
     context_object_name = 'auctions'
+
+
+class Image(Model):
+    image = ImageField(upload_to='images/', default=None, null=False, blank=False)
