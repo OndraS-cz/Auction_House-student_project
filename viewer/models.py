@@ -126,14 +126,17 @@ class Auction(Model):
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
-    min_bid = IntegerField(null=False)
+    min_bit = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
+    def __str__(self):
+        return self.address
 
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
-
+    class Meta:
+        verbose_name_plural = "Properties"
 
     def time_to(self):
         #date_auction = "10-20-2024 15:30"
@@ -149,17 +152,15 @@ class Auction(Model):
         time_diference = then - now
         return time_diference
 
-
-        time_difference = then - now
-
     class Meta:
         verbose_name_plural = "Auctions"
 
+
     def __repr__(self):
-        return f"Property(name={self.property})"
+        return f"Property(name={self.address})"
 
     def __str__(self):
-        return f"{self.property}"
+        return f"{self.address}"
 
 
 class Bid(Model):
