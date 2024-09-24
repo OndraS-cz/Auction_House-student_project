@@ -119,13 +119,14 @@ class PropertyType(Model):
         if self.apartment:
             return f"{self.apartment}"
 
-class Property(Model):
-    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
+
+class Auction(Model):
+    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='auction')
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
-    min_bit = IntegerField(null=False)
+    min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
     def __str__(self):
@@ -151,6 +152,8 @@ class Property(Model):
         time_diference = then - now
         return time_diference
 
+    class Meta:
+        verbose_name_plural = "Auctions"
 
     def __repr__(self):
         return f"Property(name={self.address})"
@@ -160,7 +163,7 @@ class Property(Model):
 
 
 class Bid(Model):
-    property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
+    auction = ForeignKey(Auction, null=True, blank=True, on_delete=models.CASCADE)
     bidder_name = CharField(max_length=255)
     bid_amount = IntegerField(null=False)
     bid_date = DateTimeField(auto_now_add=True)

@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Pozemky</h1>
+    <ul>
+        {% for ground in grounds %}
+            <li><a href="{% url 'ground' ground.id %}"> {{ ground }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

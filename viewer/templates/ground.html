@@ -1,0 +1,16 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ ground.name }}</h1>
+<div class="ground-details">
+    <div class="ground-property_type">
+        <strong>Typ pozemku:</strong>
+        {{ ground.property_type }}
+    </div>
+
+    <div class="ground-property_area">
+        <strong>Výměra:</strong>
+            {{ ground.property_area }} m2
+    </div>
+</div>
+{% endblock %}

@@ -1,0 +1,18 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1>{{ house.name }}</h1>
+<div class="house-details">
+    <div class="house-property_type">
+        <strong>Typ domu:</strong>
+        {{ house.property_type }}
+    </div>
+
+    <div class="house-area">
+        <strong>Výměra:</strong>
+            {{ house.area }} m2
+            {{ house.plot_area }} m2
+            {{ house.garden_area }} m2
+    </div>
+</div>
+{% endblock %}
