@@ -156,10 +156,10 @@ class Auction(Model):
         verbose_name_plural = "Auctions"
 
     def __repr__(self):
-        return f"Property(name={self.property})"
+        return f"Property(name={self.address})"
 
     def __str__(self):
-        return f"{self.property}"
+        return f"{self.address}"
 
 
 class Bid(Model):
