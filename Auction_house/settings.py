@@ -37,7 +37,7 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'viewer'
+    'viewer',
 ]
 
 MIDDLEWARE = [
@@ -123,9 +123,8 @@ STATIC_URL = 'static/'
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 
-GRAPH_MODELS = {
-    'app_labels': ['viewer']
-}
 
-MEDIA_ROOT = BASE_DIR
-MEDIA_URL = 'images/'
+GRAPH_MODELS = {
+    'all_applications': True,
+    'graph_models': True
+}
