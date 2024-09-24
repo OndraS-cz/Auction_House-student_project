@@ -15,4 +15,15 @@
             {{ house.garden_area }} m2
     </div>
 </div>
+
+<div>
+    <strong>Fotogalerie:</strong>
+</div>
+<div class="house-images">
+    {% for image in house.images.all %}
+        <span class="house-image">
+            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+        </span>
+    {% endfor %}
+</div>
 {% endblock %}

@@ -5,6 +5,7 @@ from django.urls import reverse_lazy
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
+from viewer.forms import ImageModelForm
 from viewer.models import House, Apartment, Ground, Auction, Image
 #from viewer.forms import ImageModelForm
 
@@ -139,7 +140,7 @@ class AuctionsListView(ListView):
     context_object_name = 'auctions'
 
 
-"""class ImageCreateView(PermissionRequiredMixin, CreateView):
+class ImageCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'form_image.html'
     form_class = ImageModelForm
     success_url = reverse_lazy('home')
@@ -152,4 +153,4 @@ class AuctionsListView(ListView):
 
 class ImageDetailView(DetailView):
     model = Image
-    template_name = 'image.html'"""
+    template_name = 'image.html'

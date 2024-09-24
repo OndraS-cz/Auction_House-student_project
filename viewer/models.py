@@ -150,8 +150,6 @@ class Auction(Model):
         time_difference = then - now
         return time_difference
 
-    class Meta:
-        verbose_name_plural = "Auctions"
 
     def __repr__(self):
         return f"Auction(name={self.address})"

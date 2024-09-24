@@ -2,13 +2,6 @@
 
 {% block content %}
 <h1>{{ auction.property_type }}</h1>
-<div class="auction-images">
-    {% for image in auction.images.all %}
-        <span class="auction-image">
-            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
-        </span>
-    {% endfor %}
-</div>
 <div class="auction-details">
     <div class="auction-property_type">
         <strong>Adresa nemovitosti:</strong>
@@ -44,5 +37,15 @@
         <strong>Zbývající čas do dražby:</strong>
             {{ auction.time_to }}
     </div>
+</div>
+<div>
+    <strong>Fotogalerie:</strong>
+</div>
+<div class="auction-images">
+    {% for image in auction.images.all %}
+        <span class="auction-image">
+            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+        </span>
+    {% endfor %}
 </div>
 {% endblock %}

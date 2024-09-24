@@ -20,7 +20,7 @@ from django.urls import path
 
 from Auction_house import settings
 from viewer.views import home, GroundsListView, ground, HousesListView, house, \
-    ApartmentsListView, apartment, AuctionsListView, auction
+    ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -37,5 +37,8 @@ urlpatterns = [
 
     path('auctions/', AuctionsListView.as_view(), name='auctions'),
     path('auction/<pk>/', auction, name='auction'),
+
+    path('image/create/', ImageCreateView.as_view(), name='image_create'),
+    path('image/<pk>/', ImageDetailView.as_view(), name='image'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
