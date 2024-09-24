@@ -1,6 +1,7 @@
 from django.db import models
 
-from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField
+from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField, ImageField, TextField, \
+    ManyToManyField
 
 import time
 
@@ -147,6 +148,7 @@ class Auction(Model):
         then = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
         now = datetime.datetime.now()
         time_difference = then - now
+        return time_difference
 
     class Meta:
         verbose_name_plural = "Auctions"
@@ -172,3 +174,18 @@ class Bid(Model):
             return self.bidder_name  # pokud je nickname příliš krátký, vrať ho celý
         else:
             return self.bidder_name[0] + '*' * (len(self.bidder_name) - 2) + self.bidder_name[-1]
+
+
+class Image(Model):
+    image = ImageField(upload_to='images/', default=None, null=False, blank=False)
+    house = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True, related_name='images')
+    apartment = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True, related_name='images')
+    ground = ForeignKey(Ground, on_delete=SET_NULL, null=True, blank=True, related_name='images')
+    auctions = ManyToManyField(Auction, blank=True, related_name='images')
+    description = TextField(null=True, blank=True)
+
+    def __repr__(self):
+        return f"Image(image={self.image}, auctions={self.auctions}, description={self.description})"
+
+    def __str__(self):
+        return f"Image: {self.image}, {self.description}"

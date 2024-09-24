@@ -32,7 +32,17 @@
 
     <div class="auction-date_auction">
         <strong>Datum dražby:</strong>
-            {{ auction.date_auction }}
+            {{ auction.date_auction|date:"d.m.Y H:i" }}
+    </div>
+
+    <div class="auction-local_time">
+        <strong>Aktuální čas:</strong>
+            {{ auction.loc_time }}
+    </div>
+
+    <div class="auction-time_to">
+        <strong>Zbývající čas do dražby:</strong>
+            {{ auction.time_to }}
     </div>
 </div>
 {% endblock %}
