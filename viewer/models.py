@@ -60,7 +60,7 @@ class ApartmentType(Model):
 
 
 class House(Model):
-    name = CharField(max_length=50, null=False)
+    name = CharField(max_length=100, null=False)
     area = IntegerField(null=True, blank=True)
     property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses')
     plot_area = IntegerField(null=True, blank=True)
@@ -77,7 +77,7 @@ class House(Model):
 
 
 class Ground(Model):
-    name = CharField(max_length=50)
+    name = CharField(max_length=100)
     property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
     property_area = IntegerField(null=False)
 
@@ -92,7 +92,7 @@ class Ground(Model):
 
 
 class Apartment(Model):
-    name = CharField(max_length=50, null=False)
+    name = CharField(max_length=100, null=False)
     property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
     area = IntegerField(null=False)
 

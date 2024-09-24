@@ -5,27 +5,30 @@
 <div class="property-details">
     <div class="property-property_type">
         <strong>Adresa nemovitosti:</strong>
-        {{ property.address }} {{ property.city }}
+        {{ auction.address }} {{ auction.city }}
     </div>
 
     <div class="property-value">
         <strong>Odhad ceny nemovitosti:</strong>
-            {{ property.estimate_value }} Kč
+            {{ auction.estimate_value }} Kč
     </div>
 
     <div class="property-assurance">
         <strong>Dražební jistota:</strong>
-            {{ property.auction_assurance }} Kč
+            {{ auction.auction_assurance }} Kč
     </div>
 
     <div class="property-min_bid">
         <strong>Minimální příhoz:</strong>
-            {{ property.min_bid }} Kč
+            {{ auction.min_bid }} Kč
     </div>
 
     <div class="property-date_auction">
         <strong>Datum dražby:</strong>
-            {{ property.date_auction }}
+            {{ auction.date_auction }}
     </div>
+    {% if user.is_authenticated %}
+    <a href="{%  url 'update_auction' auction.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
+    {% endif %}
 </div>
 {% endblock %}

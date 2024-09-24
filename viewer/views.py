@@ -1,11 +1,11 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, CreateView
+from django.views.generic import FormView, CreateView, UpdateView
 from django.views import View
 from django.views.generic import TemplateView, ListView
 
 from viewer.forms import ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-from viewer.models import House, Apartment
+from viewer.models import House, Apartment, PropertyType
 from logging import getLogger
 from viewer.models import House, Apartment, Ground, Auction
 
@@ -55,10 +55,21 @@ def insert_data(request):
     return render(request, "insert_data.html")
 
 
-class HouseCreateView(CreateView):
+class InsertHouse(CreateView):
     template_name = 'form.html'
     form_class = HouseModelForm
     success_url = reverse_lazy('insert_property_type')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)
+
+
+class UpdateHouse(UpdateView):
+    template_name = 'form.html'
+    form_class = HouseModelForm
+    success_url = reverse_lazy('houses')
+    model = House
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -74,11 +85,31 @@ class InsertApartments(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
+class UpdateApartments(UpdateView):
+    template_name = 'form.html'
+    form_class = ApartmentModelForm
+    success_url = reverse_lazy('apartments')
+    model = Apartment
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)
+
 
 class InsertGrounds(CreateView):
     template_name = "form.html"
     form_class = GroundModelForm
     success_url = reverse_lazy('insert_property_type')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)
+
+class UpdateGrounds(UpdateView):
+    template_name = 'form.html'
+    form_class = GroundModelForm
+    success_url = reverse_lazy('grounds')
+    model = Ground
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -103,6 +134,19 @@ class InsertAuction(CreateView):
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
+
+class UpdateAuction(UpdateView):
+    template_name = 'form.html'
+    form_class = AuctionModelForm
+    success_url = reverse_lazy('auctions')
+    model = Auction
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)
+
+
+
 def apartment(request, pk):
     if Apartment.objects.filter(id=pk).exists():
         apartment_ = Apartment.objects.get(id=pk)

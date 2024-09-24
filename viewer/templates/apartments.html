@@ -4,7 +4,11 @@
 <h1>Byty</h1>
     <ul>
         {% for apartment in apartments %}
-            <li><a href="{% url 'apartment' apartment.id %}"> {{ apartment }} </a>
+            <li>
+                <a href="{% url 'apartment' apartment.id %}"> {{ apartment }} </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'update_apartments' apartment.id %}"> 🔧 </a>
+            {% endif %}
             </li>
         {% endfor %}
     </ul>

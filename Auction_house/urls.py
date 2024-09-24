@@ -18,8 +18,9 @@ from django.contrib import admin
 from django.urls import path
 
 from viewer.views import home, GroundsListView, ground, HousesListView, house, \
-    ApartmentsListView, apartment, AuctionsListView, auction
-from viewer.views import home, houses, apartments, insert_data, HouseCreateView, InsertApartments, InsertGrounds, \
+    ApartmentsListView, apartment, AuctionsListView, auction, UpdateHouse, UpdateApartments, UpdateGrounds, \
+    UpdateAuction
+from viewer.views import home, houses, apartments, insert_data, InsertHouse, InsertApartments, InsertGrounds, \
     InsertAuction, InsertPropertytype
 
 urlpatterns = [
@@ -40,9 +41,13 @@ urlpatterns = [
 
 
     path('insert/', insert_data, name="insert_data"),
-    path('insert/houses', HouseCreateView.as_view(), name="insert_houses"),
+    path('insert/houses', InsertHouse.as_view(), name="insert_houses"),
+    path('update/houses/<pk>', UpdateHouse.as_view(), name="update_houses"),
     path('insert/apartments', InsertApartments.as_view(), name="insert_apartments"),
+    path('update/apartments/<pk>', UpdateApartments.as_view(), name="update_apartments"),
     path('insert/grounds', InsertGrounds.as_view(), name="insert_grounds"),
+    path('update/grounds/<pk>', UpdateGrounds.as_view(), name="update_grounds"),
     path('insert/property_type', InsertPropertytype.as_view(), name="insert_property_type"),
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
+    path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
 ]

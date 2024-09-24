@@ -12,5 +12,8 @@
         <strong>Výměra:</strong>
             {{ ground.property_area }} m2
     </div>
+    {% if user.is_authenticated %}
+    <a href="{%  url 'update_grounds' ground.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
+    {% endif %}
 </div>
 {% endblock %}

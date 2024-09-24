@@ -8,14 +8,14 @@ class HouseModelForm(ModelForm):
         model = House
         fields = '__all__'
 
-class GroundModelForm(ModelForm):
-    class Meta:
-        model = Ground
-        fields = '__all__'
-
 class ApartmentModelForm(ModelForm):
     class Meta:
         model = Apartment
+        fields = '__all__'
+
+class GroundModelForm(ModelForm):
+    class Meta:
+        model = Ground
         fields = '__all__'
 
 class PropertyTypeModelForm(ModelForm):
