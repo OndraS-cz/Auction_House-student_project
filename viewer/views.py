@@ -1,6 +1,6 @@
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import FormView, CreateView, UpdateView
+from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views import View
 from django.views.generic import TemplateView, ListView
 
@@ -75,6 +75,11 @@ class UpdateHouse(UpdateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
+class DeleteHouse(DeleteView):
+    template_name = 'creator_confirm_delete.html'
+    model = House
+    success_url = reverse_lazy('houses')
+
 
 class InsertApartments(CreateView):
     template_name = "form.html"
@@ -95,6 +100,11 @@ class UpdateApartments(UpdateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
+class DeleteApartments(DeleteView):
+    template_name = 'creator_confirm_delete.html'
+    model = Apartment
+    success_url = reverse_lazy('apartments')
+
 
 class InsertGrounds(CreateView):
     template_name = "form.html"
@@ -114,6 +124,11 @@ class UpdateGrounds(UpdateView):
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
+
+class DeleteGrounds(DeleteView):
+    template_name = 'creator_confirm_delete.html'
+    model = Ground
+    success_url = reverse_lazy('grounds')
 
 
 class InsertPropertytype(CreateView):
@@ -145,7 +160,10 @@ class UpdateAuction(UpdateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-
+class DeleteAuction(DeleteView):
+    template_name = 'creator_confirm_delete.html'
+    model = Auction
+    success_url = reverse_lazy('auctions')
 
 def apartment(request, pk):
     if Apartment.objects.filter(id=pk).exists():

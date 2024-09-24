@@ -8,6 +8,7 @@
                 <a href="{% url 'house' house.id %}"> {{ house }} </a>
             {% if user.is_authenticated %}
                 <a href="{% url 'update_houses' house.id %}"> 🔧 </a>
+                <a href="{% url 'delete_houses' house.id %}"> ❌ </a>
             {% endif %}
             </li>
         {% endfor %}

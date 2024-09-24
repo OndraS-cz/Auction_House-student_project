@@ -17,6 +17,8 @@
     </div>
     {% if user.is_authenticated %}
     <a href="{%  url 'update_houses' house.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
+    <a href="{%  url 'delete_houses' house.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
+
     {% endif %}
 </div>
 {% endblock %}
