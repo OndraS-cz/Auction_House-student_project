@@ -119,23 +119,21 @@ class PropertyType(Model):
         if self.apartment:
             return f"{self.apartment}"
 
-class Property(Model):
-    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='property')
+
+class Auction(Model):
+    property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='auction')
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
-    min_bit = IntegerField(null=False)
+    min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
-    def __str__(self):
-        return self.address
 
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
-    class Meta:
-        verbose_name_plural = "Properties"
+
 
     def time_to(self):
         #date_auction = "10-20-2024 15:30"
@@ -152,15 +150,20 @@ class Property(Model):
         return time_diference
 
 
+        time_difference = then - now
+
+    class Meta:
+        verbose_name_plural = "Auctions"
+
     def __repr__(self):
-        return f"Property(name={self.address})"
+        return f"Property(name={self.property})"
 
     def __str__(self):
-        return f"{self.address}"
+        return f"{self.property}"
 
 
 class Bid(Model):
-    property = ForeignKey(Property, on_delete=models.CASCADE, related_name='bids')
+    auction = ForeignKey(Auction, null=True, blank=True, on_delete=models.CASCADE)
     bidder_name = CharField(max_length=255)
     bid_amount = IntegerField(null=False)
     bid_date = DateTimeField(auto_now_add=True)

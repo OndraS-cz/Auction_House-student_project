@@ -17,6 +17,8 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path
 
+from viewer.views import home, GroundsListView, ground, HousesListView, house, \
+    ApartmentsListView, apartment, AuctionsListView, auction
 from viewer.views import home, houses, apartments, insert_data, HouseCreateView, InsertApartments, InsertGrounds, \
     InsertAuction, InsertPropertytype
 
@@ -24,8 +26,17 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),
-    path('houses/', houses, name='houses'),
-    path('apartments/', apartments, name='apartments'),
+    path('houses/', HousesListView.as_view(), name='houses'),
+    path('house/<pk>/', house, name='house'),
+
+    path('apartments/', ApartmentsListView.as_view(), name='apartments'),
+    path('apartment/<pk>/', apartment, name='apartment'),
+
+    path('grounds/', GroundsListView.as_view(), name='grounds'),
+    path('ground/<pk>/', ground, name='ground'),
+
+    path('auctions/', AuctionsListView.as_view(), name='auctions'),
+    path('auction/<pk>/', auction, name='auction'),
 
     path('insert/', insert_data, name="insert_data"),
     path('insert/houses', HouseCreateView.as_view(), name="insert_houses"),
