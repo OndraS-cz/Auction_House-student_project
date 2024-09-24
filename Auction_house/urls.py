@@ -38,6 +38,7 @@ urlpatterns = [
     path('auctions/', AuctionsListView.as_view(), name='auctions'),
     path('auction/<pk>/', auction, name='auction'),
 
+
     path('insert/', insert_data, name="insert_data"),
     path('insert/houses', HouseCreateView.as_view(), name="insert_houses"),
     path('insert/apartments', InsertApartments.as_view(), name="insert_apartments"),

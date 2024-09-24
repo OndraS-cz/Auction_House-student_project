@@ -96,16 +96,6 @@ class Apartment(Model):
     property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
     area = IntegerField(null=False)
 
-    def time(self):
-        year = self.date_auction.year
-        month = self.date_auction.month
-        day = self.date_auction.day
-        hour = self.date_auction.hour
-        minute = self.date_auction.minute
-        result = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
-
-
-
     class Meta:
         ordering = ['name']
 
