@@ -96,6 +96,16 @@ class Apartment(Model):
     property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
     area = IntegerField(null=False)
 
+    def time(self):
+        year = self.date_auction.year
+        month = self.date_auction.month
+        day = self.date_auction.day
+        hour = self.date_auction.hour
+        minute = self.date_auction.minute
+        result = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
+
+
+
     class Meta:
         ordering = ['name']
 
@@ -126,7 +136,7 @@ class Auction(Model):
     address = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
-    min_bit = IntegerField(null=False)
+    min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
     def __str__(self):
@@ -155,12 +165,11 @@ class Auction(Model):
     class Meta:
         verbose_name_plural = "Auctions"
 
-
     def __repr__(self):
-        return f"Property(name={self.address})"
+        return f"Property(name={self.property})"
 
     def __str__(self):
-        return f"{self.address}"
+        return f"{self.property}"
 
 
 class Bid(Model):
