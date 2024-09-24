@@ -149,6 +149,9 @@ class Property(Model):
         then = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
         now = datetime.datetime.now()
         time_diference = then - now
+        return time_diference
+
+
     def __repr__(self):
         return f"Property(name={self.address})"
 
