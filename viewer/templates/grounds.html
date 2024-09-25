@@ -4,7 +4,13 @@
 <h1>Pozemky</h1>
     <ul>
         {% for ground in grounds %}
-            <li><a href="{% url 'ground' ground.id %}"> {{ ground }} </a>
+            <li>
+                <a href="{% url 'ground' ground.id %}"> {{ ground }} </a>
+                {% if user.is_authenticated %}
+                <a href="{% url 'update_grounds' ground.id %}"> 🔧 </a>
+                <a href="{% url 'delete_grounds' ground.id %}"> ❌ </a>
+
+            {% endif %}
             </li>
         {% endfor %}
     </ul>

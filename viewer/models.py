@@ -7,6 +7,8 @@ import time
 
 import datetime
 
+import pytz
+
 class Cities(Model):
     name = CharField(max_length=20, null=False)
 
@@ -124,7 +126,7 @@ class PropertyType(Model):
 class Auction(Model):
     property_type = ForeignKey(PropertyType, null=True, blank=True, on_delete=SET_NULL, related_name='auction')
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
-    address = CharField(max_length=50, null=False)
+    location = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
     min_bid = IntegerField(null=False)
@@ -137,25 +139,24 @@ class Auction(Model):
 
 
     def time_to(self):
-        #date_auction = "10-20-2024 15:30"
-        year = self.date_auction.year
-        month = self.date_auction.month
-        day = self.date_auction.day
-        hour = self.date_auction.hour
-        minute = self.date_auction.minute
-        #subjects = [month, day, hour, minute]
-        #print(year, month, day, hour, minute)
-        then = datetime.datetime(int(year), int(month), int(day), int(hour), int(minute))
-        now = datetime.datetime.now()
-        time_difference = then - now
-        return time_difference
+        then = self.date_auction.replace(tzinfo=pytz.utc)
+        now = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        time_diference = then - now
+        return time_diference
 
+    def is_begin(self):
+        return self.date_auction.replace(tzinfo=pytz.utc) < datetime.datetime.now().replace(tzinfo=pytz.utc)
+    def isnot_begin(self):
+        return self.date_auction.replace(tzinfo=pytz.utc) > datetime.datetime.now().replace(tzinfo=pytz.utc)
+
+    class Meta:
+        verbose_name_plural = "Auctions"
 
     def __repr__(self):
-        return f"Auction(name={self.address})"
+        return f"Auction(name={self.location})"
 
     def __str__(self):
-        return f"{self.property_type}"
+        return f"{self.location}"
 
 
 class Bid(Model):

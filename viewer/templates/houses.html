@@ -4,7 +4,12 @@
 <h1>Domy</h1>
     <ul>
         {% for house in houses %}
-            <li><a href="{% url 'house' house.id %}"> {{ house }} </a>
+            <li>
+                <a href="{% url 'house' house.id %}"> {{ house }} </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'update_houses' house.id %}"> 🔧 </a>
+                <a href="{% url 'delete_houses' house.id %}"> ❌ </a>
+            {% endif %}
             </li>
         {% endfor %}
     </ul>

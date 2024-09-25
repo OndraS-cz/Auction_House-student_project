@@ -4,7 +4,13 @@
 <h1>Aukce</h1>
     <ul>
         {% for auction in auctions %}
-            <li><a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+            <li>
+                <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+            {% if user.is_authenticated %}
+                <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
+                <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
+
+            {% endif %}
             </li>
         {% endfor %}
     </ul>
