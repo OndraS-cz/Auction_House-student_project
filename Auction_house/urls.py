@@ -16,13 +16,11 @@ Including another URLconf
 """
 from django.conf.urls.static import static
 from django.contrib import admin
-from django.urls import path
+from django.urls import path, include
 
 from Auction_house import settings
-from viewer.views import home, houses, apartments, insert_data, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, \
-    ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, \
-    HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, \
-    UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction
+from accounts.views import SignUpView, user_logout
+from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction, ImagesListView, ImageUpdateView, ImageDeleteView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -65,11 +63,16 @@ urlpatterns = [
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
 
+    path('images/', ImagesListView.as_view(), name='images'),
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
+    path('image/update/<pk>/', ImageUpdateView.as_view(), name='image_update'),
+    path('image/delete/<pk>/', ImageDeleteView.as_view(), name='image_delete'),
     path('image/<pk>/', ImageDetailView.as_view(), name='image'),
 
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
 
+    path('accounts/signup/', SignUpView.as_view(), name='signup'),
+    path('accounts/logout/', user_logout, name='logout'),
+    path('accounts/', include('django.contrib.auth.urls')),
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
