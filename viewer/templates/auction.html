@@ -27,6 +27,17 @@
         <strong>Datum dražby:</strong>
             {{ auction.date_auction }}
     </div>
+    <div>
+        {% if auction.isnot_begin %}
+            <strong>Aukce začne za</strong>  {{ auction.time_to }}
+        {% endif %}
+        {% if auction.is_begin %}
+            Začátek aukce
+            <strong>Největší příhoz:</strong> {{  }}
+        {% endif %}
+    </div>
+
+
     {% if user.is_authenticated %}
     <a href="{%  url 'update_auction' auction.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_auction' auction.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>

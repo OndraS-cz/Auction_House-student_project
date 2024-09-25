@@ -28,5 +28,5 @@ class AuctionModelForm(ModelForm):
         model = Auction
         fields = '__all__'
 
-    date_auction = DateField(required=False, widget=NumberInput(attrs={'type': 'date'}))
+    #date_auction = DateField(required=False, widget=NumberInput(attrs={'type': 'date'}))
 

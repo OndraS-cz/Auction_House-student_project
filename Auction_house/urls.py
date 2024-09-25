@@ -27,6 +27,7 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),
+
     path('houses/', HousesListView.as_view(), name='houses'),
     path('house/<pk>/', house, name='house'),
 
@@ -64,4 +65,5 @@ urlpatterns = [
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
+
 ]
