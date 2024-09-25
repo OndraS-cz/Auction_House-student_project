@@ -85,7 +85,7 @@ class UpdateHouse(UpdateView):
         return super().form_invalid(form)
 
 class DeleteHouse(DeleteView):
-    template_name = 'creator_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     model = House
     success_url = reverse_lazy('houses')
 
@@ -110,7 +110,7 @@ class UpdateApartments(UpdateView):
         return super().form_invalid(form)
 
 class DeleteApartments(DeleteView):
-    template_name = 'creator_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     model = Apartment
     success_url = reverse_lazy('apartments')
 
@@ -135,7 +135,7 @@ class UpdateGrounds(UpdateView):
         return super().form_invalid(form)
 
 class DeleteGrounds(DeleteView):
-    template_name = 'creator_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     model = Ground
     success_url = reverse_lazy('grounds')
 
@@ -170,7 +170,7 @@ class UpdateAuction(UpdateView):
         return super().form_invalid(form)
 
 class DeleteAuction(DeleteView):
-    template_name = 'creator_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     model = Auction
     success_url = reverse_lazy('auctions')
 
@@ -262,7 +262,7 @@ class AuctionsListView(ListView):
     context_object_name = 'auctions'
 
 
-class ImageCreateView(PermissionRequiredMixin, CreateView):
+class ImageCreateView(CreateView):
     template_name = 'form_image.html'
     form_class = ImageModelForm
     success_url = reverse_lazy('home')

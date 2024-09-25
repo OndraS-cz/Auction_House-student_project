@@ -29,47 +29,48 @@ urlpatterns = [
 
     path('', home, name='home'),
 
-    path('houses/', HousesListView.as_view(), name='houses'),
-    path('house/<pk>/', house, name='house'),
-
-    path('apartments/', ApartmentsListView.as_view(), name='apartments'),
-    path('apartment/<pk>/', apartment, name='apartment'),
-
-    path('grounds/', GroundsListView.as_view(), name='grounds'),
-    path('ground/<pk>/', ground, name='ground'),
-
-    path('auctions/', AuctionsListView.as_view(), name='auctions'),
-    path('auction/<pk>/', auction, name='auction'),
+    path('image/create', ImageCreateView.as_view(), name='image_create'),
 
 
     path('insert/', insert_data, name="insert_data"),
 
-
     path('insert/houses', InsertHouse.as_view(), name="insert_houses"),
     path('update/houses/<pk>', UpdateHouse.as_view(), name="update_houses"),
     path('delete/houses/<pk>', DeleteHouse.as_view(), name="delete_houses"),
+
+    path('houses/', HousesListView.as_view(), name='houses'),
+    path('house/<pk>/', house, name='house'),
 
 
     path('insert/apartments', InsertApartments.as_view(), name="insert_apartments"),
     path('update/apartments/<pk>', UpdateApartments.as_view(), name="update_apartments"),
     path('delete/apartments/<pk>', DeleteApartments.as_view(), name="delete_apartments"),
 
+    path('apartments/', ApartmentsListView.as_view(), name='apartments'),
+    path('apartment/<pk>/', apartment, name='apartment'),
+
 
     path('insert/grounds', InsertGrounds.as_view(), name="insert_grounds"),
     path('update/grounds/<pk>', UpdateGrounds.as_view(), name="update_grounds"),
     path('delete/grounds/<pk>', DeleteGrounds.as_view(), name="delete_grounds"),
 
+    path('grounds/', GroundsListView.as_view(), name='grounds'),
+    path('ground/<pk>/', ground, name='ground'),
+
 
     path('insert/property_type', InsertPropertytype.as_view(), name="insert_property_type"),
 
 
+
+
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
-
-    path('image/create/', ImageCreateView.as_view(), name='image_create'),
-    path('image/<pk>/', ImageDetailView.as_view(), name='image'),
-
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
+
+    path('auctions/', AuctionsListView.as_view(), name='auctions'),
+    path('auction/<pk>/', auction, name='auction'),
+
+    path('image/<pk>/', ImageDetailView.as_view(), name='image'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
