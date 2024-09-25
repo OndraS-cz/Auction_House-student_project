@@ -7,17 +7,13 @@ from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
-from viewer.forms import ImageModelForm
+from viewer.forms import ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
+
 from viewer.models import House, Apartment, Ground, Auction, Image
-#from viewer.forms import ImageModelForm
 
 from logging import getLogger
 
 LOGGER = getLogger()
-from viewer.forms import ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-from viewer.models import House, Apartment, PropertyType
-from logging import getLogger
-from viewer.models import House, Apartment, Ground, Auction
 
 
 def home(request):
@@ -53,6 +49,7 @@ class HousesListView(ListView):
     template_name = "houses.html"
     model = House
     context_object_name = 'houses'
+
 
 def apartments(request):
     apartments_ = Apartment.objects.all()
@@ -273,6 +270,31 @@ class ImageCreateView(PermissionRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
+class ImageUpdateView(PermissionRequiredMixin, UpdateView):
+    template_name = 'form_image.html'
+    form_class = ImageModelForm
+    success_url = reverse_lazy('images')
+    model = Image
+    permission_required = 'viewer.change_image'
+
+    def form_invalid(self, form):
+        LOGGER.warning('User provided invalid data while updating a creator.')
+        return super().form_invalid(form)
+
+
+class ImageDeleteView(PermissionRequiredMixin, DeleteView):
+    template_name = 'confirm_delete.html'
+    model = Image
+    success_url = reverse_lazy('images')
+    permission_required = 'viewer.delete_image'
+
+
 class ImageDetailView(DetailView):
     model = Image
     template_name = 'image.html'
+
+
+class ImagesListView(ListView):
+    template_name = "images.html"
+    model = Image
+    context_object_name = 'images'

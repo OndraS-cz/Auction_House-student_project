@@ -12,6 +12,12 @@
         <strong>Výměra:</strong>
             {{ ground.property_area }} m2
     </div>
+
+    <div class="ground-description">
+        <strong>Popis pozemku: </strong>
+        {{ ground.description }}
+    </div>
+
     {% if user.is_authenticated %}
     <a href="{%  url 'update_grounds' ground.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_grounds' ground.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
@@ -29,4 +35,5 @@
         </span>
     {% endfor %}
 </div>
+<input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
 {% endblock %}

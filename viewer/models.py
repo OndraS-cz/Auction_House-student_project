@@ -68,6 +68,7 @@ class House(Model):
     property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses')
     plot_area = IntegerField(null=True, blank=True)
     garden_area = IntegerField(null=True, blank=True)
+    description = TextField(null=False, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -83,6 +84,7 @@ class Ground(Model):
     name = CharField(max_length=150)
     property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds')
     property_area = IntegerField(null=False)
+    description = TextField(null=False, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -98,6 +100,7 @@ class Apartment(Model):
     name = CharField(max_length=150, null=False)
     property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments')
     area = IntegerField(null=False)
+    description = TextField(null=False, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -131,6 +134,7 @@ class Auction(Model):
     auction_assurance = IntegerField(null=False)
     min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
+    description = TextField(null=False, blank=True)
 
 
     def loc_time(self):
@@ -141,8 +145,8 @@ class Auction(Model):
     def time_to(self):
         then = self.date_auction.replace(tzinfo=pytz.utc)
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
-        time_diference = then - now
-        return time_diference
+        time_difference = then - now
+        return time_difference
 
     def is_begin(self):
         return self.date_auction.replace(tzinfo=pytz.utc) < datetime.datetime.now().replace(tzinfo=pytz.utc)
@@ -153,10 +157,10 @@ class Auction(Model):
         verbose_name_plural = "Auctions"
 
     def __repr__(self):
-        return f"Auction(name={self.location})"
+        return f"Auction(name={self.property_type}, {self.location})"
 
     def __str__(self):
-        return f"{self.location}"
+        return f"{self.property_type} ({self.location})"
 
 
 class Bid(Model):

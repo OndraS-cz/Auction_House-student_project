@@ -3,12 +3,8 @@
 {% block content %}
     <form method="POST">
         {% csrf_token %}
-        <p>Opravdu chceš smazat záznam {{ object }} z databáze?</p>
+        <p>Opravdu chcete smazat záznam {{ object }} z databáze?</p>
         <input type="submit" value="Smazat" class="btn btn-danger">
-        <a href="{% url 'home' %}"><button class="btn btn-primary" type="button">Zpět</button></a>
-
-
+        <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
     </form>
-
-
 {% endblock %}
