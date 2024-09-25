@@ -1,4 +1,4 @@
 /.venv/
 db.sqlite3
 Auction_house/secret_key.py
-
+/.idea/
