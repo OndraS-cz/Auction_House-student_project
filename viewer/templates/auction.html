@@ -1,46 +1,51 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1>{{ property.property_type }}</h1>
-<div class="property-details">
-    <div class="property-property_type">
+<h1>{{ auction.property_type }}</h1>
+<div class="auction-details">
+    <div class="auction-property_type">
         <strong>Adresa nemovitosti:</strong>
-        {{ auction.address }} {{ auction.city }}
+        {{ auction.address }}
     </div>
 
-    <div class="property-value">
+    <div class="auction-value">
         <strong>Odhad ceny nemovitosti:</strong>
             {{ auction.estimate_value }} Kč
     </div>
 
-    <div class="property-assurance">
+    <div class="auction-assurance">
         <strong>Dražební jistota:</strong>
             {{ auction.auction_assurance }} Kč
     </div>
 
-    <div class="property-min_bid">
+    <div class="auction-min_bid">
         <strong>Minimální příhoz:</strong>
             {{ auction.min_bid }} Kč
     </div>
 
-    <div class="property-date_auction">
+    <div class="auction-date_auction">
         <strong>Datum dražby:</strong>
-            {{ auction.date_auction }}
-    </div>
-    <div>
-        {% if auction.isnot_begin %}
-            <strong>Aukce začne za</strong>  {{ auction.time_to }}
-        {% endif %}
-        {% if auction.is_begin %}
-            Začátek aukce
-            <strong>Největší příhoz:</strong> {{  }}
-        {% endif %}
+            {{ auction.date_auction|date:"d.m.Y H:i" }}
     </div>
 
+    <div class="auction-local_time">
+        <strong>Aktuální čas:</strong>
+            {{ auction.loc_time }}
+    </div>
 
-    {% if user.is_authenticated %}
-    <a href="{%  url 'update_auction' auction.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
-    <a href="{%  url 'delete_auction' auction.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
-    {% endif %}
+    <div class="auction-time_to">
+        <strong>Zbývající čas do dražby:</strong>
+            {{ auction.time_to }}
+    </div>
+</div>
+<div>
+    <strong>Fotogalerie:</strong>
+</div>
+<div class="auction-images">
+    {% for image in auction.images.all %}
+        <span class="auction-image">
+            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+        </span>
+    {% endfor %}
 </div>
 {% endblock %}

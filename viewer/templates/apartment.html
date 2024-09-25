@@ -17,4 +17,15 @@
     <a href="{%  url 'delete_apartments' apartment.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
     {% endif %}
 </div>
+
+<div>
+    <strong>Fotogalerie:</strong>
+</div>
+<div class="apartment-images">
+    {% for image in apartment.images.all %}
+        <span class="apartment-image">
+            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+        </span>
+    {% endfor %}
+</div>
 {% endblock %}

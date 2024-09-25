@@ -1,15 +1,24 @@
+from django.contrib.auth.mixins import PermissionRequiredMixin
+from django.db.models import Model, ImageField
 from django.shortcuts import render
+from django.urls import reverse_lazy
 from django.urls import reverse_lazy
 from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views import View
-from django.views.generic import TemplateView, ListView
+from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
+from viewer.forms import ImageModelForm
+from viewer.models import House, Apartment, Ground, Auction, Image
+#from viewer.forms import ImageModelForm
+
+from logging import getLogger
+
+LOGGER = getLogger()
 from viewer.forms import ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
 from viewer.models import House, Apartment, PropertyType
 from logging import getLogger
 from viewer.models import House, Apartment, Ground, Auction
 
-LOGGER = getLogger()
 
 def home(request):
     return render(request, "home.html")
@@ -251,3 +260,19 @@ class AuctionsListView(ListView):
     template_name = "auctions.html"
     model = Auction
     context_object_name = 'auctions'
+
+
+class ImageCreateView(PermissionRequiredMixin, CreateView):
+    template_name = 'form_image.html'
+    form_class = ImageModelForm
+    success_url = reverse_lazy('home')
+    permission_required = 'viewer.add_image'
+
+    def form_invalid(self, form):
+        LOGGER.warning('User provided invalid data.')
+        return super().form_invalid(form)
+
+
+class ImageDetailView(DetailView):
+    model = Image
+    template_name = 'image.html'

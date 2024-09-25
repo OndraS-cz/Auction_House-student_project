@@ -1,6 +1,7 @@
 from django.db import models
 
-from django.db.models import Model, CharField, DateTimeField, ForeignKey, ManyToManyField, SET_NULL, IntegerField
+from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField, ImageField, TextField, \
+    ManyToManyField
 
 import time
 
@@ -62,7 +63,7 @@ class ApartmentType(Model):
 
 
 class House(Model):
-    name = CharField(max_length=100, null=False)
+    name = CharField(max_length=150, null=False)
     area = IntegerField(null=True, blank=True)
     property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses')
     plot_area = IntegerField(null=True, blank=True)
@@ -79,8 +80,8 @@ class House(Model):
 
 
 class Ground(Model):
-    name = CharField(max_length=100)
-    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds_type')
+    name = CharField(max_length=150)
+    property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds')
     property_area = IntegerField(null=False)
 
     class Meta:
@@ -94,8 +95,8 @@ class Ground(Model):
 
 
 class Apartment(Model):
-    name = CharField(max_length=100, null=False)
-    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments_type')
+    name = CharField(max_length=150, null=False)
+    property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments')
     area = IntegerField(null=False)
 
     class Meta:
@@ -131,12 +132,11 @@ class Auction(Model):
     min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
 
+
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
 
-    class Meta:
-        verbose_name_plural = "Properties"
 
     def time_to(self):
         then = self.date_auction.replace(tzinfo=pytz.utc)
@@ -153,7 +153,7 @@ class Auction(Model):
         verbose_name_plural = "Auctions"
 
     def __repr__(self):
-        return f"Property(name={self.location})"
+        return f"Auction(name={self.location})"
 
     def __str__(self):
         return f"{self.location}"
@@ -175,4 +175,16 @@ class Bid(Model):
             return self.bidder_name[0] + '*' * (len(self.bidder_name) - 2) + self.bidder_name[-1]
 
 
+class Image(Model):
+    image = ImageField(upload_to='images/', default=None, null=False, blank=False)
+    house = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True, related_name='images')
+    apartment = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True, related_name='images')
+    ground = ForeignKey(Ground, on_delete=SET_NULL, null=True, blank=True, related_name='images')
+    auctions = ManyToManyField(Auction, blank=True, related_name='images')
+    description = TextField(null=True, blank=True)
 
+    def __repr__(self):
+        return f"Image(image={self.image}, auctions={self.auctions}, description={self.description})"
+
+    def __str__(self):
+        return f"Image: {self.image}, {self.description}"

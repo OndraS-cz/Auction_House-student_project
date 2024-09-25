@@ -14,14 +14,15 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
-from viewer.views import home, GroundsListView, ground, HousesListView, house, \
-    ApartmentsListView, apartment, AuctionsListView, auction, UpdateHouse, UpdateApartments, UpdateGrounds, \
-    UpdateAuction, DeleteHouse, DeleteApartments, DeleteGrounds, DeleteAuction
-from viewer.views import home, houses, apartments, insert_data, InsertHouse, InsertApartments, InsertGrounds, \
-    InsertAuction, InsertPropertytype
+from Auction_house import settings
+from viewer.views import home, houses, apartments, insert_data, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, \
+    ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, \
+    HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, \
+    UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -63,7 +64,12 @@ urlpatterns = [
 
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
+
+    path('image/create/', ImageCreateView.as_view(), name='image_create'),
+    path('image/<pk>/', ImageDetailView.as_view(), name='image'),
+
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+

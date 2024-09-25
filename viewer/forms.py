@@ -1,6 +1,7 @@
 from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput
 
-from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction
+from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
+    Image
 
 
 class HouseModelForm(ModelForm):
@@ -30,3 +31,7 @@ class AuctionModelForm(ModelForm):
 
     #date_auction = DateField(required=False, widget=NumberInput(attrs={'type': 'date'}))
 
+class ImageModelForm(ModelForm):
+    class Meta:
+        model = Image
+        fields = '__all__'

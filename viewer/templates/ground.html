@@ -18,4 +18,15 @@
 
     {% endif %}
 </div>
+
+<div>
+    <strong>Fotogalerie:</strong>
+</div>
+<div class="ground-images">
+    {% for image in ground.images.all %}
+        <span class="ground-image">
+            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+        </span>
+    {% endfor %}
+</div>
 {% endblock %}

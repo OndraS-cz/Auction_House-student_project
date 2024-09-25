@@ -1,0 +1,52 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5">
+    <span class="auction-image">
+        <img src="{{ image.image.url }}" alt="{{ image.description }}" height="80%">
+    </span>
+
+    <div class="image-details mt-4">
+        {% if image.auction %}
+            <div class="image-auction mb-2">
+                Film: <a href="{% url 'auction' image.auction.id %}">{{ image.auction.property_type }}</a>
+            </div>
+        {% endif %}
+        {% if image.houses.all %}
+            <div class="image-houses mb-2"> Domy:
+                {% for house in image.houses.all %}
+                    <span class="image-house mb-2">
+                        <a href="{% url 'house' house.id %}">
+                            {{ house }}</a>{% if not forloop.last %},{% endif %}
+                    </span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if image.apartments.all %}
+            <div class="image-apartments mb-2"> Byty:
+                {% for apartment in image.apartments.all %}
+                    <span class="image-apartment mb-2">
+                        <a href="{% url 'apartment' apartment.id %}">
+                            {{ apartment }}</a>{% if not forloop.last %},{% endif %}
+                    </span>
+                {% endfor %}
+            </div>
+        {% endif %}
+
+        {% if image.grounds.all %}
+            <div class="image-grounds mb-2"> Pozemky:
+                {% for ground in image.grounds.all %}
+                    <span class="image-ground mb-2">
+                        <a href="{% url 'ground' ground.id %}">
+                            {{ ground }}</a>{% if not forloop.last %},{% endif %}
+                    </span>
+                {% endfor %}
+            </div>
+        {% endif %}
+        <div class="image-description mb-2">
+            Popis: {{ image.description }}
+        </div>
+    </div>
+</div>
+{% endblock %}
