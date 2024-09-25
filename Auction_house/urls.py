@@ -19,13 +19,10 @@ from django.contrib import admin
 from django.urls import path
 
 from Auction_house import settings
-from viewer.views import home, GroundsListView, ground, HousesListView, house, \
-    ApartmentsListView, apartment, AuctionsListView, auction, UpdateHouse, UpdateApartments, UpdateGrounds, \
-    UpdateAuction, DeleteHouse, DeleteApartments, DeleteGrounds, DeleteAuction
-from viewer.views import home, houses, apartments, insert_data, InsertHouse, InsertApartments, InsertGrounds, \
-    InsertAuction, InsertPropertytype
-    ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView, insert_data, \
-    HouseCreateView, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction
+from viewer.views import home, houses, apartments, insert_data, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, \
+    ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, \
+    HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, \
+    UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -71,8 +68,8 @@ urlpatterns = [
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
     path('image/<pk>/', ImageDetailView.as_view(), name='image'),
 
-] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
 
-]
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
+
