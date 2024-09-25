@@ -13,4 +13,15 @@
             {{ apartment.area }} m2
     </div>
 </div>
+
+<div>
+    <strong>Fotogalerie:</strong>
+</div>
+<div class="apartment-images">
+    {% for image in apartment.images.all %}
+        <span class="apartment-image">
+            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+        </span>
+    {% endfor %}
+</div>
 {% endblock %}

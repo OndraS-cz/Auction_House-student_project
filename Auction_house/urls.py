@@ -14,13 +14,16 @@ Including another URLconf
     1. Import the include() function: from django.urls import include, path
     2. Add a URL to urlpatterns:  path('blog/', include('blog.urls'))
 """
+from django.conf.urls.static import static
 from django.contrib import admin
 from django.urls import path
 
+from Auction_house import settings
 from viewer.views import home, GroundsListView, ground, HousesListView, house, \
     ApartmentsListView, apartment, AuctionsListView, auction
 from viewer.views import home, houses, apartments, insert_data, HouseCreateView, InsertApartments, InsertGrounds, \
     InsertAuction, InsertPropertytype
+    ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -46,3 +49,7 @@ urlpatterns = [
     path('insert/property_type', InsertPropertytype.as_view(), name="insert_property_type"),
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
 ]
+    path('image/create/', ImageCreateView.as_view(), name='image_create'),
+    path('image/<pk>/', ImageDetailView.as_view(), name='image'),
+
+] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

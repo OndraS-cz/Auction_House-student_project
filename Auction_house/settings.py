@@ -37,6 +37,8 @@ INSTALLED_APPS = [
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
+
+    'accounts',
     'viewer',
 ]
 
@@ -128,3 +130,9 @@ GRAPH_MODELS = {
     'all_applications': True,
     'graph_models': True
 }
+
+LOGIN_REDIRECT_URL = 'home'
+LOGOUT_REDIRECT_URL = 'home'
+
+MEDIA_ROOT = BASE_DIR  #os.path.join(BASE_DIR, 'files')
+MEDIA_URL = 'images/'
