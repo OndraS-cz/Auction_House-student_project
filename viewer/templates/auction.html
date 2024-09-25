@@ -39,6 +39,15 @@
     </div>
 </div>
 <div>
+        {% if auction.isnot_begin %}
+            <strong>Aukce začne za</strong>  {{ auction.time_to }}
+        {% endif %}
+        {% if auction.is_begin %}
+            Začátek aukce
+            <strong>Největší příhoz:</strong> {{  }}
+        {% endif %}
+</div>
+<div>
     <strong>Fotogalerie:</strong>
 </div>
 <div class="auction-images">
