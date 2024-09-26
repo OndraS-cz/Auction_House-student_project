@@ -15,8 +15,8 @@ class SignUpForm(UserCreationForm):
     first_name = CharField(label="Křestní jméno")
     last_name = CharField(label="Příjmení")
     date_of_birth = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum narození", required=True)
-    nr_id_card = IntegerField(label="Číslo občanského průkazu")
-    validity_id_card = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum platnosti OP", required=True)
+    nr_id_card = IntegerField(label="Číslo dokladu totožnosti")
+    validity_id_card = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum platnosti dokladu totožnosti", required=True)
     phone_number = IntegerField(label="Mobilní telefon")
 
 
