@@ -12,6 +12,12 @@
         <strong>Výměra:</strong>
             {{ apartment.area }} m2
     </div>
+
+    <div class="apartment-description">
+        <strong>Popis nemovitosti: </strong>
+        {{ apartment.description }}
+    </div>
+
     {% if user.is_authenticated %}
     <a href="{%  url 'update_apartments' apartment.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_apartments' apartment.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
@@ -28,4 +34,5 @@
         </span>
     {% endfor %}
 </div>
+<input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
 {% endblock %}
