@@ -11,14 +11,13 @@ from accounts.models import Profile
 from viewer.forms import ImageModelForm, BidModelForm
 from viewer.models import House, Apartment, Ground, Auction, Image, Bid
 #from viewer.forms import ImageModelForm
+from viewer.forms import ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
+
+from viewer.models import House, Apartment, Ground, Auction, Image
 
 from logging import getLogger
 
 LOGGER = getLogger()
-from viewer.forms import ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-from viewer.models import House, Apartment, PropertyType
-from logging import getLogger
-from viewer.models import House, Apartment, Ground, Auction
 
 
 def home(request):
@@ -86,7 +85,7 @@ class UpdateHouse(UpdateView):
         return super().form_invalid(form)
 
 class DeleteHouse(DeleteView):
-    template_name = 'confirm_delete.html'
+    template_name = 'creator_confirm_delete.html'
     model = House
     success_url = reverse_lazy('houses')
 
@@ -111,7 +110,7 @@ class UpdateApartments(UpdateView):
         return super().form_invalid(form)
 
 class DeleteApartments(DeleteView):
-    template_name = 'confirm_delete.html'
+    template_name = 'creator_confirm_delete.html'
     model = Apartment
     success_url = reverse_lazy('apartments')
 
@@ -136,7 +135,7 @@ class UpdateGrounds(UpdateView):
         return super().form_invalid(form)
 
 class DeleteGrounds(DeleteView):
-    template_name = 'confirm_delete.html'
+    template_name = 'creator_confirm_delete.html'
     model = Ground
     success_url = reverse_lazy('grounds')
 
@@ -255,48 +254,16 @@ def auction(request, pk):
     return grounds(request)
 
 
-
-class AuctionView(ListView):
+class AuctionView(View):
     def get(self, request):
         auctions_ = Auction.objects.all()
         context = {'auctions': auctions_}
         return render(request, "auctions.html", context)
 
-    def get_context_data(self, **kwargs):
-        context = self().get_context_data(**kwargs)
-        pk = self.kwargs['pk']
-        auction_ = Auction.objects.get(id=pk)
-        context['Auction'] = auction_
-        return context
-
-
 
 class AuctionsTemplateView(TemplateView):
     template_name = "auctions.html"
     extra_context = {'auctions': Auction.objects.all()}
-
-    """def post(self, request, *args, **kwargs):
-        context = self.get_context_data()
-        bid_ = Bid.objects.filter(auction = context['auction'], user=Profile.object.get(user=request.user))
-        if bid_.exists():
-            bid_ = Bid.objects.get(auction = context['auction'], user=Profile.object.get(user=request.user))
-            bid_.bid_amount = request.POST.get('bid_amount')
-            bid_.save
-        else:
-            Bid.objects.create(bidder_name = Profile.objects.get(user=request.user),
-                               bid_amount = context[min_bid],
-
-                                  )
-        return render(request, "auction.html", context)
-    """
-    def get_context_data(self, **kwargs):
-        context = self().get_context_data(**kwargs)
-        pk = self.kwargs['pk']
-        auction_ = Auction.objects.get(id=pk)
-        context['Auction'] = auction_
-        return context
-
-
 
 
 class AuctionsListView(ListView):
@@ -305,7 +272,7 @@ class AuctionsListView(ListView):
     context_object_name = 'auctions'
 
 
-class ImageCreateView(CreateView):
+class ImageCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'form_image.html'
     form_class = ImageModelForm
     success_url = reverse_lazy('home')
@@ -316,7 +283,25 @@ class ImageCreateView(CreateView):
         return super().form_invalid(form)
 
 
+class ImageUpdateView(PermissionRequiredMixin, UpdateView):
+    template_name = 'form_image.html'
+    form_class = ImageModelForm
+    success_url = reverse_lazy('images')
+    model = Image
+    permission_required = 'viewer.change_image'
+
+    def form_invalid(self, form):
+        LOGGER.warning('User provided invalid data while updating a creator.')
+        return super().form_invalid(form)
+
+
+class ImageDeleteView(PermissionRequiredMixin, DeleteView):
+    template_name = 'confirm_delete.html'
+    model = Image
+    success_url = reverse_lazy('images')
+    permission_required = 'viewer.delete_image'
+
+
 class ImageDetailView(DetailView):
     model = Image
     template_name = 'image.html'
-

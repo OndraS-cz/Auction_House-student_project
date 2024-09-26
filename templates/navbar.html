@@ -22,6 +22,19 @@
                     <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
                         {{ user.username }}
                     </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item text-right" href="{% url 'logout' %}">Odhlásit</a>
+                        <a class="dropdown-item text-right" href="{% url 'password_change' %}">Změnit heslo</a>
+                        <a class="dropdown-item text-right" href="{% url 'password_reset' %}">Resetovat heslo</a>
+                    </div>
+                {% else %}
+                    <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
+                        Nepřihlášený uživatel.
+                    </a>
+                    <div class="dropdown-menu dropdown-menu-right">
+                        <a class="dropdown-item text-right" href="{% url 'login' %}">Přihlásit</a>
+                        <a class="dropdown-item text-right" href="{% url 'signup' %}">Registrovat</a>
+                    </div>
                 {% endif %}
             </div>
         </div>

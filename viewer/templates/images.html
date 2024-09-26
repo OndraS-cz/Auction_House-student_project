@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+
+{% block content %}
+    <h1>Obrázky</h1>
+        <ul>
+        {% for image in images %}
+            <li class="bg-light rounded mt-2 pl-2 pt-2" style="display: flex; align-items: flex-start;">
+                <a href="{% url 'image' image.id %}" class="pt-2 pl-2">
+                    <img src="{{ image.image.url }}" alt="{{ image.description }}" width="40px" class="mr-2">
+                </a>
+                {% if perms.viewer.change_image %}
+                    <a href="{% url 'image_update' image.id %}">✏️</a>
+                {% endif %}
+                {% if perms.viewer.delete_image %}
+                    <a href="{% url 'image_delete' image.id %}">❌</a>
+                {% endif %}
+                <div class="image-details pl-2" style="display: flex; flex-direction: column;">
+                    {% if image.auction %}
+                        <div class="image-auction mb-2">
+                            Aukce: <a href="{% url 'auction' image.auction.id %}">{{ image.auction.property_type }}</a>
+                        </div>
+                    {% endif %}
+                    <div class="image-description mb-2">
+                        Popis: {{ image.description }}
+                    </div>
+                </div>
+
+
+            </li>
+        {% endfor %}
+        </ul>
+{% endblock %}

@@ -10,11 +10,18 @@
 
     <div class="house-area">
         <strong>Výměra:</strong>
-            {{ house.area }} m2
-            {{ house.plot_area }} m2
-            {{ house.garden_area }} m2
-
+        <ul>
+            <li>celková: {{ house.area }} m2</li>
+            <li>zastavěná plocha: {{ house.plot_area }} m2</li>
+            <li>okolní pozemek: {{ house.garden_area }} m2</li>
+        </ul>
     </div>
+
+    <div class="house-description">
+        <strong>Popis nemovitosti: </strong>
+        {{ house.description }}
+    </div>
+
     {% if user.is_authenticated %}
     <a href="{%  url 'update_houses' house.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_houses' house.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
@@ -32,4 +39,5 @@
         </span>
     {% endfor %}
 </div>
+<input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
 {% endblock %}
