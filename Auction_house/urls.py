@@ -19,10 +19,11 @@ from django.contrib import admin
 from django.urls import path
 
 from Auction_house import settings
-from viewer.views import home, houses, apartments, insert_data, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, \
+from viewer.views import home, houses, apartments, insert_data, InsertHouse, ApartmentsListView, apartment, \
+    AuctionsListView, auction, ImageCreateView, \
     ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, \
     HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, \
-    UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction
+    UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction, InsertBid
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -31,6 +32,7 @@ urlpatterns = [
 
     path('image/create', ImageCreateView.as_view(), name='image_create'),
 
+    path('insert/bid', InsertBid.as_view(), name='insert_bid'),
 
     path('insert/', insert_data, name="insert_data"),
 
@@ -71,6 +73,7 @@ urlpatterns = [
     path('auction/<pk>/', auction, name='auction'),
 
     path('image/<pk>/', ImageDetailView.as_view(), name='image'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

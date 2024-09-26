@@ -7,8 +7,9 @@ from django.views.generic import FormView, CreateView, UpdateView, DeleteView
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
-from viewer.forms import ImageModelForm
-from viewer.models import House, Apartment, Ground, Auction, Image
+from accounts.models import Profile
+from viewer.forms import ImageModelForm, BidModelForm
+from viewer.models import House, Apartment, Ground, Auction, Image, Bid
 #from viewer.forms import ImageModelForm
 
 from logging import getLogger
@@ -153,7 +154,7 @@ class InsertPropertytype(CreateView):
 class InsertAuction(CreateView):
     template_name = "form.html"
     form_class = AuctionModelForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('image_create')
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -173,6 +174,15 @@ class DeleteAuction(DeleteView):
     template_name = 'confirm_delete.html'
     model = Auction
     success_url = reverse_lazy('auctions')
+
+class InsertBid(CreateView):
+    template_name = "auction.html"
+    form_class = BidModelForm
+    success_url = reverse_lazy('auction')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)
 
 def apartment(request, pk):
     if Apartment.objects.filter(id=pk).exists():
@@ -239,21 +249,54 @@ def auctions(request):
 def auction(request, pk):
     if Auction.objects.filter(id=pk).exists():
         auction_ = Auction.objects.get(id=pk)
-        context = {'auction': auction_}
+        form = BidModelForm
+        context = {'auction': auction_, 'form': form}
         return render(request, 'auction.html', context)
     return grounds(request)
 
 
-class AuctionView(View):
+
+class AuctionView(ListView):
     def get(self, request):
         auctions_ = Auction.objects.all()
         context = {'auctions': auctions_}
         return render(request, "auctions.html", context)
 
+    def get_context_data(self, **kwargs):
+        context = self().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        auction_ = Auction.objects.get(id=pk)
+        context['Auction'] = auction_
+        return context
+
+
 
 class AuctionsTemplateView(TemplateView):
     template_name = "auctions.html"
     extra_context = {'auctions': Auction.objects.all()}
+
+    """def post(self, request, *args, **kwargs):
+        context = self.get_context_data()
+        bid_ = Bid.objects.filter(auction = context['auction'], user=Profile.object.get(user=request.user))
+        if bid_.exists():
+            bid_ = Bid.objects.get(auction = context['auction'], user=Profile.object.get(user=request.user))
+            bid_.bid_amount = request.POST.get('bid_amount')
+            bid_.save
+        else:
+            Bid.objects.create(bidder_name = Profile.objects.get(user=request.user),
+                               bid_amount = context[min_bid],
+
+                                  )
+        return render(request, "auction.html", context)
+    """
+    def get_context_data(self, **kwargs):
+        context = self().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        auction_ = Auction.objects.get(id=pk)
+        context['Auction'] = auction_
+        return context
+
+
 
 
 class AuctionsListView(ListView):
@@ -276,3 +319,4 @@ class ImageCreateView(CreateView):
 class ImageDetailView(DetailView):
     model = Image
     template_name = 'image.html'
+

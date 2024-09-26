@@ -17,4 +17,4 @@ class AuctionModelTest(TestCase):
 
     def test_home_str(self):
         house = House.objects.get(id=1)
-        self.assertEqual(house.__str__(), house.name)
+        self.assertEqual(house.__str__(), 'Cihlový dům')

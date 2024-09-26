@@ -1,7 +1,7 @@
 from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
-    Image
+    Image, Bid
 
 
 class HouseModelForm(ModelForm):
@@ -35,3 +35,9 @@ class ImageModelForm(ModelForm):
     class Meta:
         model = Image
         fields = '__all__'
+
+class BidModelForm(ModelForm):
+    class Meta:
+        model = Bid
+        fields = '__all__'
+

@@ -10,6 +10,6 @@ from viewer.views import auction
 class ExampleTestClass(TestCase):
 
     @classmethod
-    def loc_time_test(self):
+    def test_loc_time(self):
         result = auction.loc_time
         self.assertEqual(result, time.localtime())
