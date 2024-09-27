@@ -54,10 +54,7 @@ class HousesListView(ListView):
     model = House
     context_object_name = 'houses'
 
-def apartments(request):
-    apartments_ = Apartment.objects.all()
-    context = {'apartments': apartments_}
-    return render(request, 'apartments.html', context)
+
 
 
 def insert_data(request):
@@ -190,6 +187,10 @@ def apartment(request, pk):
         return render(request, 'apartment.html', context)
     return grounds(request)
 
+def apartments(request):
+    apartments_ = Apartment.objects.all()
+    context = {'apartments': apartments_}
+    return render(request, 'apartments.html', context)
 
 class ApartmentsView(View):
     def get(self, request):

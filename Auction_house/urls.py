@@ -19,13 +19,9 @@ from django.contrib import admin
 from django.urls import path, include
 
 from Auction_house import settings
-from viewer.views import home, houses, apartments, insert_data, InsertHouse, ApartmentsListView, apartment, \
-    AuctionsListView, auction, ImageCreateView, \
-    ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, \
-    HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, \
-    UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction, InsertBid
+
 from accounts.views import SignUpView, user_logout
-from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction, ImagesListView, ImageUpdateView, ImageDeleteView
+from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertBid
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -65,12 +61,17 @@ urlpatterns = [
 
     path('insert/property_type', InsertPropertytype.as_view(), name="insert_property_type"),
 
-
-
-
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
 
-    path('images/', ImagesListView.as_view(), name='images'),
+
+
+
+
+    path('images/', ImageDetailView.as_view(), name='images'),
+
+
+
+
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
     path('image/update/<pk>/', ImageUpdateView.as_view(), name='image_update'),
     path('image/delete/<pk>/', ImageDeleteView.as_view(), name='image_delete'),
