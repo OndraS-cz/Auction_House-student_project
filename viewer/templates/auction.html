@@ -89,11 +89,7 @@ var x = setInterval(function() {
             <strong>Největší příhoz: </strong>
 
         {% endif %}
-</div>
-<div class="auction-description">
-    <strong>Popis aukce: </strong>
-    {{ auction.description }}
-</div>
+
 <div>
     <strong>Fotogalerie:</strong>
 </div>
@@ -114,7 +110,7 @@ var x = setInterval(function() {
     {% endif %}
 </div>
 <div>
-        {% if auction.end %}
+        {% if auction.end and Bid.bid_date.exists %}
             <strong>Prodáno </strong>
 
         {% endif %}

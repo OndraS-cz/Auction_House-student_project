@@ -68,7 +68,7 @@ class House(Model):
     property_type = ForeignKey(HouseType, null=True, blank=True, on_delete=SET_NULL, related_name='houses')
     plot_area = IntegerField(null=True, blank=True)
     garden_area = IntegerField(null=True, blank=True)
-    description = TextField(null=False, blank=True)
+    description = TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -84,7 +84,7 @@ class Ground(Model):
     name = CharField(max_length=150)
     property_type = ForeignKey(GroundType, null=True, blank=True, on_delete=SET_NULL, related_name='grounds')
     property_area = IntegerField(null=False)
-    description = TextField(null=False, blank=True)
+    description = TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -100,7 +100,7 @@ class Apartment(Model):
     name = CharField(max_length=150, null=False)
     property_type = ForeignKey(ApartmentType, null=True, blank=True, on_delete=SET_NULL, related_name='apartments')
     area = IntegerField(null=False)
-    description = TextField(null=False, blank=True)
+    description = TextField(null=True, blank=True)
 
     class Meta:
         ordering = ['name']
@@ -134,7 +134,7 @@ class Auction(Model):
     auction_assurance = IntegerField(null=False)
     min_bid = IntegerField(null=False)
     date_auction = DateTimeField(null=False)
-
+    date_end_auction = DateTimeField(null=False)
 
     def loc_time(self):
         local = time.localtime()
