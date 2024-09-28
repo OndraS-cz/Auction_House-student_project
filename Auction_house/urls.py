@@ -21,7 +21,11 @@ from django.urls import path, include
 from Auction_house import settings
 
 from accounts.views import SignUpView, user_logout
-from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertBid
+from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, ImageCreateView, \
+    ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, HousesListView, \
+    house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, \
+    DeleteGrounds, UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertBid, \
+    AuctionTemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -63,15 +67,7 @@ urlpatterns = [
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
 
-
-
-
-
     path('images/', ImageDetailView.as_view(), name='images'),
-
-
-
-
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
     path('image/update/<pk>/', ImageUpdateView.as_view(), name='image_update'),
     path('image/delete/<pk>/', ImageDeleteView.as_view(), name='image_delete'),
@@ -84,7 +80,12 @@ urlpatterns = [
     path('accounts/logout/', user_logout, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
     path('auctions/', AuctionsListView.as_view(), name='auctions'),
-    path('auction/<pk>/', auction, name='auction'),
+
+
+
+
+
+    path('auction/<pk>/', AuctionTemplateView.as_view(), name='auction'),
 
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)

@@ -1,3 +1,5 @@
+from lib2to3.fixes.fix_input import context
+
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Model, ImageField
 from django.shortcuts import render
@@ -246,14 +248,41 @@ def auctions(request):
     context = {'auctions': auctions_}
     return render(request, 'auctions.html', context)
 
-def auction(request, pk):
+"""def auction(request, pk):
     if Auction.objects.filter(id=pk).exists():
         auction_ = Auction.objects.get(id=pk)
         form = BidModelForm
         context = {'auction': auction_, 'form': form}
         return render(request, 'auction.html', context)
     return grounds(request)
+"""
 
+class AuctionTemplateView(TemplateView):
+    template_name = "auction.html"
+
+    def post(self, request):
+        context = self.get_context_data()
+        bid_ = Bid.objects.filter(auction = context['auction'])
+        if bid_.exists():
+            bid_ = Bid.objects.filter(auction=context['auction'])
+            bid_.bidder_name = request.POST.get('bidder_name')
+            bid_.bid_amount = request.POST.get('bid_amount')
+            bid_.save()
+        else:
+            Bid.objects.create( auction = context['auction'],
+                            user = Profile.objects.get(user=request.user),
+                            bidder_name = request.POST.get('bidder_name'),
+                            bid_amount = request.POST.get('auction.min_bid'),
+        )
+        return render(request, 'auction.html', context)
+
+    def get_context_data(self, **kwargs):
+        context= super().get_context_data(**kwargs)
+        pk = self.kwargs['pk']
+        auction_ = Auction.objects.get(id=pk)
+        context['auction'] = auction_
+        context['form'] = BidModelForm
+        return context
 
 class AuctionView(View):
     def get(self, request):

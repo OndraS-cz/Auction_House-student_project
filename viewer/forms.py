@@ -40,4 +40,3 @@ class BidModelForm(ModelForm):
     class Meta:
         model = Bid
         fields = '__all__'
-

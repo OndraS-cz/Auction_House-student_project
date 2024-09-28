@@ -9,6 +9,9 @@ import datetime
 
 import pytz
 
+from accounts.models import Profile
+
+
 class Cities(Model):
     name = CharField(max_length=20, null=False)
 
@@ -148,7 +151,7 @@ class Auction(Model):
             return time_diference
 
 
-    def time_off(self):
+    def time_of(self):
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
         then = self.date_end_auction.replace(tzinfo=pytz.utc)
         result = then - now
@@ -156,16 +159,6 @@ class Auction(Model):
             return result
         else:
             return "Konec"
-
-    @staticmethod
-    def time_off_5():
-        now = datetime.datetime.now()
-        then = datetime.datetime.now() + datetime.timedelta(minutes=5)
-        result = now - then
-        return result
-
-    def ended(self):
-        return
 
 
     def in_progress(self):
@@ -205,7 +198,8 @@ class Auction(Model):
 
 
 class Bid(Model):
-    auction = ForeignKey(Auction, null=True, blank=True, on_delete=models.CASCADE)
+    auction = ForeignKey(Auction, null=True, blank=True, on_delete=models.CASCADE, related_name='bid')
+    user = ForeignKey(Profile, null=True, blank=True, on_delete=SET_NULL, related_name='bid')
     bidder_name = CharField(max_length=255)
     bid_amount = IntegerField(null=False)
     bid_date = DateTimeField(auto_now_add=True)
