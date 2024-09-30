@@ -79,12 +79,8 @@ urlpatterns = [
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/logout/', user_logout, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
+
     path('auctions/', AuctionsListView.as_view(), name='auctions'),
-
-
-
-
-
     path('auction/<pk>/', AuctionTemplateView.as_view(), name='auction'),
 
 

@@ -160,6 +160,15 @@ class Auction(Model):
         else:
             return "Konec"
 
+    def diference(self):
+        now = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        then = self.date_end_auction.replace(tzinfo=pytz.utc)
+        result = then - now
+        if now < then:
+            return result
+        else:
+            return "Konec"
+
 
     def in_progress(self):
         začátek_aukce = self.date_auction.replace(tzinfo=pytz.utc)

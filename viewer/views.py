@@ -1,5 +1,7 @@
+from datetime import datetime, tzinfo
 from lib2to3.fixes.fix_input import context
 
+import pytz
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Model, ImageField
 from django.shortcuts import render
@@ -255,34 +257,39 @@ def auctions(request):
         context = {'auction': auction_, 'form': form}
         return render(request, 'auction.html', context)
     return grounds(request)
-"""
+
+class AuctionFormView(FormView):
+    template_name = 'auction.html'  # Šablona, která zobrazí formulář
+    form_class = BidModelForm  # Odkaz na náš formulář
+    success_url = reverse_lazy('auction')  # URL, kam bude uživatel přesměrován po úspěšném odeslání formuláře
+
+    def form_valid(self, form):
+        # Zde můžete zpracovat data z formuláře
+        # Například je uložit do databáze nebo odeslat email
+        print(form.cleaned_data)  # Tisk validovaných dat do konzole
+        return super().form_valid(form)"""
+
 
 class AuctionTemplateView(TemplateView):
     template_name = "auction.html"
 
     def post(self, request):
-        context = self.get_context_data()
-        bid_ = Bid.objects.filter(auction = context['auction'])
-        if bid_.exists():
-            bid_ = Bid.objects.filter(auction=context['auction'])
-            bid_.bidder_name = request.POST.get('bidder_name')
-            bid_.bid_amount = request.POST.get('bid_amount')
-            bid_.save()
-        else:
-            Bid.objects.create( auction = context['auction'],
+        context_ = self.get_context_data()
+        Bid.objects.create( auction = context_['auction'],
                             user = Profile.objects.get(user=request.user),
                             bidder_name = request.POST.get('bidder_name'),
                             bid_amount = request.POST.get('auction.min_bid'),
-        )
-        return render(request, 'auction.html', context)
+                                )
+
+        return render(request, 'auction.html', context_)
 
     def get_context_data(self, **kwargs):
-        context= super().get_context_data(**kwargs)
+        context_= super().get_context_data(**kwargs)
         pk = self.kwargs['pk']
         auction_ = Auction.objects.get(id=pk)
-        context['auction'] = auction_
-        context['form'] = BidModelForm
-        return context
+        context_['auction'] = auction_
+        context_['form'] = BidModelForm
+        return context_
 
 class AuctionView(View):
     def get(self, request):
