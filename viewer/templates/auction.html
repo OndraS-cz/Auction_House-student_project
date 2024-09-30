@@ -24,11 +24,19 @@
         <strong>Minimální příhoz:</strong>
             {{ auction.min_bid }} Kč
     </div>
+    {% if auction.isnot_start %}
+        <div class="auction-date_auction">
+            <strong>Datum dražby:</strong>
+                {{ auction.date_auction|date:"d.m.Y H:i" }}
+        </div>
+    {% endif %}
+    {% if auction.in_progress %}
+        <div class="auction-time_of">
+            <strong>Datum konce dražby:</strong>
+            {{auction.date_end_auction|date:"d.m.Y H:i" }}
 
-    <div class="auction-date_auction">
-        <strong>Datum dražby:</strong>
-            {{ auction.date_auction|date:"d.m.Y H:i" }}
-    </div>
+        </div>
+    {% endif %}
 <table>
     <tr>
         <td>
@@ -45,12 +53,15 @@
             const now = new Date();
 
             // Formátování času
+            const years = now.getFullYear().toString().padStart(1, '0')
+            const moths = now.getUTCMonth().toString().padStart(1, '0');
+            const days = now.getDate().toString().padStart(1, '0')
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
 
             // Složení času do formátu HH:MM:SS
-            const currentTime = `${hours}:${minutes}:${seconds}`;
+            const currentTime = `${days}.${moths}.${years}  ${hours}:${minutes}:${seconds}`;
 
             // Zobrazení času na stránce
             document.getElementById('clock').textContent = currentTime;
@@ -76,13 +87,7 @@
                 {{ auction.time_to }}
         </div>
     {% endif %}
-    {% if auction.in_progress %}
-        <div class="auction-time_of">
-            <strong>Datum konce dražby:</strong>
-            {{auction.date_end_auction }}
 
-        </div>
-    {% endif %}
 </div>
 
 <div class="auction-description">
