@@ -129,7 +129,7 @@
                 <div class="auction-bid bg-light rounded mt-2 p-2 position-relative">
                     <div class="auction-bid-user-box">
                         <span class="auction-bid-user">
-                            Uživatel: {{ bid.user }}
+                            Uživatel: {{ bid.anonymizovat_jmeno }} {{ anonymizovat_přijmení }}
                         </span>
                         <span class="auction-bid-created font-italic text-secondary">
                             {{ bid.created|date:'d. m. Y H:i' }}
