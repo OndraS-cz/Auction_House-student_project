@@ -59,8 +59,6 @@ class HousesListView(ListView):
     context_object_name = 'houses'
 
 
-
-
 def insert_data(request):
     return render(request, "insert_data.html")
 
