@@ -20,7 +20,10 @@ from django.urls import path, include
 
 from Auction_house import settings
 from accounts.views import SignUpView, user_logout
-from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertPropertytype, InsertAuction, HousesListView, house, GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, UpdateAuction, DeleteAuction, ImagesListView, ImageUpdateView, ImageDeleteView
+from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, auction, ImageCreateView, \
+    ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
+    GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
+    UpdateAuction, DeleteAuction, ImagesListView, ImageUpdateView, ImageDeleteView, InsertPropertyType
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -58,7 +61,7 @@ urlpatterns = [
     path('delete/grounds/<pk>', DeleteGrounds.as_view(), name="delete_grounds"),
 
 
-    path('insert/property_type', InsertPropertytype.as_view(), name="insert_property_type"),
+    path('insert/property_type', InsertPropertyType.as_view(), name="insert_property_type"),
 
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),

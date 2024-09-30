@@ -137,7 +137,7 @@ class DeleteGrounds(DeleteView):
     success_url = reverse_lazy('grounds')
 
 
-class InsertPropertytype(CreateView):
+class InsertPropertyType(CreateView):
     template_name = "form.html"
     form_class = PropertyTypeModelForm
     success_url = reverse_lazy('insert_auction')
