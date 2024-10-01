@@ -7,7 +7,7 @@
 <div class="auction-details">
     <div class="auction-property_type">
         <strong>Adresa nemovitosti:</strong>
-        {{ auction.address }}
+        {{ auction.location }}
     </div>
 
     <div class="auction-value">
@@ -142,4 +142,5 @@
             {% endfor %}
         </div>
 </div>
+<input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
 {% endblock %}
