@@ -12,8 +12,9 @@ from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
 from accounts.models import Profile
-from viewer.forms import ImageModelForm, BidModelForm
-from viewer.models import House, Apartment, Ground, Auction, Image, Bid
+from viewer.forms import ImageModelForm, BidModelForm, CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, \
+    GroundTypeModelForm
+from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseType, ApartmentType, Cities, GroundType
 #from viewer.forms import ImageModelForm
 from viewer.forms import ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
 
@@ -40,6 +41,10 @@ def house(request, pk):
         return render(request, 'house.html', context)
     return grounds(request)
 
+def house_types(request):
+    house_types = HouseType.objects.all()
+    context = {'house_types': house_types}
+    return render(request, 'house_types.html', context)
 
 class HousesView(View):
     def get(self, request):
@@ -52,12 +57,20 @@ class HousesTemplateView(TemplateView):
     template_name = "houses.html"
     extra_context = {'houses': House.objects.all()}
 
+class HouseTypesListView(ListView):
+    template_name = "house_types.html"
+    model = HouseType
+    context_object_name = 'house_types'
+
+class DeleteHouseType(DeleteView):
+    template_name = 'confirm_delete.html'
+    model = HouseType
+    success_url = reverse_lazy('insert_data')
 
 class HousesListView(ListView):
     template_name = "houses.html"
     model = House
     context_object_name = 'houses'
-
 
 def insert_data(request):
     return render(request, "insert_data.html")
@@ -187,18 +200,28 @@ def apartment(request, pk):
         apartment_ = Apartment.objects.get(id=pk)
         context = {'apartment': apartment_}
         return render(request, 'apartment.html', context)
-    return grounds(request)
+    return apartments(request)
 
 def apartments(request):
     apartments_ = Apartment.objects.all()
     context = {'apartments': apartments_}
     return render(request, 'apartments.html', context)
 
+def aparment_types(request):
+    apartment_types_ = ApartmentType.objects.all()
+    context = {'apartment_types': apartment_types_}
+    return render(request, 'apartment_types.html', context)
+
 class ApartmentsView(View):
     def get(self, request):
         apartments_ = Apartment.objects.all()
         context = {'apartments': apartments_}
         return render(request, "apartments.html", context)
+
+class DeleteApartmentType(DeleteView):
+    template_name = 'confirm_delete.html'
+    model = ApartmentType
+    success_url = reverse_lazy('insert_data')
 
 
 class ApartmentsTemplateView(TemplateView):
@@ -224,6 +247,20 @@ def ground(request, pk):
         return render(request, 'ground.html', context)
     return grounds(request)
 
+def ground_types(request):
+    ground_types_ = GroundType.objects.all()
+    context = {'ground_types': ground_types_}
+    return render(request, 'ground_types.html', context)
+
+class DeleteGroundType(DeleteView):
+    template_name = 'confirm_delete.html'
+    model = GroundType
+    success_url = reverse_lazy('insert_data')
+
+class InsertGroundType(CreateView):
+    template_name = "form.html"
+    form_class = GroundTypeModelForm
+    success_url = reverse_lazy('insert_data')
 
 class GroundsView(View):
     def get(self, request):
@@ -275,10 +312,11 @@ class AuctionTemplateView(TemplateView):
         context_ = self.get_context_data()
         Bid.objects.create( auction = context_['auction'],
                             user = Profile.objects.get(user=request.user),
-                            first_name = Profile.objects.get(bidder_name=request.user.first_name),
-                            last_name = Profile.objects.get(bidder_name=request.user.last_name),
+                            bidder_name = Profile.objects.get(bidder_name=request.user.last_name),
                             bid_amount = request.POST.get('auction.min_bid'),
                                 )
+
+        Auction.time_set()
 
         return render(request, 'auction.html', context_)
 
@@ -341,3 +379,42 @@ class ImageDeleteView(PermissionRequiredMixin, DeleteView):
 class ImageDetailView(DetailView):
     model = Image
     template_name = 'image.html'
+
+
+def cities(request):
+        cities_ = Cities.objects.all()
+        context = {'cities': cities_}
+        return render(request, 'cities.html', context)
+
+class Insertcity(CreateView):
+    template_name = "form.html"
+    form_class = CitiesModelForm
+    success_url = reverse_lazy('insert_data')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)
+
+class DeleteCity(DeleteView):
+    template_name = 'confirm_delete.html'
+    model = Cities
+    success_url = reverse_lazy('insert_data')
+
+
+class InsertHouseType(CreateView):
+    template_name = "form.html"
+    form_class = HouseTypeModelForm
+    success_url = reverse_lazy('insert_data')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)
+
+class InsertAparmentType(CreateView):
+    template_name = "form.html"
+    form_class = ApartmentTypeModelForm
+    success_url = reverse_lazy('insert_data')
+
+    def form_invalid(self, form):
+        LOGGER.warning('User providet invalit data updating.')
+        return super().form_invalid(form)

@@ -1,0 +1,15 @@
+<{% extends 'base.html' %}
+
+{% block content %}
+<h1>Typy Domů</h1>
+    <ul>
+        {% for house_type in house_types %}
+            <li>
+                {{ house_type }}
+            {% if user.is_authenticated %}
+                    <a href="{% url 'delete_house_type' house_type.id %}"> ❌ </a>
+            {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

@@ -25,7 +25,9 @@ from accounts.views import SignUpView, user_logout
 from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, ImageCreateView, \
     ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
-    UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, InsertBid, AuctionTemplateView
+    UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, InsertBid, AuctionTemplateView, \
+    Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertAparmentType, \
+    DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -43,8 +45,15 @@ urlpatterns = [
     path('update/houses/<pk>', UpdateHouse.as_view(), name="update_houses"),
     path('delete/houses/<pk>', DeleteHouse.as_view(), name="delete_houses"),
 
+
     path('houses/', HousesListView.as_view(), name='houses'),
     path('house/<pk>/', house, name='house'),
+
+    path('house_types/', HouseTypesListView.as_view(), name="house_types"),
+    path('insert/house_types', InsertHouseType.as_view(), name="insert_house_type"),
+    path('delete/house_type/<pk>', DeleteHouseType.as_view(), name="delete_house_type"),
+
+
 
 
     path('insert/apartments', InsertApartments.as_view(), name="insert_apartments"),
@@ -54,6 +63,10 @@ urlpatterns = [
     path('apartments/', ApartmentsListView.as_view(), name='apartments'),
     path('apartment/<pk>/', apartment, name='apartment'),
 
+    path('aparment_types/', aparment_types, name="aparment_types"),
+    path('insert/apartment_types', InsertAparmentType.as_view(), name="insert_apartment_types"),
+    path('delete/apartment_types/<pk>', DeleteApartmentType.as_view(), name="delete_apartment_types"),
+
 
     path('insert/grounds', InsertGrounds.as_view(), name="insert_grounds"),
     path('update/grounds/<pk>', UpdateGrounds.as_view(), name="update_grounds"),
@@ -62,7 +75,15 @@ urlpatterns = [
     path('grounds/', GroundsListView.as_view(), name='grounds'),
     path('ground/<pk>/', ground, name='ground'),
 
+    path('insert/ground_type', InsertGroundType.as_view(), name="insert_ground_type"),
+    path('ground_types/', ground_types, name= 'ground_types'),
+    path('delete/ground_type/<pk>', DeleteGroundType.as_view(), name="delete_ground_type"),
+
     path('insert/property_type', InsertPropertyType.as_view(), name="insert_property_type"),
+
+    path('delete/cities/<pk>', DeleteCity.as_view(), name="delete_cities"),
+    path('insert/cities', Insertcity.as_view(), name="insert_cities"),
+    path('cities/', cities, name='cities'),
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),

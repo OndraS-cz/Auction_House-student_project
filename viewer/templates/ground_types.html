@@ -1,0 +1,15 @@
+<{% extends 'base.html' %}
+
+{% block content %}
+<h1>Typy Pozemků</h1>
+    <ul>
+        {% for ground_type in ground_types %}
+            <li>
+                {{ ground_type }}
+            {% if user.is_authenticated %}
+                    <a href="{% url 'delete_ground_type' ground_type.id %}"> ❌ </a>
+            {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

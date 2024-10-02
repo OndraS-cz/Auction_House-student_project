@@ -1,0 +1,15 @@
+<{% extends 'base.html' %}
+
+{% block content %}
+<h1>Typy Bytů</h1>
+    <ul>
+        {% for apartment_type in apartment_types %}
+            <li>
+                {{ apartment_type }}
+            {% if user.is_authenticated %}
+                    <a href="{% url 'delete_apartment_types' apartment_type.id %}"> ❌ </a>
+            {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

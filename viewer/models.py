@@ -139,6 +139,39 @@ class Auction(Model):
     date_auction = DateTimeField(null=False)
     date_end_auction = DateTimeField(null=False)
 
+    """def time_key(self):
+        if self.date_end_auction.second < 10:
+            if self.date_end_auction.minute < 10:
+                if self.date_end_auction.hour < 10:
+                    return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
+                return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
+            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:{self.date_end_auction.minute}:0{self.date_end_auction.second}"
+
+        if self.date_end_auction.minute < 10:
+            if self.date_end_auction.hour < 10:
+                if self.date_end_auction.second < 10:
+                    return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
+                return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:{self.date_end_auction.second}"
+            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:0{self.date_end_auction.minute}:{self.date_end_auction.second}"
+
+        if self.date_end_auction.hour < 10:
+            if self.date_end_auction.second < 10:
+                if self.date_end_auction.minute < 10:
+                    return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
+                return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:{self.date_end_auction.minute}:0{self.date_end_auction.second}"
+            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:{self.date_end_auction.minute}:{self.date_end_auction.second}"
+        else:
+            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:{self.date_end_auction.minute}:{self.date_end_auction.second}"
+"""
+    def time_set(self):
+        then = self.date_auction.replace(tzinfo=pytz.utc)
+        now = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        time_diference = then - now
+
+        if Bid.create and time_diference.total_seconds() < 300:
+            self.date_end_auction = now + datetime.timedelta(minutes=5)
+
+
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"

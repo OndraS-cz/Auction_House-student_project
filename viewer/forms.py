@@ -1,4 +1,4 @@
-from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput
+from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput, forms
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
     Image, Bid
@@ -41,7 +41,29 @@ class ImageModelForm(ModelForm):
 
 
 class BidModelForm(ModelForm):
+
     class Meta:
         model = Bid
         fields = '__all__' #['bid_amount', 'user']
 
+    bid_amount = IntegerField(min_value=200000, label="příhoz")
+
+class CitiesModelForm(ModelForm):
+    class Meta:
+        model = Cities
+        fields = '__all__'
+
+class HouseTypeModelForm(ModelForm):
+    class Meta:
+        model = HouseType
+        fields = '__all__'
+
+class ApartmentTypeModelForm(ModelForm):
+    class Meta:
+        model = ApartmentType
+        fields = '__all__'
+
+class GroundTypeModelForm(ModelForm):
+    class Meta:
+        model = GroundType
+        fields = '__all__'

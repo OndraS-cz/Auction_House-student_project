@@ -54,14 +54,14 @@
 
             // Formátování času
             const years = now.getFullYear().toString().padStart(1, '0')
-            const moths = now.getUTCMonth().toString().padStart(1, '0');
+            const moths = now.getMonth().toString().padStart(1, '0');
             const days = now.getDate().toString().padStart(1, '0')
             const hours = now.getHours().toString().padStart(2, '0');
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
 
             // Složení času do formátu HH:MM:SS
-            const currentTime = `${days}.${moths}.${years}  ${hours}:${minutes}:${seconds}`;
+            const currentTime = `${days}.${(Number(moths) + Number(1))}.${years}  ${hours}:${minutes}:${seconds}`;
 
             // Zobrazení času na stránce
             document.getElementById('clock').textContent = currentTime;
@@ -84,7 +84,34 @@
     {% if auction.isnot_start %}
         <div class="auction-time_to">
             <strong>Zbývající čas do dražby:</strong>
-                {{ auction.time_to }}
+                    {{ auction.time_key }}
+
+
+                <script>
+                    <p id="odpoctavani"></p>
+                    function Clock_to() {
+                        let cilovyDatum = new Date("12 31, 2024 05:05:05").getTime();
+
+                        let odpoctavani = setInterval(function () {
+                            let nyni = new Date().getTime();
+                            let rozdil = cilovyDatum - nyni;
+
+                            let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
+                            let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                            let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
+                            let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
+
+                            // Zobrazení odpočítávání v elementu s id "odpoctavani"
+                            document.getElementById("odpoctavani").innerHTML = `${dny}d ${hodiny}h ${minuty}m ${sekundy}s`;
+
+                            if (rozdil < 0) {
+                                clearInterval(odpoctavani);
+                                document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
+                            }
+                        }, 1000);
+                    }
+                    Clock_to();
+                </script>
         </div>
     {% endif %}
 

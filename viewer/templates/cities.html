@@ -1,0 +1,15 @@
+<{% extends 'base.html' %}
+
+{% block content %}
+<h1>Města</h1>
+    <ul>
+        {% for city in cities %}
+            <li>
+                {{ city }}
+            {% if user.is_authenticated %}
+                    <a href="{% url 'delete_cities' city.id %}"> ❌ </a>
+            {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
