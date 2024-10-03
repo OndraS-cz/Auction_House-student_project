@@ -188,6 +188,8 @@ class InsertBid(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
+
+
 def apartment(request, pk):
     if Apartment.objects.filter(id=pk).exists():
         apartment_ = Apartment.objects.get(id=pk)
@@ -282,15 +284,18 @@ def auctions(request):
 class AuctionTemplateView(TemplateView):
     template_name = "auction.html"
 
-    def post(self, request):
+    def post(self, request, pk):
+        auction_ = Auction.objects.get(id=pk)
+
         context_ = self.get_context_data()
-        Bid.objects.create( auction = context_['auction'],
+        Bid.objects.create( auction = auction_,
                             user = Profile.objects.get(user=request.user),
-                            bidder_name = Profile.objects.get(bidder_name=request.user.last_name),
-                            bid_amount = request.POST.get('auction.min_bid'),
+                            bidder_name = request.POST.get('bidder_name'),
+                            bid_amount = request.POST.get('bid_amount'),
                                 )
 
-        Auction.time_set()
+        bid = Bid.objects.filter(auction=auction_,)
+
 
         return render(request, 'auction.html', context_)
 

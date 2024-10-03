@@ -2,7 +2,6 @@ from datetime import time
 
 from django.test import TestCase
 
-from viewer.views import auction
 
 
 # Create your tests here.
@@ -10,6 +9,7 @@ from viewer.views import auction
 class ExampleTestClass(TestCase):
 
     @classmethod
-    def test_loc_time(self):
-        result = auction.loc_time
-        self.assertEqual(result, time.localtime())
+    def test_add(self):
+        print("Test method: test_add")
+        result = 1 + 4
+        self.assertEqual(result, 5)

@@ -41,9 +41,6 @@ class ImageModelForm(ModelForm):
 
 
 class BidModelForm(ModelForm):
-
-    bid_amount = IntegerField(label="Jméno", help_text="Zadejte své celé jméno.")
-
     class Meta:
         model = Bid
         fields = '__all__' #['bid_amount', 'user']

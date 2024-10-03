@@ -123,8 +123,8 @@
 
 <div>
     {% if auction.in_progress %}
-        <strong>Poslední příhoz: </strong>
-                {{ bid.bidder_name }}
+        <strong>Nejnižší podání: </strong>
+                {{ auction.min_value }}
     {% endif %}
 </div>
 
