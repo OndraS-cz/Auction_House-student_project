@@ -134,5 +134,5 @@ GRAPH_MODELS = {
 LOGIN_REDIRECT_URL = 'home'
 LOGOUT_REDIRECT_URL = 'home'
 
-MEDIA_ROOT = BASE_DIR  #os.path.join(BASE_DIR, 'files')
+MEDIA_ROOT = BASE_DIR
 MEDIA_URL = 'images/'
