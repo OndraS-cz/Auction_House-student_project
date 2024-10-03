@@ -2,22 +2,16 @@ from datetime import datetime, tzinfo
 from lib2to3.fixes.fix_input import context
 
 import pytz
+
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.views.generic import UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView, TemplateView, ListView, CreateView, DetailView
 from django.views import View
-from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
 from accounts.models import Profile
-from viewer.forms import BidModelForm, ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-from viewer.forms import ImageModelForm, BidModelForm, CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, \
-    GroundTypeModelForm
+from viewer.forms import ImageModelForm, BidModelForm, CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, GroundTypeModelForm, BidModelForm, ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
 from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseType, ApartmentType, Cities, GroundType
-#from viewer.forms import ImageModelForm
-from viewer.forms import ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-
-from viewer.models import House, Apartment, Ground, Auction, Image
 
 from logging import getLogger
 
