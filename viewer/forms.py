@@ -41,7 +41,6 @@ class ImageModelForm(ModelForm):
 
 
 class BidModelForm(ModelForm):
-
     class Meta:
         model = Bid
         fields = '__all__' #['bid_amount', 'user']

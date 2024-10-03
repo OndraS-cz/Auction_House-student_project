@@ -9,5 +9,7 @@ from django.test import TestCase
 class ExampleTestClass(TestCase):
 
     @classmethod
-    def test_loc_time(self):
-        self.assertEqual(1, 1)
+    def test_add(self):
+        print("Test method: test_add")
+        result = 1 + 4
+        self.assertEqual(result, 5)

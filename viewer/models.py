@@ -134,10 +134,13 @@ class Auction(Model):
     city = ForeignKey(Cities, null=True, blank=True, on_delete=SET_NULL, related_name='city')
     location = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
+    min_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
-    min_bid = IntegerField(null=False)
+    min_bid = IntegerField(null=True, blank=False)
     date_auction = DateTimeField(null=False)
     date_end_auction = DateTimeField(null=False)
+    description = TextField(null=True, blank=True)
+
 
     """def time_key(self):
         if self.date_end_auction.second < 10:
@@ -180,8 +183,8 @@ class Auction(Model):
     def time_to(self):
             then = self.date_auction.replace(tzinfo=pytz.utc)
             now = datetime.datetime.now().replace(tzinfo=pytz.utc)
-            time_diference = then - now
-            return time_diference
+            time_difference = then - now
+            return time_difference
 
 
     def time_of(self):
@@ -193,7 +196,8 @@ class Auction(Model):
         else:
             return "Konec"
 
-    def diference(self):
+
+    def difference(self):
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
         then = self.date_end_auction.replace(tzinfo=pytz.utc)
         result = then - now
@@ -204,26 +208,27 @@ class Auction(Model):
 
 
     def in_progress(self):
-        začátek_aukce = self.date_auction.replace(tzinfo=pytz.utc)
-        aktuální_čas = datetime.datetime.now().replace(tzinfo=pytz.utc)
-        konec_aukce = self.date_end_auction.replace(tzinfo=pytz.utc)
-        if aktuální_čas > začátek_aukce and aktuální_čas < konec_aukce:
+        auction_start = self.date_auction.replace(tzinfo=pytz.utc)
+        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
+        if actual_time > auction_start and actual_time < auction_end:
             return True
         else:
             return False
 
     def isnot_start(self):
-        začátek_aukce = self.date_auction.replace(tzinfo=pytz.utc)
-        aktuální_čas = datetime.datetime.now().replace(tzinfo=pytz.utc)
-        if aktuální_čas < začátek_aukce:
+        auction_start = self.date_auction.replace(tzinfo=pytz.utc)
+        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        if actual_time < auction_start:
             return True
         else:
             return False
 
+
     def end(self):
-        aktuální_čas = datetime.datetime.now().replace(tzinfo=pytz.utc)
-        konec_aukce = self.date_end_auction.replace(tzinfo=pytz.utc)
-        if aktuální_čas > konec_aukce:
+        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
+        if actual_time > auction_end:
             return True
         else:
             return False
@@ -232,8 +237,10 @@ class Auction(Model):
     class Meta:
         verbose_name_plural = "Auctions"
 
+
     def __repr__(self):
         return f"Auction(name={self.property_type}, {self.location})"
+
 
     def __str__(self):
         return f"{self.property_type} ({self.location})"
@@ -246,10 +253,12 @@ class Bid(Model):
     bid_amount = IntegerField(null=False)
     bid_date = DateTimeField(auto_now_add=True)
 
+
     def __str__(self):
         return f"{self.bidder_name} - {self.bid_amount} Kč"
 
-    def anonymizovat_jmeno(self):
+
+    def anonymization_name(self):
         if len(self.bidder_name) <= 2:
             return self.bidder_name
         else:
@@ -264,8 +273,10 @@ class Image(Model):
     auctions = ManyToManyField(Auction, blank=True, related_name='images')
     description = TextField(null=True, blank=True)
 
+
     def __repr__(self):
         return f"Image(image={self.image}, auctions={self.auctions}, description={self.description})"
+
 
     def __str__(self):
         return f"Image: {self.image}, {self.description}"

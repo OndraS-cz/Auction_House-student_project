@@ -2,23 +2,16 @@ from datetime import datetime, tzinfo
 from lib2to3.fixes.fix_input import context
 
 import pytz
+
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Model, ImageField
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.urls import reverse_lazy
-from django.views.generic import FormView, CreateView, UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView, TemplateView, ListView, CreateView, DetailView
 from django.views import View
-from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
 from accounts.models import Profile
-from viewer.forms import ImageModelForm, BidModelForm, CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, \
-    GroundTypeModelForm
+from viewer.forms import ImageModelForm, BidModelForm, CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, GroundTypeModelForm, BidModelForm, ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
 from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseType, ApartmentType, Cities, GroundType
-#from viewer.forms import ImageModelForm
-from viewer.forms import ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-
-from viewer.models import House, Apartment, Ground, Auction, Image
 
 from logging import getLogger
 
@@ -195,6 +188,8 @@ class InsertBid(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
+
+
 def apartment(request, pk):
     if Apartment.objects.filter(id=pk).exists():
         apartment_ = Apartment.objects.get(id=pk)
@@ -285,38 +280,22 @@ def auctions(request):
     context = {'auctions': auctions_}
     return render(request, 'auctions.html', context)
 
-"""def auction(request, pk):
-    if Auction.objects.filter(id=pk).exists():
-        auction_ = Auction.objects.get(id=pk)
-        form = BidModelForm
-        context = {'auction': auction_, 'form': form}
-        return render(request, 'auction.html', context)
-    return grounds(request)
-
-class AuctionFormView(FormView):
-    template_name = 'auction.html'  # Šablona, která zobrazí formulář
-    form_class = BidModelForm  # Odkaz na náš formulář
-    success_url = reverse_lazy('auction')  # URL, kam bude uživatel přesměrován po úspěšném odeslání formuláře
-
-    def form_valid(self, form):
-        # Zde můžete zpracovat data z formuláře
-        # Například je uložit do databáze nebo odeslat email
-        print(form.cleaned_data)  # Tisk validovaných dat do konzole
-        return super().form_valid(form)"""
-
 
 class AuctionTemplateView(TemplateView):
     template_name = "auction.html"
 
-    def post(self, request):
+    def post(self, request, pk):
+        auction_ = Auction.objects.get(id=pk)
+
         context_ = self.get_context_data()
-        Bid.objects.create( auction = context_['auction'],
+        Bid.objects.create( auction = auction_,
                             user = Profile.objects.get(user=request.user),
-                            bidder_name = Profile.objects.get(bidder_name=request.user.last_name),
-                            bid_amount = request.POST.get('auction.min_bid'),
+                            bidder_name = request.POST.get('bidder_name'),
+                            bid_amount = request.POST.get('bid_amount'),
                                 )
 
-        Auction.time_set()
+        bid = Bid.objects.filter(auction=auction_,)
+
 
         return render(request, 'auction.html', context_)
 
