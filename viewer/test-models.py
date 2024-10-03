@@ -7,7 +7,7 @@ from django.test import TestCase
 from viewer.models import House, HouseType, PropertyType, Auction, Cities, ApartmentType, GroundType, Apartment, Ground, \
     Bid
 
-"""class AuctionModelTest(TestCase):
+class AuctionModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -15,7 +15,7 @@ from viewer.models import House, HouseType, PropertyType, Auction, Cities, Apart
 
 
 
-        house = House.objects.create(
+        """        house = House.objects.create(
             name = 'Cihlový dům',
             area = '200',
             plot_area = '48',
@@ -53,6 +53,38 @@ from viewer.models import House, HouseType, PropertyType, Auction, Cities, Apart
 
     def test_city_str(self):
         city = Cities.objects.get(id=1)
-        self.assertEqual(city.__repr__(), f"City(name=San Francisco)")
-"""
+        self.assertEqual(city.__repr__(), f"City(name=San Francisco)")"""
+
+
+class AuctionModelTest(TestCase):
+
+    @classmethod
+    def setUpTestData(cls):
+        house_1 = House.objects.create(
+            name = 'Cihlový dům',
+            area = '200',
+            plot_area = '48',
+            garden_area = '100',
+
+        )
+
+        house_type = HouseType.objects.create(property_type = "3+1")
+
+
+    def test_house_str(self):
+        house = House.objects.get(id=1)
+        self.assertEqual(house.__str__(), 'Cihlový dům')
+
+    def test_house_repr(self):
+        house = House.objects.get(id=1)
+        self.assertEqual(house.__repr__(), 'House(name=Cihlový dům)')
+
+    def test_house_type_str(self):
+        house_type = HouseType.objects.get(id=1)
+        self.assertEqual(house_type.__str__(), '3+1')
+
+    def test_house_type_repr(self):
+        house_type = HouseType.objects.get(id=1)
+        self.assertEqual(house_type.__repr__(), 'HouseType(name=3+1)')
+
 
