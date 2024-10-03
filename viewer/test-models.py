@@ -44,3 +44,12 @@ class AuctionModelTest(TestCase):
     def test_home_str(self):
         house = House.objects.get(id=1)
         self.assertEqual(house.__str__(), 'Cihlový dům')
+
+    def test_house_type_str(self):
+        house_type = HouseType.objects.get(id=1)
+        self.assertEqual(house_type.__str__(), '3+1')
+
+    def test_city_str(self):
+        city = Cities.objects.get(id=1)
+        self.assertEqual(city.__repr__(), f"City(name=San Francisco)")
+
