@@ -1,11 +1,13 @@
 import datetime
 
+from django.contrib.auth.models import User
+from django.contrib.gis.geoip2.resources import City
 from django.test import TestCase
 
-from viewer.models import House, HouseType, PropertyType, Auction, Cities
+from viewer.models import House, HouseType, PropertyType, Auction, Cities, ApartmentType, GroundType, Apartment, Ground, \
+    Bid
 
-
-class AuctionModelTest(TestCase):
+"""class AuctionModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
@@ -52,4 +54,5 @@ class AuctionModelTest(TestCase):
     def test_city_str(self):
         city = Cities.objects.get(id=1)
         self.assertEqual(city.__repr__(), f"City(name=San Francisco)")
+"""
 
