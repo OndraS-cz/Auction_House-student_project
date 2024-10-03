@@ -29,6 +29,7 @@
         <strong>Datum dražby:</strong>
             {{ auction.date_auction|date:"d.m.Y H:i" }}
     </div>
+
 <table>
     <tr>
         <td>
@@ -37,8 +38,7 @@
             </div>
         </td>
         <td>
-             <div class="auction-local_time" id="clock">
-
+        <div class="auction-local_time" id="clock">
         <script>
         function updateClock() {
             // Získání aktuálního času
@@ -61,11 +61,9 @@
 
         // První volání funkce, aby se čas zobrazil ihned při načtení stránky
         updateClock();
-
         </script>
-    </div>
+        </div>
         </td>
-
     </tr>
 
 </table>
@@ -92,11 +90,13 @@
 
 <div>
 </div>
+
 <div>
-        {% if auction.in_progress %}
-            <strong>Poslední příhoz: </strong>
-                    {{ bid.bidder_name }}
-        {% endif %}
+    {% if auction.in_progress %}
+        <strong>Poslední příhoz: </strong>
+                {{ bid.bidder_name }}
+    {% endif %}
+</div>
 
 <div>
     <strong>Fotogalerie:</strong>
@@ -104,10 +104,29 @@
 <div class="auction-images">
     {% for image in auction.images.all %}
         <span class="auction-image">
-            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+            <img src="{{ image.image.url }}" alt="{{ image.description }}" width="150px">
         </span>
     {% endfor %}
 </div>
+
+<div>
+    {% if auction.property_type.apartment_id %}
+        <a href="{% url 'apartments' auction.property_type.apartment_id %}" class="btn btn-primary">
+            Detail nemovitosti
+        </a>
+
+    {% elif auction.property_type.house_id %}
+        <a href="{% url 'house' auction.property_type.house_id %}" class="btn btn-primary">
+            Detail nemovitosti
+        </a>
+
+    {% else %}
+        <a href="{% url 'ground' auction.property_type.ground_id %}" class="btn btn-primary">
+            Detail nemovitosti
+        </a>
+    {% endif %}
+</div>
+
 <div>
     {% if auction.in_progress %}
         <form method="post">
@@ -120,7 +139,6 @@
 <div>
         {% if auction.end and Bid.bid_date.exists %}
             <strong>Prodáno </strong>
-
         {% endif %}
 </div>
 <div>
@@ -143,4 +161,5 @@
         </div>
 </div>
 <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
+
 {% endblock %}

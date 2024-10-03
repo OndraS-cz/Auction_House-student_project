@@ -52,7 +52,7 @@ class SignUpForm(UserCreationForm):
 
     def clean_name(self):
         cleaned_data = self.cleaned_data
-        initial = cleaned_data['first_name']
+        initial = cleaned_data['name']
         print(f"initial name: '{initial}'")
         result = initial
         if initial is not None:

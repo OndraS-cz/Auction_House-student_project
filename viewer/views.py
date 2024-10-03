@@ -3,20 +3,14 @@ from lib2to3.fixes.fix_input import context
 
 import pytz
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Model, ImageField
 from django.shortcuts import render
 from django.urls import reverse_lazy
-from django.urls import reverse_lazy
-from django.views.generic import FormView, CreateView, UpdateView, DeleteView
+from django.views.generic import UpdateView, DeleteView
 from django.views import View
 from django.views.generic import TemplateView, ListView, CreateView, DetailView
 
 from accounts.models import Profile
-from viewer.forms import ImageModelForm, BidModelForm
-from viewer.models import House, Apartment, Ground, Auction, Image, Bid
-#from viewer.forms import ImageModelForm
-from viewer.forms import ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-
+from viewer.forms import BidModelForm, ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
 from viewer.models import House, Apartment, Ground, Auction, Image
 
 from logging import getLogger

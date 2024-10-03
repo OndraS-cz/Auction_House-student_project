@@ -35,7 +35,7 @@
 <div class="house-images">
     {% for image in house.images.all %}
         <span class="house-image">
-            <img src="{{  image.image.url }}" alt="{{  image.description }}" width="150px">
+            <img src="{{ image.image.url }}" alt="{{ image.description }}" width="150px">
         </span>
     {% endfor %}
 </div>
