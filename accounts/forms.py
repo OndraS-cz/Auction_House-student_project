@@ -13,7 +13,6 @@ from accounts.check_document import check_document
 class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ['username', 'first_name', 'last_name', 'date_of_birth', 'birth_nr', 'document_type', 'document_number', 'document_expiry', 'phone_number', 'email', 'password1', 'password2']
-    # username = CharField(label="Uživatelské jméno")
     first_name = CharField(label="Křestní jméno")
     last_name = CharField(label="Příjmení")
     date_of_birth = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum narození", required=True)
