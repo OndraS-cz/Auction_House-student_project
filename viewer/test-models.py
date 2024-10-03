@@ -60,7 +60,7 @@ class AuctionModelTest(TestCase):
 
     @classmethod
     def setUpTestData(cls):
-        house_1 = House.objects.create(
+        house = House.objects.create(
             name = 'Cihlový dům',
             area = '200',
             plot_area = '48',
@@ -69,6 +69,17 @@ class AuctionModelTest(TestCase):
         )
 
         house_type = HouseType.objects.create(property_type = "3+1")
+
+        auction = Auction.objects.create(
+            location = "Brno",
+            estimate_value = "5000000",
+            min_value = '3500000',
+            auction_assurance = "3500000",
+            min_bid = "200000",
+            date_auction = datetime.date(2024, 10, 5),
+            date_end_auction = datetime.date(2024, 11, 1),
+            description = 'Podrobný popis'
+        )
 
 
     def test_house_str(self):
@@ -87,4 +98,9 @@ class AuctionModelTest(TestCase):
         house_type = HouseType.objects.get(id=1)
         self.assertEqual(house_type.__repr__(), 'HouseType(name=3+1)')
 
+    def test_number_of_auctions_(self):
+        auction = Auction.objects.get(id=1)
+        auctions = Auction.objects.all()
+        number_of_auctions = auctions.count()
+        self.assertEqual(number_of_auctions, 1)
 
