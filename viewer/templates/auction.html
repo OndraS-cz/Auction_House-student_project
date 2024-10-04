@@ -77,41 +77,69 @@
     </tr>
 
 </table>
-
+</div>
     {% if auction.isnot_start %}
         <div class="auction-time_to">
-            <strong>Zbývající čas do dražby:</strong>
-                    {{ auction.time_key }}
+            <strong>Zbývající čas do dražby</strong>
+            <p id="odpoctavani"></p>
+            <script>
+                function Clock_to() {
+                    let cilovyDatum = new Date("{{ auction.date_auction|date:'c' }}").getTime();
 
+                    let odpoctavani = setInterval(function () {
+                        let nyni = new Date().getTime();
+                        let rozdil = cilovyDatum - nyni;
 
-                <script>
-                    <p id="odpoctavani"></p>
-                    function Clock_to() {
-                        let cilovyDatum = new Date("12 31, 2024 05:05:05").getTime();
+                        let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
+                        let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
+                        let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
 
-                        let odpoctavani = setInterval(function () {
-                            let nyni = new Date().getTime();
-                            let rozdil = cilovyDatum - nyni;
+                                    // Zobrazení odpočítávání v elementu s id "odpoctavani"
+                        document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny}     ${hodiny}:${minuty}:${sekundy}`;
 
-                            let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
-                            let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-                            let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
-                            let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
-
-                            // Zobrazení odpočítávání v elementu s id "odpoctavani"
-                            document.getElementById("odpoctavani").innerHTML = `${dny}d ${hodiny}h ${minuty}m ${sekundy}s`;
-
-                            if (rozdil < 0) {
-                                clearInterval(odpoctavani);
-                                document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
+                        if (rozdil < 0) {
+                            clearInterval(odpoctavani);
+                            document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
+                                    }
+                                }, 1000);
                             }
-                        }, 1000);
-                    }
-                    Clock_to();
-                </script>
+                Clock_to();
+
+                        </script>
         </div>
     {% endif %}
-</div>
+{% if auction.in_progress %}
+        <div class="auction-time_to">
+            <strong>Zbývající čas do konce</strong>
+            <p id="odpoctavani"></p>
+            <script>
+                function Clock_to() {
+                    let cilovyDatum = new Date("{{ auction.date_end_auction|date:'c' }}").getTime();
+
+                    let odpoctavani = setInterval(function () {
+                        let nyni = new Date().getTime();
+                        let rozdil = cilovyDatum - nyni;
+
+                        let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
+                        let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                        let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
+                        let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
+
+                                    // Zobrazení odpočítávání v elementu s id "odpoctavani"
+                        document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny}     ${hodiny}:${minuty}:${sekundy}`;
+
+                        if (rozdil < 0) {
+                            clearInterval(odpoctavani);
+                            document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
+                                    }
+                                }, 1000);
+                            }
+                Clock_to();
+
+                        </script>
+        </div>
+    {% endif %}
 
 <div class="auction-description">
     <strong>Popis aukce: </strong>
@@ -241,6 +269,8 @@
             {% endfor %}
         </div>
 </div>
-<input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
+<a href="{% url 'auctions' %}" class="btn btn-primary">
+            Zpět
+        </a>
 
 {% endblock %}

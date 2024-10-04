@@ -142,30 +142,7 @@ class Auction(Model):
     description = TextField(null=True, blank=True)
 
 
-    """def time_key(self):
-        if self.date_end_auction.second < 10:
-            if self.date_end_auction.minute < 10:
-                if self.date_end_auction.hour < 10:
-                    return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
-                return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
-            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:{self.date_end_auction.minute}:0{self.date_end_auction.second}"
 
-        if self.date_end_auction.minute < 10:
-            if self.date_end_auction.hour < 10:
-                if self.date_end_auction.second < 10:
-                    return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
-                return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:{self.date_end_auction.second}"
-            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:0{self.date_end_auction.minute}:{self.date_end_auction.second}"
-
-        if self.date_end_auction.hour < 10:
-            if self.date_end_auction.second < 10:
-                if self.date_end_auction.minute < 10:
-                    return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:0{self.date_end_auction.minute}:0{self.date_end_auction.second}"
-                return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:{self.date_end_auction.minute}:0{self.date_end_auction.second}"
-            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} 0{self.date_end_auction.hour}:{self.date_end_auction.minute}:{self.date_end_auction.second}"
-        else:
-            return f"{self.date_auction.month} {self.date_auction.day}, {self.date_auction.year} {self.date_end_auction.hour}:{self.date_end_auction.minute}:{self.date_end_auction.second}"
-"""
     def time_set(self):
         then = self.date_auction.replace(tzinfo=pytz.utc)
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
