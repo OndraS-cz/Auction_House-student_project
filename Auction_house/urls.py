@@ -25,9 +25,9 @@ from accounts.views import SignUpView, user_logout
 from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, ImageCreateView, \
     ImageDetailView, insert_data, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
-    UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, InsertBid, AuctionTemplateView, \
+    UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
     Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertAparmentType, \
-    DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType
+    DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid
 
 urlpatterns = [
     path('admin/', admin.site.urls),

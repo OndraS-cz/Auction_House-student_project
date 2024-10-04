@@ -251,7 +251,7 @@ class Bid(Model):
     user = ForeignKey(Profile, null=True, blank=True, on_delete=SET_NULL, related_name='bid')
     bidder_name = CharField(max_length=255)
     bid_amount = IntegerField(null=False)
-    bid_date = DateTimeField(auto_now_add=True)
+    created = DateTimeField(auto_now_add=True)
 
 
     def __str__(self):

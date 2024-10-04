@@ -4,7 +4,7 @@ from lib2to3.fixes.fix_input import context
 import pytz
 
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.shortcuts import render
+from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView, TemplateView, ListView, CreateView, DetailView
 from django.views import View
@@ -188,8 +188,6 @@ class InsertBid(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-
-
 def apartment(request, pk):
     if Apartment.objects.filter(id=pk).exists():
         apartment_ = Apartment.objects.get(id=pk)
@@ -286,16 +284,12 @@ class AuctionTemplateView(TemplateView):
 
     def post(self, request, pk):
         auction_ = Auction.objects.get(id=pk)
-
         context_ = self.get_context_data()
-        Bid.objects.create( auction = auction_,
+        bid_ = Bid.objects.create( auction = context_['auction'],
                             user = Profile.objects.get(user=request.user),
                             bidder_name = request.POST.get('bidder_name'),
                             bid_amount = request.POST.get('bid_amount'),
                                 )
-
-        bid = Bid.objects.filter(auction=auction_,)
-
 
         return render(request, 'auction.html', context_)
 
