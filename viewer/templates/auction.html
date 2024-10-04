@@ -84,11 +84,14 @@
             <p id="odpoctavani"></p>
             <script>
                 function Clock_to() {
-                    let cilovyDatum = new Date("{{ auction.date_auction|date:'c' }}").getTime();
 
+                    let str = "{{ auction.date_auction|date:'c' }}"
+                    let kousek = str.slice(0, -6)
+                    let cilovyDatum = new Date(kousek).getTime();
                     let odpoctavani = setInterval(function () {
-                        let nyni = new Date().getTime();
-                        let rozdil = cilovyDatum - nyni;
+
+                        let nyní = new Date().getTime();
+                        let rozdil = (cilovyDatum - nyní);
 
                         let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
                         let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -103,7 +106,11 @@
                             document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
                                     }
                                 }, 1000);
-                            }
+
+
+
+                }
+
                 Clock_to();
 
                         </script>
@@ -115,11 +122,14 @@
             <p id="odpoctavani"></p>
             <script>
                 function Clock_to() {
-                    let cilovyDatum = new Date("{{ auction.date_end_auction|date:'c' }}").getTime();
 
+                    let str = "{{ auction.date_end_auction|date:'c' }}"
+                    let kousek = str.slice(0, -6)
+                    let cilovyDatum = new Date(kousek).getTime();
                     let odpoctavani = setInterval(function () {
-                        let nyni = new Date().getTime();
-                        let rozdil = cilovyDatum - nyni;
+
+                        let nyní = new Date().getTime();
+                        let rozdil = (cilovyDatum - nyní);
 
                         let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
                         let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -134,7 +144,11 @@
                             document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
                                     }
                                 }, 1000);
-                            }
+
+
+
+                }
+
                 Clock_to();
 
                         </script>
