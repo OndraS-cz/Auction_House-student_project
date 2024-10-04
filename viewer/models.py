@@ -249,7 +249,6 @@ class Auction(Model):
 class Bid(Model):
     auction = ForeignKey(Auction, null=True, blank=True, on_delete=models.CASCADE, related_name='bid')
     user = ForeignKey(Profile, null=True, blank=True, on_delete=SET_NULL, related_name='bid')
-    bidder_name = CharField(max_length=255)
     bid_amount = IntegerField(null=False)
     created = DateTimeField(auto_now_add=True)
 
@@ -257,12 +256,12 @@ class Bid(Model):
     def __str__(self):
         return f"{self.bidder_name} - {self.bid_amount} Kč"
 
-
-    def anonymization_name(self):
-        if len(self.bidder_name) <= 2:
-            return self.bidder_name
+    @staticmethod
+    def anonymization_name(name):
+        if len(name) <= 2:
+            return name
         else:
-            return self.bidder_name[0] + '*' * (len(self.bidder_name) - 2) + self.bidder_name[-1]
+            return name[0] + '*' * (len(name) - 2) + name[-1]
 
 
 class Image(Model):

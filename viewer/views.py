@@ -287,7 +287,6 @@ class AuctionTemplateView(TemplateView):
         context_ = self.get_context_data()
         bid_ = Bid.objects.create( auction = context_['auction'],
                             user = Profile.objects.get(user=request.user),
-                            bidder_name = request.POST.get('bidder_name'),
                             bid_amount = request.POST.get('bid_amount'),
                                 )
 

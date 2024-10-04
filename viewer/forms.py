@@ -44,7 +44,7 @@ class BidModelForm(ModelForm):
 
     class Meta:
         model = Bid
-        fields = '__all__' #['bid_amount', 'user']
+        fields = ['bid_amount']
 
     bid_amount = IntegerField(min_value=200000, label="příhoz")
 
