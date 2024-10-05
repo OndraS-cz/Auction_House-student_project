@@ -180,6 +180,7 @@ class DeleteAuction(DeleteView):
     success_url = reverse_lazy('auctions')
 
 class InsertBid(CreateView):
+    model = Bid
     template_name = "auction.html"
     form_class = BidModelForm
     success_url = reverse_lazy('auction')

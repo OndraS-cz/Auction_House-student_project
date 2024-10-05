@@ -1,3 +1,6 @@
+from datetime import date
+
+from django.core.exceptions import ValidationError
 from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput, forms
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
@@ -33,7 +36,6 @@ class AuctionModelForm(ModelForm):
         model = Auction
         fields = '__all__'
 
-
 class ImageModelForm(ModelForm):
     class Meta:
         model = Image
@@ -46,7 +48,13 @@ class BidModelForm(ModelForm):
         model = Bid
         fields = ['bid_amount']
 
-    bid_amount = IntegerField(min_value=200000, label="příhoz")
+    def clean(self):
+        bid_amount = self.cleaned_data['bid_amount']
+        auction = self.cleaned_data.get('auction')
+
+        if auction and bid_amount < auction.min_bid:
+             raise forms.ValidationError(f"Bid must be at least {auction.min_bid}")
+        return bid_amount
 
 class CitiesModelForm(ModelForm):
     class Meta:
