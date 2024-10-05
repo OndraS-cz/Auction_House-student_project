@@ -165,8 +165,12 @@
 
 <div>
     {% if auction.in_progress %}
-        <strong>Nejnižší podání: </strong>
+        <strong>Aktuální hodnota: </strong>
                 {{ auction.min_value }}
+    {% endif %}
+    {% if auction.end %}
+        <strong>Aukci vyhrál: </strong>
+                {{ bid.viner }}
     {% endif %}
 </div>
 

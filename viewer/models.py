@@ -160,16 +160,9 @@ class Auction(Model):
         if self.min_value > self.estimate_value:
             raise ValidationError({
                 'min_value': ('The value is too big.'),
+
             })
 
-
-    def time_set(self):
-        then = self.date_auction.replace(tzinfo=pytz.utc)
-        now = datetime.datetime.now().replace(tzinfo=pytz.utc)
-        time_diference = then - now
-
-        if Bid.created and time_diference.total_seconds() < 300:
-            self.date_end_auction = now + datetime.timedelta(minutes=5)
 
 
     def loc_time(self):
@@ -267,7 +260,8 @@ class Bid(Model):
                 self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=5)
                 self.auction.save()
 
-
+    def viner(self):
+        return f"Ahoj"
 
 
     def __str__(self):

@@ -65,9 +65,11 @@ class HousesListView(ListView):
     model = House
     context_object_name = 'houses'
 
-def insert_data(request):
-    return render(request, "insert_data.html")
-
+class InsertDataListView(PermissionRequiredMixin, ListView):
+    template_name = "insert_data.html"
+    model = Auction
+    context_object_name = 'insert_data'
+    permission_required = 'viewer.insert_data'
 
 class InsertHouse(CreateView):
     template_name = 'form.html'
@@ -391,3 +393,10 @@ class InsertAparmentType(CreateView):
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
+
+def bid(request, pk):
+    if Bid.objects.filter(id=pk).exists():
+        bid_ = Bid.objects.get(id=pk)
+        context = {'bid': bid_}
+        return render(request, 'auction.html', context)
+    return grounds(request)
