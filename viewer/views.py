@@ -276,24 +276,18 @@ class GroundsListView(ListView):
     context_object_name = 'grounds'
 
 
-def auctions(request):
-    auctions_ = Auction.objects.all()
-    context = {'auctions': auctions_}
-    return render(request, 'auctions.html', context)
-
 
 class AuctionTemplateView(TemplateView):
     template_name = "auction.html"
 
     def post(self, request, pk):
-        auction_ = Auction.objects.get(id=pk)
         context_ = self.get_context_data()
         bid_ = Bid.objects.create( auction = context_['auction'],
                             user = Profile.objects.get(user=request.user),
                             bid_amount = request.POST.get('bid_amount'),
                                 )
 
-        return render(request, 'auction.html', context_)
+        return render(request, 'auction.html', context_ )
 
     def get_context_data(self, **kwargs):
         context_= super().get_context_data(**kwargs)
@@ -301,24 +295,18 @@ class AuctionTemplateView(TemplateView):
         auction_ = Auction.objects.get(id=pk)
         context_['auction'] = auction_
         context_['form'] = BidModelForm
+        if Bid.objects.filter(auction_id=pk).exists():
+            context_['last_one'] = Bid.objects.filter(auction_id=pk).latest("created")
+        else:
+            pass
         return context_
 
-class AuctionView(View):
-    def get(self, request):
-        auctions_ = Auction.objects.all()
-        context = {'auctions': auctions_}
-        return render(request, "auctions.html", context)
 
 
 class AuctionsTemplateView(TemplateView):
     template_name = "auctions.html"
     extra_context = {'auctions': Auction.objects.all()}
 
-
-class AuctionsListView(ListView):
-    template_name = "auctions.html"
-    model = Auction
-    context_object_name = 'auctions'
 
 
 class ImageCreateView(PermissionRequiredMixin, CreateView):

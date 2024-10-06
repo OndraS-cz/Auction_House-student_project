@@ -22,13 +22,13 @@ from Auction_house import settings
 
 from accounts.views import SignUpView, user_logout
 
-from viewer.views import home, InsertHouse, ApartmentsListView, apartment, AuctionsListView, ImageCreateView, \
+from viewer.views import home, InsertHouse, ApartmentsListView, apartment, ImageCreateView, \
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
     Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertAparmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
-    InsertDataListView
+    InsertDataListView, AuctionsTemplateView
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -89,7 +89,7 @@ urlpatterns = [
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
-    path('auctions/', AuctionsListView.as_view(), name='auctions'),
+    path('auctions/', AuctionsTemplateView.as_view(), name='auctions'),
     path('auction/<pk>/', AuctionTemplateView.as_view(), name='auction'),
 
     path('images/', ImageDetailView.as_view(), name='images'),

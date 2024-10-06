@@ -48,10 +48,8 @@
         <div class="auction-local_time" id="clock">
         <script>
         function updateClock() {
-            // Získání aktuálního času
             const now = new Date();
 
-            // Formátování času
             const years = now.getFullYear().toString().padStart(1, '0')
             const moths = now.getMonth().toString().padStart(1, '0');
             const days = now.getDate().toString().padStart(1, '0')
@@ -59,17 +57,13 @@
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
 
-            // Složení času do formátu HH:MM:SS
-            const currentTime = `${days}.${(Number(moths) + Number(1))}.${years}  ${hours}:${minutes}:${seconds}`;
+            const trueTime = `${days}.${(Number(moths) + Number(1))}.${years}  ${hours}:${minutes}:${seconds}`;
 
-            // Zobrazení času na stránce
-            document.getElementById('clock').textContent = currentTime;
+            document.getElementById('clock').textContent = trueTime;
         }
 
-        // Aktualizace času každou sekundu
         setInterval(updateClock, 1000);
 
-        // První volání funkce, aby se čas zobrazil ihned při načtení stránky
         updateClock();
         </script>
         </div>
@@ -90,15 +84,14 @@
                     let cilovyDatum = new Date(kousek).getTime();
                     let odpoctavani = setInterval(function () {
 
-                        let nyní = new Date().getTime();
-                        let rozdil = (cilovyDatum - nyní);
+                        let now = new Date().getTime();
+                        let rozdil = (cilovyDatum - now);
 
                         let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
                         let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                         let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
                         let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
 
-                                    // Zobrazení odpočítávání v elementu s id "odpoctavani"
                         document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny}     ${hodiny}:${minuty}:${sekundy}`;
 
                         if (rozdil < 0) {
@@ -128,8 +121,8 @@
                     let cilovyDatum = new Date(kousek).getTime();
                     let odpoctavani = setInterval(function () {
 
-                        let nyní = new Date().getTime();
-                        let rozdil = (cilovyDatum - nyní);
+                        let now = new Date().getTime();
+                        let rozdil = (cilovyDatum - now);
 
                         let dny = Math.floor(rozdil / (1000 * 60 * 60 * 24));
                         let hodiny = Math.floor((rozdil % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
@@ -170,7 +163,7 @@
     {% endif %}
     {% if auction.end %}
         <strong>Aukci vyhrál: </strong>
-                {{ bid.viner }}
+                {{ last_one }}
     {% endif %}
 </div>
 

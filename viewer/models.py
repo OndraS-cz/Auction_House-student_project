@@ -163,8 +163,6 @@ class Auction(Model):
 
             })
 
-
-
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
@@ -260,8 +258,7 @@ class Bid(Model):
                 self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=5)
                 self.auction.save()
 
-    def viner(self):
-        return f"Ahoj"
+
 
 
     def __str__(self):
