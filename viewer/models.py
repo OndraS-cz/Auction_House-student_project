@@ -254,7 +254,19 @@ class Bid(Model):
             self.auction.min_value = int(self.auction.min_value) + int(self.bid_amount)
             self.auction.save()
             time = self.auction.date_end_auction.replace(tzinfo=pytz.utc) - datetime.datetime.now().replace(tzinfo=pytz.utc)
-            if is_new and time.total_seconds() < 300:
+            if time.total_seconds() < 300 and time.total_seconds() >= 240:
+                self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=1)
+                self.auction.save()
+            elif time.total_seconds() < 240 and time.total_seconds() >= 180:
+                self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=2)
+                self.auction.save()
+            elif time.total_seconds() < 180 and time.total_seconds() >= 120:
+                self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=3)
+                self.auction.save()
+            elif time.total_seconds() < 120 and time.total_seconds() >= 60:
+                self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=4)
+                self.auction.save()
+            elif time.total_seconds() < 60 and time.total_seconds() >= 0:
                 self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=5)
                 self.auction.save()
 
