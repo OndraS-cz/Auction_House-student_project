@@ -298,7 +298,7 @@ class AuctionTemplateView(TemplateView):
         if Bid.objects.filter(auction_id=pk).exists():
             context_['last_one'] = Bid.objects.filter(auction_id=pk).latest("created")
         else:
-            pass
+            context_['last_one'] = None
         return context_
 
 
