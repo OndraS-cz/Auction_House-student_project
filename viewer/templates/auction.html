@@ -129,7 +129,6 @@
                         let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
                         let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
 
-                                    // Zobrazení odpočítávání v elementu s id "odpoctavani"
                         document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny}     ${hodiny}:${minuty}:${sekundy}`;
 
                         if (rozdil < 0) {
@@ -209,7 +208,6 @@
 </style>
 
 <script>
-    // Funkce pro zobrazení obrázku
     function showImage(url) {
         const popupImg = document.getElementById('popup-img');
         const overlay = document.getElementById('overlay');
@@ -219,7 +217,6 @@
         overlay.style.display = 'block';  // Zobrazení overlay
     }
 
-    // Funkce pro skrytí obrázku a overlay
     function hideImage() {
         const popupImg = document.getElementById('popup-img');
         const overlay = document.getElementById('overlay');

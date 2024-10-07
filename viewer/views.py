@@ -55,7 +55,7 @@ class HouseTypesListView(ListView):
     model = HouseType
     context_object_name = 'house_types'
 
-class DeleteHouseType(DeleteView):
+class DeleteHouseType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = HouseType
     success_url = reverse_lazy('insert_data')
@@ -71,7 +71,7 @@ class InsertDataListView(PermissionRequiredMixin, ListView):
     context_object_name = 'insert_data'
     permission_required = 'viewer.insert_data'
 
-class InsertHouse(CreateView):
+class InsertHouse(PermissionRequiredMixin, CreateView):
     template_name = 'form.html'
     form_class = HouseModelForm
     success_url = reverse_lazy('insert_property_type')
@@ -81,7 +81,7 @@ class InsertHouse(CreateView):
         return super().form_invalid(form)
 
 
-class UpdateHouse(UpdateView):
+class UpdateHouse(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = HouseModelForm
     success_url = reverse_lazy('houses')
@@ -91,13 +91,13 @@ class UpdateHouse(UpdateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class DeleteHouse(DeleteView):
+class DeleteHouse(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = House
     success_url = reverse_lazy('houses')
 
 
-class InsertApartments(CreateView):
+class InsertApartments(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = ApartmentModelForm
     success_url = reverse_lazy('insert_property_type')
@@ -106,7 +106,7 @@ class InsertApartments(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class UpdateApartments(UpdateView):
+class UpdateApartments(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = ApartmentModelForm
     success_url = reverse_lazy('apartments')
@@ -116,13 +116,13 @@ class UpdateApartments(UpdateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class DeleteApartments(DeleteView):
+class DeleteApartments(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = Apartment
     success_url = reverse_lazy('apartments')
 
 
-class InsertGrounds(CreateView):
+class InsertGrounds(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = GroundModelForm
     success_url = reverse_lazy('insert_property_type')
@@ -131,7 +131,7 @@ class InsertGrounds(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class UpdateGrounds(UpdateView):
+class UpdateGrounds(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = GroundModelForm
     success_url = reverse_lazy('grounds')
@@ -141,13 +141,13 @@ class UpdateGrounds(UpdateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class DeleteGrounds(DeleteView):
+class DeleteGrounds(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = Ground
     success_url = reverse_lazy('grounds')
 
 
-class InsertPropertyType(CreateView):
+class InsertPropertyType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = PropertyTypeModelForm
     success_url = reverse_lazy('insert_auction')
@@ -157,7 +157,7 @@ class InsertPropertyType(CreateView):
         return super().form_invalid(form)
 
 
-class InsertAuction(CreateView):
+class InsertAuction(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = AuctionModelForm
     success_url = reverse_lazy('image_create')
@@ -166,7 +166,7 @@ class InsertAuction(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class UpdateAuction(UpdateView):
+class UpdateAuction(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = AuctionModelForm
     success_url = reverse_lazy('auctions')
@@ -176,7 +176,7 @@ class UpdateAuction(UpdateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class DeleteAuction(DeleteView):
+class DeleteAuction(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = Auction
     success_url = reverse_lazy('auctions')
@@ -214,7 +214,7 @@ class ApartmentsView(View):
         context = {'apartments': apartments_}
         return render(request, "apartments.html", context)
 
-class DeleteApartmentType(DeleteView):
+class DeleteApartmentType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = ApartmentType
     success_url = reverse_lazy('insert_data')
@@ -248,12 +248,12 @@ def ground_types(request):
     context = {'ground_types': ground_types_}
     return render(request, 'ground_types.html', context)
 
-class DeleteGroundType(DeleteView):
+class DeleteGroundType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = GroundType
     success_url = reverse_lazy('insert_data')
 
-class InsertGroundType(CreateView):
+class InsertGroundType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = GroundTypeModelForm
     success_url = reverse_lazy('insert_data')
@@ -349,7 +349,7 @@ def cities(request):
         context = {'cities': cities_}
         return render(request, 'cities.html', context)
 
-class Insertcity(CreateView):
+class Insertcity(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = CitiesModelForm
     success_url = reverse_lazy('insert_data')
@@ -358,13 +358,13 @@ class Insertcity(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class DeleteCity(DeleteView):
+class DeleteCity(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = Cities
     success_url = reverse_lazy('insert_data')
 
 
-class InsertHouseType(CreateView):
+class InsertHouseType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = HouseTypeModelForm
     success_url = reverse_lazy('insert_data')
@@ -373,7 +373,7 @@ class InsertHouseType(CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class InsertAparmentType(CreateView):
+class InsertAparmentType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = ApartmentTypeModelForm
     success_url = reverse_lazy('insert_data')
