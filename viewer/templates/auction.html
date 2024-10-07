@@ -6,26 +6,33 @@
 
 
 <h1>{{ auction.property_type }}</h1>
+<br>
 <div class="auction-details">
     <div class="auction-property_type">
         <strong>Adresa nemovitosti:</strong>
         {{ auction.location }}
     </div>
-
+    <p></p>
     <div class="auction-value">
         <strong>Odhad ceny nemovitosti:</strong>
-            {{ auction.estimate_value }} Kč
+            {{ auction.estimate_value|custom_intcomma }} Kč
     </div>
-
+    <p></p>
+    <div class="auction-min_value">
+        <strong>Nejnižší podání:</strong>
+            {{ auction.min_value|custom_intcomma }}
+    </div>
+    <p></p>
     <div class="auction-assurance">
         <strong>Dražební jistota:</strong>
-            {{ auction.auction_assurance }} Kč
+            {{ auction.auction_assurance|custom_intcomma }} Kč
     </div>
-
+    <p></p>
     <div class="auction-min_bid">
         <strong>Minimální příhoz:</strong>
-            {{ auction.min_bid }} Kč
+            {{ auction.min_bid|custom_intcomma }} Kč
     </div>
+    <p></p>
     {% if auction.isnot_start %}
         <div class="auction-date_auction">
             <strong>Datum dražby:</strong>
@@ -36,9 +43,9 @@
         <div class="auction-time_of">
             <strong>Datum konce dražby:</strong>
             {{auction.date_end_auction|date:"d.m.Y H:i" }}
-
         </div>
     {% endif %}
+<p></p>
 <table>
     <tr>
         <td>
@@ -52,7 +59,6 @@
         function updateClock() {
             const now = new Date();
 
-            // Formátování času
             const years = now.getFullYear().toString().padStart(1, '0')
             const moths = now.getMonth().toString().padStart(1, '0');
             const days = now.getDate().toString().padStart(1, '0')
@@ -60,7 +66,6 @@
             const minutes = now.getMinutes().toString().padStart(2, '0');
             const seconds = now.getSeconds().toString().padStart(2, '0');
 
-            // Složení času do formátu HH:MM:SS
             const currentTime = `${days}.${(Number(moths) + Number(1))}.${years}  ${hours}:${minutes}:${seconds}`;
 
             document.getElementById('clock').textContent = currentTime;
@@ -73,9 +78,9 @@
         </div>
         </td>
     </tr>
-
 </table>
 </div>
+<p></p>
     {% if auction.isnot_start %}
         <div class="auction-time_to">
             <strong>Zbývající čas do dražby</strong>
@@ -96,7 +101,6 @@
                         let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
                         let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
 
-                                    // Zobrazení odpočítávání v elementu s id "odpoctavani"
                         document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny}     ${hodiny}:${minuty}:${sekundy}`;
 
                         if (rozdil < 0) {
@@ -104,14 +108,11 @@
                             document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
                                     }
                                 }, 1000);
-
-
-
                 }
 
                 Clock_to();
 
-                        </script>
+            </script>
         </div>
     {% endif %}
 {% if auction.in_progress %}
@@ -134,7 +135,6 @@
                         let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
                         let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
 
-                                    // Zobrazení odpočítávání v elementu s id "odpoctavani"
                         document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny}     ${hodiny}:${minuty}:${sekundy}`;
 
                         if (rozdil < 0) {
@@ -142,17 +142,15 @@
                             document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
                                     }
                                 }, 1000);
-
-
-
                 }
 
                 Clock_to();
 
-                        </script>
+            </script>
         </div>
     {% endif %}
 
+<br>
 <div class="auction-description">
     <strong>Popis aukce: </strong>
     {{ auction.description|linebreaksbr }}
@@ -161,8 +159,8 @@
 
 <div>
     {% if auction.in_progress %}
-        <strong>Nejnižší podání: </strong>
-                {{ auction.min_value }}
+        <strong>Nejnižší podání:</strong>
+                {{ auction.min_value|custom_intcomma }}
     {% endif %}
 </div>
 <br>
@@ -277,8 +275,5 @@
             {% endfor %}
         </div>
 </div>
-<a href="{% url 'auctions' %}" class="btn btn-primary">
-            Zpět
-        </a>
-
+<a href="{% url 'auctions' %}" class="btn btn-primary">Zpět</a>
 {% endblock %}
