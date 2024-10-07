@@ -96,7 +96,7 @@
 
                         if (rozdil < 0) {
                             clearInterval(odpoctavani);
-                            document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
+                            document.getElementById("odpoctavani").innerHTML = "Aukce začíná!";
                                     }
                                 }, 1000);
 
@@ -133,7 +133,7 @@
 
                         if (rozdil < 0) {
                             clearInterval(odpoctavani);
-                            document.getElementById("odpoctavani").innerHTML = "Odpočítávání skončilo!";
+                            document.getElementById("odpoctavani").innerHTML = "Aukce skončila!";
                                     }
                                 }, 1000);
 
@@ -154,12 +154,18 @@
 
 <div>
 </div>
-
+<div>
+    {% if auction.end %}
+            <strong>Vydražil: </strong>
+                {{ last_one }}
+    {% endif %}
+</div>
 <div>
     {% if auction.in_progress %}
         <strong>Aktuální hodnota: </strong>
                 {{ auction.min_value }}
     {% endif %}
+
     {% if auction.end %}
         <strong>Vydraženo za: </strong>
                 {{ auction.min_value }}
@@ -245,7 +251,7 @@
 </div>
 
 <div>
-    {% if auction.in_progress %}
+    {% if auction.in_progress and user.is_authenticated%}
         <form method="post">
             {% csrf_token %}
             <table>{{ form.as_table }}</table>
@@ -259,6 +265,7 @@
         {% endif %}
 </div>
 <div>
+    {% if user.is_authenticated %}
         <div class="auction-bids">
             {% for bid in auction.bid.all %}
                 <div class="auction-bid bg-light rounded mt-2 p-2 position-relative">
@@ -276,7 +283,9 @@
                 </div>
             {% endfor %}
         </div>
+    {% endif %}
 </div>
+
 <a href="{% url 'auctions' %}" class="btn btn-primary">
             Zpět
         </a>

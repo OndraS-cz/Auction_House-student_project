@@ -1,0 +1,13 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Příhozy aukce</h1>
+    <ul>
+        {% for bid in bids %}
+            <li>
+                {{ bid.user }}
+
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

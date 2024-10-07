@@ -1,7 +1,8 @@
 from datetime import date
-
+from django.contrib.admin.widgets import AdminDateWidget
 from django.core.exceptions import ValidationError
-from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput, forms
+from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput, forms, \
+    SplitDateTimeWidget
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
     Image, Bid
@@ -31,10 +32,16 @@ class PropertyTypeModelForm(ModelForm):
         fields = '__all__'
 
 
+class DateTimePickerInput:
+    pass
+
+
 class AuctionModelForm(ModelForm):
     class Meta:
         model = Auction
         fields = '__all__'
+
+    #date_auction = DateField(required=False, widget=NumberInput(attrs={'type': 'time'}))
 
 class ImageModelForm(ModelForm):
     class Meta:

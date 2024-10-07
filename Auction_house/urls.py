@@ -28,7 +28,7 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
     Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertAparmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
-    InsertDataListView, AuctionsTemplateView
+    InsertDataListView, AuctionsTemplateView, auction_bids
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -91,6 +91,7 @@ urlpatterns = [
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
     path('auctions/', AuctionsTemplateView.as_view(), name='auctions'),
     path('auction/<pk>/', AuctionTemplateView.as_view(), name='auction'),
+    path('auction_bids/<pk>', auction_bids, name='auction_bids'),
 
     path('images/', ImageDetailView.as_view(), name='images'),
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
@@ -101,6 +102,8 @@ urlpatterns = [
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/logout/', user_logout, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
+
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

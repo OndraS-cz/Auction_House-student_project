@@ -163,6 +163,8 @@ class Auction(Model):
 
             })
 
+
+
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
@@ -241,12 +243,14 @@ class Bid(Model):
     created = DateTimeField(auto_now_add=True)
 
     def clean(self):
-        if self.bid_amount > 300:
+        auction = self.auction
+        if int(self.bid_amount) < auction.min_bid:
             raise ValidationError({
                 'bid_amount': ('The value is too small.'),
             })
 
     def save(self, *args, **kwargs):
+        self.clean()
         is_new = self.pk is None
         super().save(*args, **kwargs)
 
@@ -271,10 +275,8 @@ class Bid(Model):
                 self.auction.save()
 
 
-
-
     def __str__(self):
-        return f"{self.bidder_name} - {self.bid_amount} Kč"
+        return f"{self.user}"
 
     @staticmethod
     def anonymization_name(name):

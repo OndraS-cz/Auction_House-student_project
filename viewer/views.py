@@ -59,6 +59,7 @@ class DeleteHouseType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = HouseType
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.delete_house_type'
 
 class HousesListView(ListView):
     template_name = "houses.html"
@@ -75,6 +76,7 @@ class InsertHouse(PermissionRequiredMixin, CreateView):
     template_name = 'form.html'
     form_class = HouseModelForm
     success_url = reverse_lazy('insert_property_type')
+    permission_required = 'viewer.insert_house'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -86,6 +88,7 @@ class UpdateHouse(PermissionRequiredMixin, UpdateView):
     form_class = HouseModelForm
     success_url = reverse_lazy('houses')
     model = House
+    permission_required = 'viewer.update_house'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -95,12 +98,14 @@ class DeleteHouse(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = House
     success_url = reverse_lazy('houses')
+    permission_required = 'viewer.delete_house'
 
 
 class InsertApartments(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = ApartmentModelForm
     success_url = reverse_lazy('insert_property_type')
+    permission_required = 'viewer.insert_apartment'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -111,6 +116,7 @@ class UpdateApartments(PermissionRequiredMixin, UpdateView):
     form_class = ApartmentModelForm
     success_url = reverse_lazy('apartments')
     model = Apartment
+    permission_required = 'viewer.update_apartment'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -120,12 +126,14 @@ class DeleteApartments(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = Apartment
     success_url = reverse_lazy('apartments')
+    permission_required = 'viewer.delete_apartment'
 
 
 class InsertGrounds(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = GroundModelForm
     success_url = reverse_lazy('insert_property_type')
+    permission_required = 'viewer.insert_ground'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -136,6 +144,7 @@ class UpdateGrounds(PermissionRequiredMixin, UpdateView):
     form_class = GroundModelForm
     success_url = reverse_lazy('grounds')
     model = Ground
+    permission_required = 'viewer.update_ground'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -145,12 +154,14 @@ class DeleteGrounds(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = Ground
     success_url = reverse_lazy('grounds')
+    permission_required = 'viewer.delete_ground'
 
 
 class InsertPropertyType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = PropertyTypeModelForm
     success_url = reverse_lazy('insert_auction')
+    permission_required = 'viewer.insert_property_type'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -161,6 +172,7 @@ class InsertAuction(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = AuctionModelForm
     success_url = reverse_lazy('image_create')
+    permission_required = 'viewer.insert_auction'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -171,6 +183,9 @@ class UpdateAuction(PermissionRequiredMixin, UpdateView):
     form_class = AuctionModelForm
     success_url = reverse_lazy('auctions')
     model = Auction
+    permission_required = 'viewer.update_auction'
+
+
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -180,6 +195,7 @@ class DeleteAuction(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = Auction
     success_url = reverse_lazy('auctions')
+    permission_required = 'viewer.delete_auction'
 
 class InsertBid(CreateView):
     model = Bid
@@ -218,6 +234,7 @@ class DeleteApartmentType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = ApartmentType
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.delete_apartment_type'
 
 
 class ApartmentsTemplateView(TemplateView):
@@ -252,11 +269,13 @@ class DeleteGroundType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = GroundType
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.delete_ground_type'
 
 class InsertGroundType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = GroundTypeModelForm
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.insert_ground_type'
 
 class GroundsView(View):
     def get(self, request):
@@ -281,8 +300,10 @@ class AuctionTemplateView(TemplateView):
     template_name = "auction.html"
 
     def post(self, request, pk):
+        last_one = Bid.objects.filter(auction_id = pk).order_by("created").last()
         context_ = self.get_context_data()
-        bid_ = Bid.objects.create( auction = context_['auction'],
+        context_['last_one'] = last_one
+        Bid.objects.create( auction = context_['auction'],
                             user = Profile.objects.get(user=request.user),
                             bid_amount = request.POST.get('bid_amount'),
                                 )
@@ -303,8 +324,10 @@ class AuctionTemplateView(TemplateView):
 
 
 
-class AuctionsTemplateView(TemplateView):
+
+class AuctionsTemplateView(ListView):
     template_name = "auctions.html"
+    model = Auction
     extra_context = {'auctions': Auction.objects.all()}
 
 
@@ -353,6 +376,7 @@ class Insertcity(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = CitiesModelForm
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.insert_cities'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -362,12 +386,14 @@ class DeleteCity(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = Cities
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.delete_cities'
 
 
 class InsertHouseType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = HouseTypeModelForm
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.insert_house_types'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
@@ -377,14 +403,12 @@ class InsertAparmentType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = ApartmentTypeModelForm
     success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.insert_apartment_type'
 
     def form_invalid(self, form):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-def bid(request, pk):
-    if Bid.objects.filter(id=pk).exists():
-        bid_ = Bid.objects.get(id=pk)
-        context = {'bid': bid_}
-        return render(request, 'auction.html', context)
-    return grounds(request)
+def auction_bids(request, pk):
+    bids = Bid.objects.filter(auction_id = pk)
+    return render(request, 'auction_bids.html', {'bids': bids})
