@@ -7,42 +7,38 @@
         <strong>Typ bytu:</strong>
         {{ apartment.property_type }}
     </div>
-
+    <p></p>
     <div class="apartment-area">
         <strong>Výměra:</strong>
             {{ apartment.area }} m2
     </div>
-
+    <p></p>
     <div class="apartment-description">
         <strong>Popis nemovitosti: </strong>
-        {{ apartment.description }}
+        {{ apartment.description|linebreaks }}
     </div>
-
+    <p></p>
     {% if user.is_authenticated %}
     <a href="{%  url 'update_apartments' apartment.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_apartments' apartment.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
     {% endif %}
 </div>
-
+<br>
 <div>
     <strong>Fotogalerie:</strong>
 </div>
-
 <div class="apartments-images">
     {% for image in apartment.images.all %}
         <span class="apartment-image">
-            <!-- Zmenšený obrázek -->
             <img src="{{ image.image.url }}" alt="{{ image.description }}" width="150px" class="small-img" onclick="showImage('{{ image.image.url }}')">
         </span>
     {% endfor %}
 </div>
 
-<!-- Overlay a pop-up obrázek -->
 <div class="overlay" id="overlay" onclick="hideImage()"></div>
 <img id="popup-img" class="large-img">
 
 <style>
-    /* Styl pro overlay a velký obrázek */
     .overlay {
         display: none;
         position: fixed;
@@ -67,25 +63,23 @@
 </style>
 
 <script>
-    // Funkce pro zobrazení obrázku
     function showImage(url) {
         const popupImg = document.getElementById('popup-img');
         const overlay = document.getElementById('overlay');
 
-        popupImg.src = url;  // Nastavení URL obrázku
-        popupImg.style.display = 'block';  // Zobrazení obrázku
-        overlay.style.display = 'block';  // Zobrazení overlay
+        popupImg.src = url;
+        popupImg.style.display = 'block';
+        overlay.style.display = 'block';
     }
 
-    // Funkce pro skrytí obrázku a overlay
     function hideImage() {
         const popupImg = document.getElementById('popup-img');
         const overlay = document.getElementById('overlay');
 
-        popupImg.style.display = 'none';  // Skrytí obrázku
-        overlay.style.display = 'none';  // Skrytí overlay
+        popupImg.style.display = 'none';
+        overlay.style.display = 'none';
     }
 </script>
-
+<br>
 <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
 {% endblock %}

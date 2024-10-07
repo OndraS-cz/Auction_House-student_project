@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load number_format %}
+
 {% block content %}
 
 
@@ -41,14 +43,13 @@
     <tr>
         <td>
             <div>
-                <strong>Aktuální čas:   </strong>
+                <strong>Aktuální čas: </strong>
             </div>
         </td>
         <td>
         <div class="auction-local_time" id="clock">
         <script>
         function updateClock() {
-            // Získání aktuálního času
             const now = new Date();
 
             // Formátování času
@@ -62,14 +63,11 @@
             // Složení času do formátu HH:MM:SS
             const currentTime = `${days}.${(Number(moths) + Number(1))}.${years}  ${hours}:${minutes}:${seconds}`;
 
-            // Zobrazení času na stránce
             document.getElementById('clock').textContent = currentTime;
         }
 
-        // Aktualizace času každou sekundu
         setInterval(updateClock, 1000);
 
-        // První volání funkce, aby se čas zobrazil ihned při načtení stránky
         updateClock();
         </script>
         </div>
@@ -157,11 +155,9 @@
 
 <div class="auction-description">
     <strong>Popis aukce: </strong>
-    {{ auction.description }}
+    {{ auction.description|linebreaksbr }}
 </div>
-
-<div>
-</div>
+<br>
 
 <div>
     {% if auction.in_progress %}
@@ -169,25 +165,22 @@
                 {{ auction.min_value }}
     {% endif %}
 </div>
-
+<br>
 <div>
     <strong>Fotogalerie:</strong>
 </div>
 <div class="auctions-images">
     {% for image in auction.images.all %}
         <span class="auction-image">
-            <!-- Zmenšený obrázek -->
             <img src="{{ image.image.url }}" alt="{{ image.description }}" width="150px" class="small-img" onclick="showImage('{{ image.image.url }}')">
         </span>
     {% endfor %}
 </div>
 
-<!-- Overlay a pop-up obrázek -->
 <div class="overlay" id="overlay" onclick="hideImage()"></div>
 <img id="popup-img" class="large-img">
 
 <style>
-    /* Styl pro overlay a velký obrázek */
     .overlay {
         display: none;
         position: fixed;
@@ -212,26 +205,24 @@
 </style>
 
 <script>
-    // Funkce pro zobrazení obrázku
     function showImage(url) {
         const popupImg = document.getElementById('popup-img');
         const overlay = document.getElementById('overlay');
 
-        popupImg.src = url;  // Nastavení URL obrázku
-        popupImg.style.display = 'block';  // Zobrazení obrázku
-        overlay.style.display = 'block';  // Zobrazení overlay
+        popupImg.src = url;
+        popupImg.style.display = 'block';
+        overlay.style.display = 'block';
     }
 
-    // Funkce pro skrytí obrázku a overlay
     function hideImage() {
         const popupImg = document.getElementById('popup-img');
         const overlay = document.getElementById('overlay');
 
-        popupImg.style.display = 'none';  // Skrytí obrázku
-        overlay.style.display = 'none';  // Skrytí overlay
+        popupImg.style.display = 'none';
+        overlay.style.display = 'none';
     }
 </script>
-
+<br>
 <div>
     {% if auction.property_type.apartment_id %}
         <a href="{% url 'apartment' auction.property_type.apartment_id %}" class="btn btn-primary">
@@ -249,9 +240,10 @@
         </a>
     {% endif %}
 </div>
-
+<br>
 <div>
     {% if auction.in_progress %}
+        <p></p>
         <form method="post">
             {% csrf_token %}
             <table>{{ form.as_table }}</table>
@@ -259,8 +251,10 @@
         </form>
     {% endif %}
 </div>
+
 <div>
         {% if auction.end and Bid.bid_date.exists %}
+            <p></p>
             <strong>Prodáno </strong>
         {% endif %}
 </div>
