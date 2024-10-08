@@ -417,10 +417,9 @@ def auction_bids(request, pk):
     return render(request, 'auction_bids.html', {'bids': bids})
 
 def won_auctions_view(request):
-    # Získat aukce, které skončily a kde má uživatel nejvyšší příhoz
     won_auctions = Auction.objects.filter(
         date_end_auction__lt=now(),
-        bid__user=request.user.profile  # předpoklad, že uživatel je propojen s Profile modelem
+        bid__user=request.user.profile
     ).annotate(
         highest_bid_amount=Max('bid__bid_amount')
     ).filter(
