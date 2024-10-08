@@ -1,8 +1,4 @@
-from datetime import date
-from django.contrib.admin.widgets import AdminDateWidget
-from django.core.exceptions import ValidationError
-from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput, forms, \
-    SplitDateTimeWidget
+from django.forms import CharField, ModelChoiceField, IntegerField, ModelForm, Textarea, DateTimeField, ImageField
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
     Image, Bid
@@ -19,6 +15,7 @@ class HouseModelForm(ModelForm):
     plot_area = IntegerField(label="Zastavěná plocha")
     garden_area = IntegerField(label="Výměra pozemku")
     description = CharField(widget=Textarea, label="Popis nemovitosti")
+
 
 class ApartmentModelForm(ModelForm):
     class Meta:
@@ -95,6 +92,7 @@ class CitiesModelForm(ModelForm):
         fields = '__all__'
 
     name = CharField(label="Název města")
+
 
 class HouseTypeModelForm(ModelForm):
     class Meta:
