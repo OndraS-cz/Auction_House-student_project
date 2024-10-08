@@ -28,7 +28,7 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
     Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertAparmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
-    InsertDataListView, AuctionsTemplateView, auction_bids
+    InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -92,6 +92,7 @@ urlpatterns = [
     path('auctions/', AuctionsTemplateView.as_view(), name='auctions'),
     path('auction/<pk>/', AuctionTemplateView.as_view(), name='auction'),
     path('auction_bids/<pk>', auction_bids, name='auction_bids'),
+    path('won_auctions', won_auctions_view ,name='won_auctions'),
 
     path('images/', ImageDetailView.as_view(), name='images'),
     path('image/create/', ImageCreateView.as_view(), name='image_create'),

@@ -2,9 +2,10 @@ from datetime import datetime, tzinfo
 from lib2to3.fixes.fix_input import context
 
 import pytz
-
+from django.utils.timezone import now
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import ValidationError
+from django.db.models import Max, F
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView, TemplateView, ListView, CreateView, DetailView
@@ -333,6 +334,7 @@ class AuctionsTemplateView(ListView):
 
 
 
+
 class ImageCreateView(PermissionRequiredMixin, CreateView):
     template_name = 'form_image.html'
     form_class = ImageModelForm
@@ -413,3 +415,20 @@ class InsertAparmentType(PermissionRequiredMixin, CreateView):
 def auction_bids(request, pk):
     bids = Bid.objects.filter(auction_id = pk)
     return render(request, 'auction_bids.html', {'bids': bids})
+
+def won_auctions_view(request):
+    # Získat aukce, které skončily a kde má uživatel nejvyšší příhoz
+    won_auctions = Auction.objects.filter(
+        date_end_auction__lt=now(),
+        bid__user=request.user.profile  # předpoklad, že uživatel je propojen s Profile modelem
+    ).annotate(
+        highest_bid_amount=Max('bid__bid_amount')
+    ).filter(
+        bid__bid_amount=F('highest_bid_amount')
+    )
+
+    context = {
+        'won_auctions': won_auctions
+    }
+
+    return render(request, 'win_auctions.html', context)
