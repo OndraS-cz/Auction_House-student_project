@@ -1,7 +1,6 @@
 from datetime import date
 
 from django.contrib.auth.forms import UserCreationForm, UsernameField
-from django.contrib.auth.password_validation import password_validators_help_text_html
 from django.core.exceptions import ValidationError
 from django.db.transaction import atomic
 from django.forms import DateField, NumberInput, IntegerField, CharField, ChoiceField, PasswordInput
@@ -10,16 +9,16 @@ from accounts.models import Profile
 from accounts.check_document import check_document
 
 password_validators_help_text_html = (
-    "Vaše heslo nesmí být příliš podobné vašim dalším osobním údajům."
-    "Vaše heslo musí obsahovat alespoň 8 znaků."
-    "Vaše heslo nemůže být běžně používané heslo."
-    "Vaše heslo nemůže být pouze číselné.")
+    "• Vaše heslo nesmí být příliš podobné vašim dalším osobním údajům.<br>"
+    "• Vaše heslo musí obsahovat alespoň 8 znaků.<br>"
+    "• Vaše heslo nemůže být běžně používané heslo.<br>"
+    "• Vaše heslo nemůže být pouze číselné.<br>")
 
 
 class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ['username', 'first_name', 'last_name', 'date_of_birth', 'birth_nr', 'document_type', 'document_number', 'document_expiry', 'phone_number', 'email', 'password1', 'password2']
-    username = UsernameField(label="Uživatelské jméno", help_text="doplnit český překlad")
+    username = UsernameField(label="Uživatelské jméno", help_text="Vyžadováno. 150 znaků nebo méně. Pouze písmena, číslice a znaky @/./+/-/_.")
     first_name = CharField(label="Křestní jméno")
     last_name = CharField(label="Příjmení")
     date_of_birth = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum narození", required=True)
