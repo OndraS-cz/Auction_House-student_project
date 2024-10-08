@@ -1,17 +1,25 @@
 from datetime import date
 
-from django.contrib.auth.forms import UserCreationForm
+from django.contrib.auth.forms import UserCreationForm, UsernameField
+from django.contrib.auth.password_validation import password_validators_help_text_html
 from django.core.exceptions import ValidationError
 from django.db.transaction import atomic
-from django.forms import DateField, NumberInput, IntegerField, CharField, ChoiceField
+from django.forms import DateField, NumberInput, IntegerField, CharField, ChoiceField, PasswordInput
 
 from accounts.models import Profile
 from accounts.check_document import check_document
+
+password_validators_help_text_html = (
+    "Vaše heslo nesmí být příliš podobné vašim dalším osobním údajům."
+    "Vaše heslo musí obsahovat alespoň 8 znaků."
+    "Vaše heslo nemůže být běžně používané heslo."
+    "Vaše heslo nemůže být pouze číselné.")
 
 
 class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ['username', 'first_name', 'last_name', 'date_of_birth', 'birth_nr', 'document_type', 'document_number', 'document_expiry', 'phone_number', 'email', 'password1', 'password2']
+    username = UsernameField(label="Uživatelské jméno", help_text="doplnit český překlad")
     first_name = CharField(label="Křestní jméno")
     last_name = CharField(label="Příjmení")
     date_of_birth = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum narození", required=True)
@@ -20,7 +28,8 @@ class SignUpForm(UserCreationForm):
     document_number = CharField(max_length=15, label="Číslo dokladu")
     document_expiry = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum platnosti dokladu", required=True)
     phone_number = IntegerField(label="Mobilní telefon")
-
+    password1 = CharField(widget=PasswordInput(attrs={'type': 'password'}), label="Heslo", required=True, help_text=password_validators_help_text_html)
+    password2 = CharField(widget=PasswordInput(attrs={'type': 'password'}), label="Potvrzení hesla", required=True)
 
     @atomic
     def save(self, commit=True):
@@ -47,7 +56,6 @@ class SignUpForm(UserCreationForm):
             profile.save()
         return user
 
-
     def clean_first_name(self):
         cleaned_data = self.cleaned_data
         initial = cleaned_data['first_name']
@@ -60,7 +68,6 @@ class SignUpForm(UserCreationForm):
                 result = result.capitalize()
             print(f"result: '{result}'")
         return result
-
 
     def clean_last_name(self):
         cleaned_data = self.cleaned_data
@@ -75,7 +82,6 @@ class SignUpForm(UserCreationForm):
             print(f"result: '{result}'")
         return result
 
-
     def clean_date_of_birth(self):
         print("clean_date_of_birth")
         cleaned_data = self.cleaned_data
@@ -86,14 +92,12 @@ class SignUpForm(UserCreationForm):
             raise ValidationError('Datum narození musí být v minulosti!')
         return date_of_birth
 
-
     def clean_document_expiry(self):
         cleaned_data = self.cleaned_data
         document_expiry = cleaned_data['document_expiry']
         if document_expiry and document_expiry <= date.today():
             raise ValidationError('Datum platnosti občanského průkazu musí být pouze v budoucnosti!')
         return document_expiry
-
 
     def clean(self):
         cleaned_data = self.cleaned_data
@@ -104,7 +108,6 @@ class SignUpForm(UserCreationForm):
         cleaned_data['first_name'] = name
         cleaned_data['last_name'] = surname
         return cleaned_data
-
 
     def clean_birth_nr(self):
         cleaned_data = self.cleaned_data

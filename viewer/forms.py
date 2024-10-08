@@ -1,6 +1,6 @@
 from django.db.models.fields import TextField
 from django.forms import Form, CharField, ModelChoiceField, IntegerField, DateField, ModelForm, NumberInput, forms, \
-    DateTimeField
+    DateTimeField, ChoiceField, Textarea
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
     Image, Bid
@@ -35,8 +35,8 @@ class AuctionModelForm(ModelForm):
         model = Auction
         fields = '__all__'
 
-    property_type = CharField(label="Nemovitost:")
-    city = CharField(label="Město:")
+    property_type = ModelChoiceField(queryset=PropertyType.objects.all(), label="Nemovitost:")
+    city = ModelChoiceField(queryset=Cities.objects.all(), label="Město:")
     location = CharField(label="Adresa (lokace):")
     estimate_value = IntegerField(label="Odhadní cena:")
     min_value = IntegerField(label="Nejnižší podání:")
@@ -44,7 +44,7 @@ class AuctionModelForm(ModelForm):
     min_bid = IntegerField(label="Minimální příhoz:")
     date_auction = DateTimeField(label="Datum aukce:")
     date_end_auction = DateTimeField(label="Datum konce aukce:")
-    description = CharField(label="Popis aukce:")
+    description = CharField(widget=Textarea, label="Popis aukce:")
 
 
 class ImageModelForm(ModelForm):
