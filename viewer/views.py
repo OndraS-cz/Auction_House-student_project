@@ -329,7 +329,7 @@ class AuctionTemplateView(TemplateView):
 class AuctionsTemplateView(ListView):
     template_name = "auctions.html"
     model = Auction
-    extra_context = {'auctions': Auction.objects.all()}
+    context_object_name = 'auctions'
 
 
 
