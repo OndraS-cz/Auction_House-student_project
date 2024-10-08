@@ -243,8 +243,7 @@ class Bid(Model):
     created = DateTimeField(auto_now_add=True)
 
     def clean(self):
-        auction = self.auction
-        if int(self.bid_amount) < auction.min_bid:
+        if int(self.bid_amount) < self.auction.min_bid:
             raise ValidationError({
                 'bid_amount': ('The value is too small.'),
             })
