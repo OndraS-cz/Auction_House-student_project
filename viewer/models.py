@@ -254,8 +254,9 @@ class Bid(Model):
         super().save(*args, **kwargs)
 
         if is_new:
-            self.auction.akt_value = self.auction.min_value
-            self.auction.akt_value = int(self.auction.min_value) + int(self.bid_amount)
+            if self.auction.akt_value == None:
+                self.auction.akt_value = self.auction.min_value
+            self.auction.akt_value = int(self.auction.akt_value) + int(self.bid_amount)
             self.auction.save()
             time = self.auction.date_end_auction.replace(tzinfo=pytz.utc) - datetime.datetime.now().replace(tzinfo=pytz.utc)
             if time.total_seconds() < 300 and time.total_seconds() >= 240:
