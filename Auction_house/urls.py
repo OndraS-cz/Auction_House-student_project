@@ -26,7 +26,7 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
-    Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertAparmentType, \
+    InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
     InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view
 
@@ -62,7 +62,7 @@ urlpatterns = [
     path('apartment/<pk>/', apartment, name='apartment'),
 
     path('aparment_types/', aparment_types, name="aparment_types"),
-    path('insert/apartment_types', InsertAparmentType.as_view(), name="insert_apartment_types"),
+    path('insert/apartment_types', InsertApartmentType.as_view(), name="insert_apartment_types"),
     path('delete/apartment_types/<pk>', DeleteApartmentType.as_view(), name="delete_apartment_types"),
 
 
@@ -80,7 +80,7 @@ urlpatterns = [
     path('insert/property_type', InsertPropertyType.as_view(), name="insert_property_type"),
 
     path('delete/cities/<pk>', DeleteCity.as_view(), name="delete_cities"),
-    path('insert/cities', Insertcity.as_view(), name="insert_cities"),
+    path('insert/cities', InsertCity.as_view(), name="insert_cities"),
     path('cities/', cities, name='cities'),
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
