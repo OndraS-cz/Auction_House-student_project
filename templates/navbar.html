@@ -17,6 +17,10 @@
                     <a class="nav-item nav-link active" href="{% url 'insert_data' %}">Vložení dat</a>
                     <a class="nav-item nav-link active" href="{% url 'won_auctions' %}">Vyhrané aukce</a>
                 {% endif %}
+            <form method="get" action="{% url 'auctions_list' %}">
+                <input type="text" name="q" placeholder="Hledat aukci" value="{{ request.GET.q }}">
+                <button type="submit">Hledat</button>
+            </form>
           </div>
         </div>
         <div class="navbar-nav ml-auto">

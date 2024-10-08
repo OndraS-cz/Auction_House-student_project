@@ -5,7 +5,7 @@ import pytz
 from django.utils.timezone import now
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.core.exceptions import ValidationError
-from django.db.models import Max, F
+from django.db.models import Max, F, Q
 from django.shortcuts import render, get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView, TemplateView, ListView, CreateView, DetailView
@@ -431,3 +431,17 @@ def won_auctions_view(request):
     }
 
     return render(request, 'win_auctions.html', context)
+
+def auctions_list_view(request):
+    query = request.GET.get('q')  # Získá vyhledávací dotaz z URL parametrů
+    auctions = Auction.objects.all()
+
+    if query:
+        auctions = auctions.filter(
+            Q(location__icontains=query) | Q(description__icontains=query)
+        )
+
+    context = {
+        'auctions': auctions,
+    }
+    return render(request, 'auction_search.html', context)

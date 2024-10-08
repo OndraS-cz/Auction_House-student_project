@@ -28,7 +28,7 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
     Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertAparmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
-    InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view
+    InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -90,6 +90,7 @@ urlpatterns = [
     path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
     path('auctions/', AuctionsTemplateView.as_view(), name='auctions'),
+    path('auctions_search/', auctions_list_view, name='auctions_list'),
     path('auction/<pk>/', AuctionTemplateView.as_view(), name='auction'),
     path('auction_bids/<pk>', auction_bids, name='auction_bids'),
     path('won_auctions', won_auctions_view ,name='won_auctions'),
@@ -103,6 +104,7 @@ urlpatterns = [
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/logout/', user_logout, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
+
 
 
 
