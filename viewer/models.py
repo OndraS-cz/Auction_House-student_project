@@ -143,20 +143,18 @@ class Auction(Model):
     date_end_auction = DateTimeField(null=False)
     description = TextField(null=True, blank=True)
 
-    def clean_date(self):
+    def clean(self):
         if self.date_auction > self.date_end_auction:
             raise ValidationError({
                 'date_auction': ('The start date of the auction cannot be after the end date.'),
                 'date_end_auction': ('The end date of the auction must be after the start date.'),
             })
-    def clean_min_big(self):
         if self.min_bid > self.estimate_value or self.min_value or self.auction_assurance:
             raise ValidationError({
                 'min_bid': ('The value is too big.'),
 
             })
 
-    def clean_min_value(self):
         if self.min_value > self.estimate_value:
             raise ValidationError({
                 'min_value': ('The value is too big.'),

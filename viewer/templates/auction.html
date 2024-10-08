@@ -254,7 +254,8 @@
     {% if auction.in_progress and user.is_authenticated%}
         <form method="post">
             {% csrf_token %}
-            <table>{{ form.as_table }}</table>
+            <label for="bid_amount"><strong>Velikost příhozu</strong></label>
+            <input type="number" id="bid_amount" name="bid_amount" min="{{ auction.min_bid }}">
             <input id="id_submit" type="submit" value="Přihodit" class="btn btn-primary">
         </form>
     {% endif %}
