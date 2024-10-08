@@ -1,8 +1,7 @@
 from django.core.exceptions import ValidationError
 from django.db import models
 
-from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField, ImageField, TextField, \
-    ManyToManyField
+from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField, ImageField, TextField
 
 import time
 
@@ -153,9 +152,7 @@ class Auction(Model):
         if self.min_bid > self.estimate_value or self.min_bid > self.min_value or self.min_bid > self.auction_assurance:
             raise ValidationError({
                 'min_bid': ('The value is too big.'),
-
             })
-
         if self.min_value > self.estimate_value:
             raise ValidationError({
                 'min_value': ('The value is too big.'),
@@ -167,19 +164,15 @@ class Auction(Model):
                 'estimate_value': ('The value is too big.')
             })
 
-
-
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
-
 
     def time_to(self):
             then = self.date_auction.replace(tzinfo=pytz.utc)
             now = datetime.datetime.now().replace(tzinfo=pytz.utc)
             time_difference = then - now
             return time_difference
-
 
     def time_of(self):
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
@@ -190,7 +183,6 @@ class Auction(Model):
         else:
             return "Konec"
 
-
     def difference(self):
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
         then = self.date_end_auction.replace(tzinfo=pytz.utc)
@@ -199,7 +191,6 @@ class Auction(Model):
             return result
         else:
             return "Konec"
-
 
     def in_progress(self):
         auction_start = self.date_auction.replace(tzinfo=pytz.utc)
@@ -218,7 +209,6 @@ class Auction(Model):
         else:
             return False
 
-
     def end(self):
         actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
         auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
@@ -227,14 +217,11 @@ class Auction(Model):
         else:
             return False
 
-
     class Meta:
         verbose_name_plural = "Auctions"
 
-
     def __repr__(self):
         return f"Auction(name={self.property_type}, {self.location})"
-
 
     def __str__(self):
         return f"{self.property_type} ({self.location})"
@@ -245,8 +232,6 @@ class Bid(Model):
     user = ForeignKey(Profile, null=True, blank=True, on_delete=SET_NULL, related_name='bid')
     bid_amount = IntegerField(null=False)
     created = DateTimeField(auto_now_add=True)
-
-
 
     def save(self, *args, **kwargs):
         self.clean()
@@ -275,7 +260,6 @@ class Bid(Model):
                 self.auction.date_end_auction = self.auction.date_end_auction + datetime.timedelta(minutes=5)
                 self.auction.save()
 
-
     def __str__(self):
         return f"{self.user}"
 
@@ -292,13 +276,11 @@ class Image(Model):
     house = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True, related_name='images')
     apartment = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True, related_name='images')
     ground = ForeignKey(Ground, on_delete=SET_NULL, null=True, blank=True, related_name='images')
-    auctions = ManyToManyField(Auction, blank=True, related_name='images')
+    auctions = ForeignKey(Auction, on_delete=SET_NULL, null=True ,blank=True, related_name='images')
     description = TextField(null=True, blank=True)
-
 
     def __repr__(self):
         return f"Image(image={self.image}, auctions={self.auctions}, description={self.description})"
-
 
     def __str__(self):
         return f"Image: {self.image}, {self.description}"
