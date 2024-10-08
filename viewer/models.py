@@ -149,7 +149,7 @@ class Auction(Model):
                 'date_auction': ('The start date of the auction cannot be after the end date.'),
                 'date_end_auction': ('The end date of the auction must be after the start date.'),
             })
-        if self.min_bid > self.estimate_value or self.min_value or self.auction_assurance:
+        if self.min_bid > self.estimate_value or self.min_bid > self.min_value or self.min_bid > self.auction_assurance:
             raise ValidationError({
                 'min_bid': ('The value is too big.'),
 
@@ -158,7 +158,12 @@ class Auction(Model):
         if self.min_value > self.estimate_value:
             raise ValidationError({
                 'min_value': ('The value is too big.'),
-
+                'estimate_value': ('The value is too big.')
+            })
+        if self.auction_assurance > self.estimate_value:
+            raise ValidationError({
+                'auction_assurance': ('The value is too big.'),
+                'estimate_value': ('The value is too big.')
             })
 
 
@@ -240,11 +245,7 @@ class Bid(Model):
     bid_amount = IntegerField(null=False)
     created = DateTimeField(auto_now_add=True)
 
-    def clean(self):
-        if int(self.bid_amount) < self.auction.min_bid:
-            raise ValidationError({
-                'bid_amount': ('The value is too small.'),
-            })
+
 
     def save(self, *args, **kwargs):
         self.clean()
