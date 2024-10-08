@@ -1,4 +1,4 @@
-from django.forms import CharField, ModelChoiceField, IntegerField, ModelForm, DateTimeField, Textarea
+from django.forms import CharField, ModelChoiceField, IntegerField, ModelForm, DateTimeField, Textarea, ImageField
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
     Image, Bid
@@ -33,7 +33,7 @@ class GroundModelForm(ModelForm):
         fields = '__all__'
 
     name = CharField(label="Název nemovitosti")
-    property_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Druh pozemku")
+    property_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Typ pozemku")
     property_area = IntegerField(label="Výměra pozemku")
     description = CharField(widget=Textarea, label="Popis nemovitosti")
 
@@ -69,6 +69,14 @@ class ImageModelForm(ModelForm):
     class Meta:
         model = Image
         fields = '__all__'
+
+    image = ImageField(label="Obrázek")
+    house = ModelChoiceField(queryset=HouseType.objects.all(), label="Vyber příslušný dům")
+    apartment = ModelChoiceField(queryset=ApartmentType.objects.all(), label="Vyber příslušný byt")
+    ground = ModelChoiceField(queryset=GroundType.objects.all(), label="Vyber příslušný pozemek")
+    auctions = ModelChoiceField(queryset=Auction.objects.all(), label="Vyber příslušnou aukci")
+    description = CharField(widget=Textarea, label="Popis obrázku")
+
 
 class BidModelForm(ModelForm):
 

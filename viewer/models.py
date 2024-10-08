@@ -1,7 +1,6 @@
 from django.db import models
 
-from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField, ImageField, TextField, \
-    ManyToManyField
+from django.db.models import Model, CharField, DateTimeField, ForeignKey, SET_NULL, IntegerField, ImageField, TextField
 
 import time
 
@@ -141,8 +140,6 @@ class Auction(Model):
     date_end_auction = DateTimeField(null=False)
     description = TextField(null=True, blank=True)
 
-
-
     def time_set(self):
         then = self.date_auction.replace(tzinfo=pytz.utc)
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
@@ -151,18 +148,15 @@ class Auction(Model):
         if Bid.create and time_diference.total_seconds() < 300:
             self.date_end_auction = now + datetime.timedelta(minutes=5)
 
-
     def loc_time(self):
         local = time.localtime()
         return f"{local[2]}.{local[1]}.{local[0]} {local[3]}:{local[4]}"
-
 
     def time_to(self):
             then = self.date_auction.replace(tzinfo=pytz.utc)
             now = datetime.datetime.now().replace(tzinfo=pytz.utc)
             time_difference = then - now
             return time_difference
-
 
     def time_of(self):
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
@@ -173,7 +167,6 @@ class Auction(Model):
         else:
             return "Konec"
 
-
     def difference(self):
         now = datetime.datetime.now().replace(tzinfo=pytz.utc)
         then = self.date_end_auction.replace(tzinfo=pytz.utc)
@@ -182,7 +175,6 @@ class Auction(Model):
             return result
         else:
             return "Konec"
-
 
     def in_progress(self):
         auction_start = self.date_auction.replace(tzinfo=pytz.utc)
@@ -201,7 +193,6 @@ class Auction(Model):
         else:
             return False
 
-
     def end(self):
         actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
         auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
@@ -210,14 +201,11 @@ class Auction(Model):
         else:
             return False
 
-
     class Meta:
         verbose_name_plural = "Auctions"
 
-
     def __repr__(self):
         return f"Auction(name={self.property_type}, {self.location})"
-
 
     def __str__(self):
         return f"{self.property_type} ({self.location})"
@@ -228,7 +216,6 @@ class Bid(Model):
     user = ForeignKey(Profile, null=True, blank=True, on_delete=SET_NULL, related_name='bid')
     bid_amount = IntegerField(null=False)
     created = DateTimeField(auto_now_add=True)
-
 
     def __str__(self):
         return f"{self.bidder_name} - {self.bid_amount} Kč"
@@ -246,13 +233,11 @@ class Image(Model):
     house = ForeignKey(House, on_delete=SET_NULL, null=True, blank=True, related_name='images')
     apartment = ForeignKey(Apartment, on_delete=SET_NULL, null=True, blank=True, related_name='images')
     ground = ForeignKey(Ground, on_delete=SET_NULL, null=True, blank=True, related_name='images')
-    auctions = ManyToManyField(Auction, blank=True, related_name='images')
+    auctions = ForeignKey(Auction, on_delete=SET_NULL, null=True ,blank=True, related_name='images')
     description = TextField(null=True, blank=True)
-
 
     def __repr__(self):
         return f"Image(image={self.image}, auctions={self.auctions}, description={self.description})"
-
 
     def __str__(self):
         return f"Image: {self.image}, {self.description}"
