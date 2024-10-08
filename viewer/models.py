@@ -137,6 +137,7 @@ class Auction(Model):
     location = CharField(max_length=50, null=False)
     estimate_value = IntegerField(null=False)
     min_value = IntegerField(null=False)
+    akt_value = IntegerField(null=False)
     auction_assurance = IntegerField(null=False)
     min_bid = IntegerField(null=True, blank=False)
     date_auction = DateTimeField(null=False)
@@ -253,7 +254,8 @@ class Bid(Model):
         super().save(*args, **kwargs)
 
         if is_new:
-            self.auction.min_value = int(self.auction.min_value) + int(self.bid_amount)
+            self.auction.akt_value = int(self.auction.min_value)
+            self.auction.akt_value = int(self.auction.min_value) + int(self.bid_amount)
             self.auction.save()
             time = self.auction.date_end_auction.replace(tzinfo=pytz.utc) - datetime.datetime.now().replace(tzinfo=pytz.utc)
             if time.total_seconds() < 300 and time.total_seconds() >= 240:
