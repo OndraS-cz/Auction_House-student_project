@@ -167,7 +167,7 @@
 <div>
     {% if auction.in_progress %}
         <strong>Aktuální hodnota: </strong>
-                {{ auction.min_value|custom_intcomma }}
+                {{ auction.akt_value|custom_intcomma }}
     {% endif %}
 
     {% if auction.end %}
