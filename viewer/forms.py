@@ -32,10 +32,6 @@ class PropertyTypeModelForm(ModelForm):
         fields = '__all__'
 
 
-class DateTimePickerInput:
-    pass
-
-
 class AuctionModelForm(ModelForm):
     class Meta:
         model = Auction
@@ -55,13 +51,6 @@ class BidModelForm(ModelForm):
         model = Bid
         fields = ['bid_amount']
 
-    def clean(self):
-        bid_amount = self.cleaned_data['bid_amount']
-        auction = self.cleaned_data.get('auction')
-
-        if auction and bid_amount < auction.min_bid:
-             raise forms.ValidationError(f"Bid must be at least {auction.min_bid}")
-        return bid_amount
 
 class CitiesModelForm(ModelForm):
     class Meta:
