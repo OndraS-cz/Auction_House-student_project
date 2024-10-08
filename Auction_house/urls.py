@@ -53,9 +53,6 @@ urlpatterns = [
     path('insert/house_types', InsertHouseType.as_view(), name="insert_house_type"),
     path('delete/house_type/<pk>', DeleteHouseType.as_view(), name="delete_house_type"),
 
-
-
-
     path('insert/apartments', InsertApartments.as_view(), name="insert_apartments"),
     path('update/apartments/<pk>', UpdateApartments.as_view(), name="update_apartments"),
     path('delete/apartments/<pk>', DeleteApartments.as_view(), name="delete_apartments"),

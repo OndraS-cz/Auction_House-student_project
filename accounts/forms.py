@@ -2,7 +2,6 @@ from datetime import date
 
 from django.contrib.auth.forms import UserCreationForm
 from django.core.exceptions import ValidationError
-from django.db.models.expressions import result
 from django.db.transaction import atomic
 from django.forms import DateField, NumberInput, IntegerField, CharField, ChoiceField
 
@@ -49,10 +48,24 @@ class SignUpForm(UserCreationForm):
         return user
 
 
-    def clean_name(self):
+    def clean_first_name(self):
         cleaned_data = self.cleaned_data
-        initial = cleaned_data['name']
-        print(f"initial name: '{initial}'")
+        initial = cleaned_data['first_name']
+        print(f"initial first_name: '{initial}'")
+        result = initial
+        if initial is not None:
+            result = initial.strip()
+            print(f"result: '{result}'")
+            if len(result):
+                result = result.capitalize()
+            print(f"result: '{result}'")
+        return result
+
+
+    def clean_last_name(self):
+        cleaned_data = self.cleaned_data
+        initial = cleaned_data['last_name']
+        print(f"initial last_name: '{initial}'")
         result = initial
         if initial is not None:
             result = initial.strip()
