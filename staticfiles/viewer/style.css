@@ -201,7 +201,7 @@ button:hover {
 .navbar .dropdown-menu a {
     background-color: #15c5c5;
     color: white;
-    transition: background-color 1.5s ease;
+    transition: background-color 2s ease;
 }
 
 .navbar .dropdown-menu a:hover {
