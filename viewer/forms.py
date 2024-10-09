@@ -1,3 +1,5 @@
+from contextlib import nullcontext
+
 from django.forms import CharField, ModelChoiceField, IntegerField, ModelForm, Textarea, DateTimeField, ImageField
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
@@ -73,10 +75,10 @@ class ImageModelForm(ModelForm):
         fields = '__all__'
 
     image = ImageField(label="Obrázek")
-    house = ModelChoiceField(queryset=House.objects.all(), label="Vyber příslušný dům")
-    apartment = ModelChoiceField(queryset=Apartment.objects.all(), label="Vyber příslušný byt")
-    ground = ModelChoiceField(queryset=Ground.objects.all(), label="Vyber příslušný pozemek")
-    auctions = ModelChoiceField(queryset=Auction.objects.all(), label="Vyber příslušnou aukci")
+    house = ModelChoiceField(required=False, queryset=House.objects.all(), label="Vyber příslušný dům")
+    apartment = ModelChoiceField(required=False,queryset=Apartment.objects.all(), label="Vyber příslušný byt")
+    ground = ModelChoiceField(required=False,queryset=Ground.objects.all(), label="Vyber příslušný pozemek")
+    auctions = ModelChoiceField(required=False, queryset=Auction.objects.all(), label="Vyber příslušnou aukci")
     description = CharField(widget=Textarea, label="Popis obrázku")
 
 
