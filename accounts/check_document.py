@@ -12,8 +12,8 @@ def check_document(document_number, document_type):
         if 'evidovano="ano"/' in response.text.lower():
             raise ValidationError('Doklad totožnosti byl nalezen v databázi neplatných dokladů!')
         else:
-            result = True  # 'Doklad je platný nebo nebyl nalezen.'
+            result = True
     else:
-        result = False  # 'Chyba při ověřování dokladu.'
+        result = False
     print(result)
     return result

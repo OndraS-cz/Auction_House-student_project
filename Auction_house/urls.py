@@ -28,9 +28,9 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
-    Insertcity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertApartmentType, \
+    InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
-    InsertDataListView, AuctionsTemplateView, auction_bids
+    InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -79,15 +79,17 @@ urlpatterns = [
     path('insert/property_type', InsertPropertyType.as_view(), name="insert_property_type"),
 
     path('delete/cities/<pk>', DeleteCity.as_view(), name="delete_cities"),
-    path('insert/cities', Insertcity.as_view(), name="insert_cities"),
+    path('insert/cities', InsertCity.as_view(), name="insert_cities"),
     path('cities/', cities, name='cities'),
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
     path('update/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
     path('auctions/', AuctionsTemplateView.as_view(), name='auctions'),
+    path('auctions_search/', auctions_list_view, name='auctions_list'),
     path('auction/<pk>/', AuctionTemplateView.as_view(), name='auction'),
     path('auction_bids/<pk>', auction_bids, name='auction_bids'),
+    path('won_auctions', won_auctions_view ,name='won_auctions'),
 
     path('images/', ImageDetailView.as_view(), name='images'),
     path('image/create/', ImageCreateView.as_view(), name='image_create'),
@@ -104,5 +106,4 @@ urlpatterns = [
     path('aukce/pozemky/', GroundsListView.as_view(), name='pozemky')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-
 
