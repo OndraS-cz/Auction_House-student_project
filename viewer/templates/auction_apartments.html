@@ -1,15 +1,16 @@
 {% extends 'base.html' %}
 
+{% load group_tags %}
+
 {% block content %}
-<h1>Aukce domy</h1>
+<h1>Aukce bytů</h1>
     <ul>
         {% for auction in auction_apartments %}
             <li>
-               <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
-            {% if user.is_authenticated %}
+                <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+            {% if user|has_group:"Admins" %}
                 <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
                 <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
-
             {% endif %}
             </li>
         {% endfor %}

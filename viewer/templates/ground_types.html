@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
+{% load group_tags %}
+
 {% block content %}
 <h1>Typy Pozemků</h1>
     <ul>
         {% for ground_type in ground_types %}
             <li>
                 {{ ground_type }}
-            {% if user.is_authenticated %}
+            {% if user|has_group:"Admins" %}
                     <a href="{% url 'delete_ground_type' ground_type.id %}"> ❌ </a>
             {% endif %}
             </li>
