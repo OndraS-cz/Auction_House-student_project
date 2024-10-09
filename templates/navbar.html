@@ -34,6 +34,7 @@
           <a class="nav-link text-white" href="{% url 'won_auctions' %}">Vyhrané aukce</a>
         </li>
         {% endif %}
+      
         <li class="nav-item">
           <form class="d-flex" method="get" action="{% url 'auctions_list' %}">
             <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci" value="{{ request.GET.q }}">
