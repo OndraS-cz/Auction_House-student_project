@@ -70,6 +70,9 @@ class HousesListView(ListView):
     model = House
     context_object_name = 'houses'
 
+def auction_houses(request):
+    auction_houses = Auction.objects.filter(property_type__house__isnull=False)
+    return render(request, 'auction_houses.html', {'auction_houses': auction_houses})
 
 class InsertDataListView(PermissionRequiredMixin, ListView):
     template_name = "insert_data.html"
@@ -246,6 +249,10 @@ class ApartmentsView(View):
         context = {'apartments': apartments_}
         return render(request, "apartments.html", context)
 
+def auction_apartments(request):
+    auction_aparmtnets = Auction.objects.filter(property_type__apartment__isnull=False)
+    return render(request, 'auction_apartments.html', {'auction_apartments': auction_aparmtnets})
+
 
 class DeleteApartmentType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
@@ -304,6 +311,10 @@ class GroundsView(View):
         grounds_ = Ground.objects.all()
         context = {'grounds': grounds_}
         return render(request, "grounds.html", context)
+
+def auction_grounds(request):
+    auction_grounds = Auction.objects.filter(property_type__ground__isnull=False)
+    return render(request, 'auction_grounds.html', {'auction_grounds': auction_grounds})
 
 
 class GroundsTemplateView(TemplateView):
