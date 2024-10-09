@@ -234,7 +234,7 @@ def apartments(request):
     return render(request, 'apartments.html', context)
 
 
-def aparment_types(request):
+def apartment_types(request):
     apartment_types_ = ApartmentType.objects.all()
     context = {'apartment_types': apartment_types_}
     return render(request, 'apartment_types.html', context)

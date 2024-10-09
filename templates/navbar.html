@@ -1,49 +1,54 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-      <div class="container fixed">
-        <a class="navbar-brand" href="/">Dražby nemovitostí</a>
-        <button
-          class="navbar-toggler" type="button"
-          data-toggle="collapse" data-target="#navbarNavAltMarkup"
-        >
-          <span class="navbar-toggler-icon"></span>
+<nav class="navbar navbar-expand-lg navbar-light bg-success">
+    <div class="container-fluid">
+        <!-- Tlačítko Domů -->
+        <a class="navbar-brand text-white" href="/">Dražby nemovitostí</a>
+
+        <!-- Hamburger menu na malých obrazovkách -->
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
         </button>
-          <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
-          <div class="navbar-nav">
-            <a class="nav-item nav-link active" href="{% url 'houses' %}">Domy</a>
-            <a class="nav-item nav-link active" href="{% url 'apartments' %}">Byty</a>
-            <a class="nav-item nav-link active" href="{% url 'grounds' %}">Pozemky</a>
-            <a class="nav-item nav-link active" href="{% url 'auctions' %}">Aukce</a>
-                {% if user.is_authenticated %}
-                    <a class="nav-item nav-link active" href="{% url 'insert_data' %}">Vložení dat</a>
-                    <a class="nav-item nav-link active" href="{% url 'won_auctions' %}">Vyhrané aukce</a>
-                {% endif %}
-            <form method="get" action="{% url 'auctions_list' %}">
-                <input type="text" name="q" placeholder="Hledat aukci" value="{{ request.GET.q }}">
-                <button type="submit">Hledat</button>
-            </form>
-          </div>
-        </div>
-        <div class="navbar-nav ml-auto">
-            <div class="nav-item dropdown">
-                {% if user.is_authenticated %}
-                    <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
-                        {{ user.username }}
+
+        <!-- Hlavní nabídka -->
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav me-auto">
+                <!-- Dropdown menu Aukce -->
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="aukceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Aukce
                     </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item text-right" href="{% url 'logout' %}">Odhlásit</a>
-                        <a class="dropdown-item text-right" href="{% url 'password_change' %}">Změnit heslo</a>
-                        <a class="dropdown-item text-right" href="{% url 'password_reset' %}">Resetovat heslo</a>
-                    </div>
+                    <ul class="dropdown-menu" aria-labelledby="aukceDropdown">
+                        <li><a class="dropdown-item" href="/aukce/domy">Domy</a></li>
+                        <li><a class="dropdown-item" href="/aukce/byty">Byty</a></li>
+                        <li><a class="dropdown-item" href="/aukce/pozemky">Pozemky</a></li>
+                    </ul>
+                </li>
+                <!-- Vložit aukci -->
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'insert_auction' %}">Vložit aukci</a>
+                </li>
+            </ul>
+
+            <!-- Přihlášení a uživatelský dropdown -->
+            <ul class="navbar-nav ms-auto">
+                {% if user.is_authenticated %}
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        😊
+                    </a>
+                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+                        <li><a class="dropdown-item" href="{% url 'password_change' %}">Změnit heslo</a></li>
+                        <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
+                    </ul>
+                </li>
                 {% else %}
-                    <a class="nav-link active dropdown-toggle" href="#" data-toggle="dropdown">
-                        Nepřihlášený uživatel
-                    </a>
-                    <div class="dropdown-menu dropdown-menu-right">
-                        <a class="dropdown-item text-right" href="{% url 'login' %}">Přihlásit</a>
-                        <a class="dropdown-item text-right" href="{% url 'signup' %}">Registrovat</a>
-                    </div>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'login' %}">Přihlásit</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link text-white" href="{% url 'signup' %}">Registrovat</a>
+                </li>
                 {% endif %}
-            </div>
+            </ul>
         </div>
-      </div>
+    </div>
 </nav>

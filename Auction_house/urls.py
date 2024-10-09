@@ -26,9 +26,9 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
-    InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, \
+    InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
-    InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view, InsertApartmentType
+    InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -41,11 +41,9 @@ urlpatterns = [
 
     path('insert/', InsertDataListView.as_view(), name="insert_data"),
 
-
     path('insert/houses', InsertHouse.as_view(), name="insert_houses"),
     path('update/houses/<pk>', UpdateHouse.as_view(), name="update_houses"),
     path('delete/houses/<pk>', DeleteHouse.as_view(), name="delete_houses"),
-
 
     path('houses/', HousesListView.as_view(), name='houses'),
     path('house/<pk>/', house, name='house'),
@@ -61,10 +59,9 @@ urlpatterns = [
     path('apartments/', ApartmentsListView.as_view(), name='apartments'),
     path('apartment/<pk>/', apartment, name='apartment'),
 
-    path('aparment_types/', aparment_types, name="aparment_types"),
+    path('aparment_types/', apartment_types, name="apartment_types"),
     path('insert/apartment_types', InsertApartmentType.as_view(), name="insert_apartment_types"),
     path('delete/apartment_types/<pk>', DeleteApartmentType.as_view(), name="delete_apartment_types"),
-
 
     path('insert/grounds', InsertGrounds.as_view(), name="insert_grounds"),
     path('update/grounds/<pk>', UpdateGrounds.as_view(), name="update_grounds"),
@@ -84,7 +81,7 @@ urlpatterns = [
     path('cities/', cities, name='cities'),
 
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
-    path('upadte/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
+    path('update/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
     path('auctions/', AuctionsTemplateView.as_view(), name='auctions'),
     path('auctions_search/', auctions_list_view, name='auctions_list'),
@@ -102,8 +99,9 @@ urlpatterns = [
     path('accounts/logout/', user_logout, name='logout'),
     path('accounts/', include('django.contrib.auth.urls')),
 
-
-
+    path('aukce/domy/', HousesListView.as_view(), name='domy'),
+    path('aukce/byty/', ApartmentsListView.as_view(), name='byty'),
+    path('aukce/pozemky/', GroundsListView.as_view(), name='pozemky')
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 
