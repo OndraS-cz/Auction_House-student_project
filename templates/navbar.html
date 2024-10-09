@@ -1,6 +1,7 @@
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #28a745;">
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5cabdd;">
   <div class="container-fluid">
     <a class="navbar-brand text-white" href="/">Dražby nemovitostí</a>
+
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
       <span class="navbar-toggler-icon"></span>
     </button>
@@ -17,12 +18,22 @@
             <li><a class="dropdown-item" href="/auctions/grounds">Pozemky</a></li>
           </ul>
         </li>
-          {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'insert_data' %}">Vložit aukci</a>
+          <a class="nav-link text-white" href="{% url 'insert_auction' %}">Vložit aukci</a>
         </li>
-          {% endif %}
+
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'won_auctions' %}">Vyhrané aukce</a>
+        </li>
+
+        <li class="nav-item">
+          <form class="d-flex" method="get" action="{% url 'auctions_list' %}">
+            <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci" value="{{ request.GET.q }}">
+            <button class="btn btn-light" type="submit">Hledat</button>
+          </form>
+        </li>
       </ul>
+
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">

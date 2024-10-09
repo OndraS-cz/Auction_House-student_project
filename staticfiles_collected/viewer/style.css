@@ -1,38 +1,72 @@
-/* Základní styl pro navbar */
 .navbar {
-    background-color: #28a745;
-    padding: 10px;
-}
-
-/* Položky v navbaru */
-.navbar-nav .nav-link {
-    color: white;
-    margin-right: 15px;
-}
-
-/* Dropdown menu styling */
-.navbar .dropdown-menu {
-    background-color: #28a745;
-    border-radius: 5px;
-}
-
-.navbar .dropdown-item:hover {
-    background-color: #218838;
-    color: white;
-}
-
-/* Styl pro tlačítko toggler na mobilních zařízeních */
-.navbar-toggler {
-    border: none;
-}
-
-.navbar-toggler-icon {
-    background-color: white;
-}
-
-/* Zajištění, že tlačítka budou inline */
-.navbar-nav {
+    background-color: #5cabdd;
+    padding: 3px 15px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
     display: flex;
+    justify-content: space-between;
     align-items: center;
 }
 
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    align-items: center;
+}
+
+.nav-item {
+    margin-right: 20px;
+}
+
+.nav-link {
+    color: white;
+    font-size: 16px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+}
+
+.navbar-toggler {
+    border-color: rgb(48, 138, 248);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: #28a745;
+}
+
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.container-fluid {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.navbar .nav-link {
+    font-size: 0.85rem;
+    padding: 3px 10px;
+}
+
+.navbar-brand {
+    font-size: 1.1rem;
+    padding: 3px 10px;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-image: url('/static/viewer/images/marble-texture.jpg');
+    background-size: cover;
+    background-attachment: fixed;
+    background-repeat: no-repeat;
+    color: #333;
+}
