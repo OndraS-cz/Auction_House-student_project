@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Domy</h1>
+    <ul>
+        {% for property in property_types %}
+            <li>
+            {{ property }}
+            {% if user.is_authenticated %}
+                <a href="{% url 'delete_property_type' property.id%}"> ❌ </a>
+            {% endif %}
+
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}

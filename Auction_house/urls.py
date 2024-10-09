@@ -29,7 +29,7 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
     InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view, auction_houses, \
-    auction_apartments, auction_grounds
+    auction_apartments, auction_grounds, PropertyTypesListView, DeletePropertyType
 
 urlpatterns = [
     path('admin/', admin.site.urls),
@@ -76,6 +76,8 @@ urlpatterns = [
     path('delete/ground_type/<pk>', DeleteGroundType.as_view(), name="delete_ground_type"),
 
     path('insert/property_type', InsertPropertyType.as_view(), name="insert_property_type"),
+    path('delete/property_type/<pk>', DeletePropertyType.as_view(), name="delete_property_type"),
+    path('property_types', PropertyTypesListView.as_view(), name="property_types"),
 
     path('delete/cities/<pk>', DeleteCity.as_view(), name="delete_cities"),
     path('insert/cities', InsertCity.as_view(), name="insert_cities"),
