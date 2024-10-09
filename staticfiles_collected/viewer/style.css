@@ -1,0 +1,38 @@
+/* Základní styl pro navbar */
+.navbar {
+    background-color: #28a745;
+    padding: 10px;
+}
+
+/* Položky v navbaru */
+.navbar-nav .nav-link {
+    color: white;
+    margin-right: 15px;
+}
+
+/* Dropdown menu styling */
+.navbar .dropdown-menu {
+    background-color: #28a745;
+    border-radius: 5px;
+}
+
+.navbar .dropdown-item:hover {
+    background-color: #218838;
+    color: white;
+}
+
+/* Styl pro tlačítko toggler na mobilních zařízeních */
+.navbar-toggler {
+    border: none;
+}
+
+.navbar-toggler-icon {
+    background-color: white;
+}
+
+/* Zajištění, že tlačítka budou inline */
+.navbar-nav {
+    display: flex;
+    align-items: center;
+}
+

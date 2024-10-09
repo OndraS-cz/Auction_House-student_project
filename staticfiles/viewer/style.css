@@ -1,0 +1,65 @@
+.navbar {
+    background-color: #28a745;
+    padding: 3px 15px; /* Zmenšení paddingu na minimum */
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* Základní styl pro navbar */
+.navbar-nav {
+    display: flex;
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+    align-items: center; /* Zarovnání vertikálně na střed */
+}
+
+.nav-item {
+    margin-right: 20px; /* Mezera mezi položkami */
+}
+
+.nav-link {
+    color: white;
+    font-size: 16px;
+    padding: 5px 10px;
+    text-transform: uppercase;
+}
+
+.navbar-toggler {
+    border-color: rgba(255, 255, 255, 0.1);
+}
+
+.navbar-brand {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: white;
+}
+
+.dropdown-menu {
+    background-color: #28a745;
+}
+
+.container {
+    max-width: 800px; /* Omezíme šířku stránky na 800px */
+    margin: 0 auto; /* Vycentrování */
+    padding: 20px;
+}
+
+/* Pokud máš container-fluid, můžeš ho nahradit takto: */
+.container-fluid {
+    max-width: 1200px; /* Nastavíme maximální šířku */
+    margin: 0 auto;
+    padding: 20px;
+}
+
+.navbar .nav-link {
+    font-size: 0.85rem; /* Menší text v navigaci */
+    padding: 3px 10px; /* Menší padding pro jednotlivé odkazy */
+}
+
+.navbar-brand {
+    font-size: 1.1rem; /* Zmenšení velikosti textu loga */
+    padding: 3px 10px; /* Zmenšení paddingu pro logo */
+}

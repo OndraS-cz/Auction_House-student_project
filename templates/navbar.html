@@ -1,54 +1,55 @@
-<nav class="navbar navbar-expand-lg navbar-light bg-success">
-    <div class="container-fluid">
-        <!-- Tlačítko Domů -->
-        <a class="navbar-brand text-white" href="/">Dražby nemovitostí</a>
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #28a745;">
+  <div class="container-fluid">
+    <!-- Logo vlevo -->
+    <a class="navbar-brand text-white" href="/">Dražby nemovitostí</a>
 
-        <!-- Hamburger menu na malých obrazovkách -->
-        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
+    <!-- Toggle button pro mobilní zobrazení -->
+    <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
 
-        <!-- Hlavní nabídka -->
-        <div class="collapse navbar-collapse" id="navbarNav">
-            <ul class="navbar-nav me-auto">
-                <!-- Dropdown menu Aukce -->
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="aukceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        Aukce
-                    </a>
-                    <ul class="dropdown-menu" aria-labelledby="aukceDropdown">
-                        <li><a class="dropdown-item" href="/aukce/domy">Domy</a></li>
-                        <li><a class="dropdown-item" href="/aukce/byty">Byty</a></li>
-                        <li><a class="dropdown-item" href="/aukce/pozemky">Pozemky</a></li>
-                    </ul>
-                </li>
-                <!-- Vložit aukci -->
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'insert_auction' %}">Vložit aukci</a>
-                </li>
-            </ul>
+    <!-- Obsah navbaru -->
+    <div class="collapse navbar-collapse" id="navbarNav">
+      <!-- Položky vlevo -->
+      <ul class="navbar-nav me-auto mb-2 mb-lg-0">
+        <!-- Dropdown Aukce -->
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="aukceDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            Aukce
+          </a>
+          <ul class="dropdown-menu" aria-labelledby="aukceDropdown">
+            <li><a class="dropdown-item" href="/aukce/domy">Domy</a></li>
+            <li><a class="dropdown-item" href="/aukce/byty">Byty</a></li>
+            <li><a class="dropdown-item" href="/aukce/pozemky">Pozemky</a></li>
+          </ul>
+        </li>
+        <!-- Vložit Aukci -->
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'insert_auction' %}">Vložit aukci</a>
+        </li>
+      </ul>
 
-            <!-- Přihlášení a uživatelský dropdown -->
-            <ul class="navbar-nav ms-auto">
-                {% if user.is_authenticated %}
-                <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                        😊
-                    </a>
-                    <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
-                        <li><a class="dropdown-item" href="{% url 'password_change' %}">Změnit heslo</a></li>
-                        <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
-                    </ul>
-                </li>
-                {% else %}
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'login' %}">Přihlásit</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link text-white" href="{% url 'signup' %}">Registrovat</a>
-                </li>
-                {% endif %}
-            </ul>
-        </div>
+      <!-- Položky vpravo (přihlašování a profil) -->
+      <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        {% if user.is_authenticated %}
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+            😊
+          </a>
+          <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
+            <li><a class="dropdown-item" href="{% url 'password_change' %}">Změnit heslo</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
+          </ul>
+        </li>
+        {% else %}
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'login' %}">Přihlásit</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-white" href="{% url 'signup' %}">Registrovat</a>
+        </li>
+        {% endif %}
+      </ul>
     </div>
+  </div>
 </nav>
