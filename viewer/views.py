@@ -370,7 +370,7 @@ class ImageDetailView(DetailView):
 
 def cities(request):
         cities_ = Cities.objects.all()
-        context = {'cities': cities_}
+        context = {'města': cities_}
         return render(request, 'cities.html', context)
 
 class Insertcity(PermissionRequiredMixin, CreateView):
@@ -400,16 +400,17 @@ class InsertHouseType(PermissionRequiredMixin, CreateView):
         LOGGER.warning('User providet invalit data updating.')
         return super().form_invalid(form)
 
-class InsertAparmentType(PermissionRequiredMixin, CreateView):
+class InsertApartmentType(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = ApartmentTypeModelForm
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.insert_apartment_type'
 
     def form_invalid(self, form):
-        LOGGER.warning('User providet invalit data updating.')
+        LOGGER.warning('User provided invalid data updating.')
         return super().form_invalid(form)
 
 def auction_bids(request, pk):
     bids = Bid.objects.filter(auction_id = pk)
     return render(request, 'auction_bids.html', {'bids': bids})
+

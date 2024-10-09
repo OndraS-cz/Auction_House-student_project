@@ -1,17 +1,20 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Aukce</h1>
-    <ul>
-        {% for auction in auctions %}
-            <li>
-                <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
-            {% if user.is_authenticated %}
-                <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
-                <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
-
-            {% endif %}
-            </li>
-        {% endfor %}
-    </ul>
+<div class="card-body">
+    <h5 class="card-title">{{ auction.property_type }} - {{ auction.city }}</h5>
+    <p class="card-text">
+        {{ auction.description|truncatewords:20 }}
+    </p>
+    <p class="card-text">
+        <strong>Odhadovaná hodnota:</strong> {{ auction.estimate_value }} Kč
+    </p>
+    <div class="btn-group">
+        <a href="{% url 'auction' auction.id %}" class="btn btn-primary">Zobrazit detail</a>
+        {% if user.is_authenticated %}
+            <a href="{% url 'update_auction' auction.id %}" class="btn btn-secondary">Upravit</a>
+            <a href="{% url 'delete_auction' auction.id %}" class="btn btn-danger">Smazat</a>
+        {% endif %}
+    </div>
+</div>
 {% endblock %}
