@@ -101,7 +101,7 @@
                         let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
                         let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
 
-                        document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny} a hodin ${hodiny}:${minuty}:${sekundy}`;
+                        document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny} a ${hodiny}:${minuty}:${sekundy} hodin`;
 
                         if (rozdil < 0) {
                             clearInterval(odpoctavani);
@@ -135,7 +135,7 @@
                         let minuty = Math.floor((rozdil % (1000 * 60 * 60)) / (1000 * 60));
                         let sekundy = Math.floor((rozdil % (1000 * 60)) / 1000);
 
-                        document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny} a hodin ${hodiny}:${minuty}:${sekundy}`;
+                        document.getElementById("odpoctavani").innerHTML = `počet dnů: ${dny} a ${hodiny}:${minuty}:${sekundy} hodin`;
 
                         if (rozdil < 0) {
                             clearInterval(odpoctavani);
