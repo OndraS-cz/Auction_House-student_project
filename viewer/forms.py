@@ -73,9 +73,9 @@ class ImageModelForm(ModelForm):
         fields = '__all__'
 
     image = ImageField(label="Obrázek")
-    house = ModelChoiceField(queryset=HouseType.objects.all(), label="Vyber příslušný dům")
-    apartment = ModelChoiceField(queryset=ApartmentType.objects.all(), label="Vyber příslušný byt")
-    ground = ModelChoiceField(queryset=GroundType.objects.all(), label="Vyber příslušný pozemek")
+    house = ModelChoiceField(queryset=House.objects.all(), label="Vyber příslušný dům")
+    apartment = ModelChoiceField(queryset=Apartment.objects.all(), label="Vyber příslušný byt")
+    ground = ModelChoiceField(queryset=Ground.objects.all(), label="Vyber příslušný pozemek")
     auctions = ModelChoiceField(queryset=Auction.objects.all(), label="Vyber příslušnou aukci")
     description = CharField(widget=Textarea, label="Popis obrázku")
 
