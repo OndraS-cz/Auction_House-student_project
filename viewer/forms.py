@@ -44,9 +44,9 @@ class PropertyTypeModelForm(ModelForm):
         model = PropertyType
         fields = '__all__'
 
-    house = ModelChoiceField(queryset=House.objects.all(), label="Rodinný dům")
-    ground = ModelChoiceField(queryset=Ground.objects.all(), label="Pozemek")
-    apartment = ModelChoiceField(queryset=Apartment.objects.all(), label="Byt")
+    house = ModelChoiceField(required=False, queryset=House.objects.all(), label="Rodinný dům")
+    ground = ModelChoiceField(required=False, queryset=Ground.objects.all(), label="Pozemek")
+    apartment = ModelChoiceField(required=False, queryset=Apartment.objects.all(), label="Byt")
 
 
 class AuctionModelForm(ModelForm):

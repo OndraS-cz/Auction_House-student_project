@@ -10,7 +10,8 @@ from django.views import View
 from accounts.models import Profile
 
 from viewer.forms import CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, GroundTypeModelForm, BidModelForm, ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
-from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseType, ApartmentType, Cities, GroundType
+from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseType, ApartmentType, Cities, GroundType, \
+    PropertyType
 
 from logging import getLogger
 
@@ -98,7 +99,7 @@ class InsertHouse(PermissionRequiredMixin, CreateView):
 class UpdateHouse(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = HouseModelForm
-    success_url = reverse_lazy('houses')
+    success_url = reverse_lazy('insert_data')
     model = House
     permission_required = 'viewer.update_house'
 
@@ -110,7 +111,7 @@ class UpdateHouse(PermissionRequiredMixin, UpdateView):
 class DeleteHouse(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = House
-    success_url = reverse_lazy('houses')
+    success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_house'
 
 
@@ -128,7 +129,7 @@ class InsertApartments(PermissionRequiredMixin, CreateView):
 class UpdateApartments(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = ApartmentModelForm
-    success_url = reverse_lazy('apartments')
+    success_url = reverse_lazy('insert_data')
     model = Apartment
     permission_required = 'viewer.update_apartment'
 
@@ -140,7 +141,7 @@ class UpdateApartments(PermissionRequiredMixin, UpdateView):
 class DeleteApartments(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = Apartment
-    success_url = reverse_lazy('apartments')
+    success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_apartment'
 
 
@@ -158,7 +159,7 @@ class InsertGrounds(PermissionRequiredMixin, CreateView):
 class UpdateGrounds(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = GroundModelForm
-    success_url = reverse_lazy('grounds')
+    success_url = reverse_lazy('insert_data')
     model = Ground
     permission_required = 'viewer.update_ground'
 
@@ -170,7 +171,7 @@ class UpdateGrounds(PermissionRequiredMixin, UpdateView):
 class DeleteGrounds(PermissionRequiredMixin, DeleteView):
     template_name = 'creator_confirm_delete.html'
     model = Ground
-    success_url = reverse_lazy('grounds')
+    success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_ground'
 
 
@@ -199,7 +200,7 @@ class InsertAuction(PermissionRequiredMixin, CreateView):
 class UpdateAuction(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = AuctionModelForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('insert_data')
     model = Auction
     permission_required = 'viewer.update_auction'
 
@@ -211,7 +212,7 @@ class UpdateAuction(PermissionRequiredMixin, UpdateView):
 class DeleteAuction(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = Auction
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_auction'
 
 
@@ -420,6 +421,18 @@ class DeleteCity(PermissionRequiredMixin, DeleteView):
     model = Cities
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_cities'
+
+
+class PropertyTypesListView(ListView):
+    template_name = "property_types.html"
+    model = PropertyType
+    context_object_name = 'property_types'
+
+class DeletePropertyType(PermissionRequiredMixin, DeleteView):
+    template_name = 'confirm_delete.html'
+    model = PropertyType
+    success_url = reverse_lazy('insert_data')
+    permission_required = 'viewer.delete_property_types'
 
 
 class InsertHouseType(PermissionRequiredMixin, CreateView):

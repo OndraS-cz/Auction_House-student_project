@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Byty</h1>
+<h1>Aukce</h1>
     <ul>
         {% for auction in auctions %}
             <li>
@@ -11,6 +11,6 @@
                 <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
             {% endif %}
             </li>
-        {% endfor %}s
+        {% endfor %}
     </ul>
 {% endblock %}
