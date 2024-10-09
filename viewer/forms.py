@@ -53,6 +53,7 @@ class AuctionModelForm(ModelForm):
     class Meta:
         model = Auction
         fields = '__all__'
+        exclude = ['act_value']
 
     property_type = ModelChoiceField(queryset=PropertyType.objects.all(), label="Nemovitost")
     city = ModelChoiceField(queryset=Cities.objects.all(), label="Město")

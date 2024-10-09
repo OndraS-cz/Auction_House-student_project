@@ -1,0 +1,12 @@
+{% extends 'base.html' %}
+
+{% block content %}
+<h1>Aukce</h1>
+    <ul>
+        {% for auction in won_auctions %}
+            <li>
+                <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
