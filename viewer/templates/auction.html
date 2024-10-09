@@ -256,16 +256,16 @@
     {% if auction.in_progress and user.is_authenticated%}
         <form method="post">
             {% csrf_token %}
-            <label for="bid_amount"><strong>Velikost příhozu</strong></label>
+            <label for="bid_amount"><strong>Hodnota příhozu</strong></label>
             <input type="number" id="bid_amount" name="bid_amount" min="{{ auction.min_bid }}">
             <input id="id_submit" type="submit" value="Přihodit" class="btn btn-primary">
         </form>
     {% endif %}
 </div>
 <div>
-        {% if auction.end and Bid.bid_date.exists %}
-            <strong>Prodáno </strong>
-        {% endif %}
+    {% if auction.end and Bid.bid_date.exists %}
+        <strong>Prodáno </strong>
+    {% endif %}
 </div>
 <div>
     {% if user.is_authenticated %}
@@ -281,12 +281,13 @@
                         </span>
                     </div>
                     <div class="auction-bid-amount">
-                        Příhoz: {{ bid.bid_amount }}
+                        Příhoz: {{ bid.bid_amount|custom_intcomma }}
                     </div>
                 </div>
             {% endfor %}
         </div>
     {% endif %}
 </div>
-<a href="{% url 'auctions' %}" class="btn btn-primary">Zpět</a>
+<p></p>
+<input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
 {% endblock %}

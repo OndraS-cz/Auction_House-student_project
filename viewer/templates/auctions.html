@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
 
+{% load group_tags %}
+
 {% block content %}
 <div class="card-body">
     <h5 class="card-title">{{ auction.property_type }} - {{ auction.city }}</h5>
@@ -11,7 +13,7 @@
     </p>
     <div class="btn-group">
         <a href="{% url 'auction' auction.id %}" class="btn btn-primary">Zobrazit detail</a>
-        {% if user.is_authenticated %}
+        {% if user|has_group:"Admins" %}
             <a href="{% url 'update_auction' auction.id %}" class="btn btn-secondary">Upravit</a>
             <a href="{% url 'delete_auction' auction.id %}" class="btn btn-danger">Smazat</a>
         {% endif %}

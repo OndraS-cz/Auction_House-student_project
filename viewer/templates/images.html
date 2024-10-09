@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load group_tags %}
+
 {% block content %}
     <h1>Obrázky</h1>
         <ul>
@@ -8,10 +10,10 @@
                 <a href="{% url 'image' image.id %}" class="pt-2 pl-2">
                     <img src="{{ image.image.url }}" alt="{{ image.description }}" width="40px" class="mr-2">
                 </a>
-                {% if perms.viewer.change_image %}
+                {% if user|has_group:"Admins" %}
                     <a href="{% url 'image_update' image.id %}">✏️</a>
                 {% endif %}
-                {% if perms.viewer.delete_image %}
+                {% if user|has_group:"Admins" %}
                     <a href="{% url 'image_delete' image.id %}">❌</a>
                 {% endif %}
                 <div class="image-details pl-2" style="display: flex; flex-direction: column;">
@@ -24,8 +26,6 @@
                         Popis: {{ image.description }}
                     </div>
                 </div>
-
-
             </li>
         {% endfor %}
         </ul>
