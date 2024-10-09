@@ -1,5 +1,3 @@
-from contextlib import nullcontext
-
 from django.forms import CharField, ModelChoiceField, IntegerField, ModelForm, Textarea, DateTimeField, ImageField
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
