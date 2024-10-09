@@ -9,12 +9,12 @@ class SignUpFormCapitalizationTest(TestCase):
             'first_name': 'john',
             'last_name': 'doe',
             'date_of_birth': '1990-01-01',
-            'birth_nr': '9001011234',
+            'birth_nr': '9001010007',
             'document_type': '0',
-            'document_number': 'AB123456',
+            'document_number': '222222222',
             'document_expiry': '2030-01-01',
-            'phone_number': '123456789',
-            'email': 'testuser@example.com',
+            'phone_number': '601111111',
+            'email': 'nemam@zadny.cz',
             'password1': 'strongpassword123',
             'password2': 'strongpassword123'
         }

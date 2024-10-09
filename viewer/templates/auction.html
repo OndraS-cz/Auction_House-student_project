@@ -173,7 +173,7 @@
 
     {% if auction.end %}
         <strong>Vydraženo za: </strong>
-                {{ auction.min_value }}
+                {{ auction.act_value|custom_intcomma }}
     {% endif %}
 </div>
 <br>

@@ -1,3 +1,4 @@
+from django.contrib.auth.decorators import user_passes_test
 from django.utils.timezone import now
 from django.contrib.auth.mixins import PermissionRequiredMixin
 from django.db.models import Max, F, Q
@@ -14,6 +15,8 @@ from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseTy
 from logging import getLogger
 
 LOGGER = getLogger()
+
+
 
 
 def home(request):
@@ -196,7 +199,7 @@ class InsertAuction(PermissionRequiredMixin, CreateView):
 class UpdateAuction(PermissionRequiredMixin, UpdateView):
     template_name = 'form.html'
     form_class = AuctionModelForm
-    success_url = reverse_lazy('auctions')
+    success_url = reverse_lazy('home')
     model = Auction
     permission_required = 'viewer.update_auction'
 
@@ -208,7 +211,7 @@ class UpdateAuction(PermissionRequiredMixin, UpdateView):
 class DeleteAuction(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = Auction
-    success_url = reverse_lazy('auctions')
+    success_url = reverse_lazy('home')
     permission_required = 'viewer.delete_auction'
 
 
