@@ -24,11 +24,12 @@
           </ul>
         </li>
         <!-- Vložit Aukci -->
+          {% if user.is_authenticated %}
         <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'insert_auction' %}">Vložit aukci</a>
+          <a class="nav-link text-white" href="{% url 'insert_data' %}">Vložit aukci</a>
         </li>
+          {% endif %}
       </ul>
-
       <!-- Položky vpravo (přihlašování a profil) -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
