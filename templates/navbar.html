@@ -34,22 +34,16 @@
           <a class="nav-link text-white" href="{% url 'won_auctions' %}">Vyhrané aukce</a>
         </li>
         {% endif %}
-      
-        <li class="nav-item">
-          <form class="d-flex" method="get" action="{% url 'auctions_list' %}">
-            <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci" value="{{ request.GET.q }}">
-            <button class="btn btn-light" type="submit">Hledat</button>
-          </form>
-        </li>
       </ul>
 
-      <form class="d-flex align-items-center" method="get" action="{% url 'auctions_list' %}">
-        <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci"
-          value="{{ request.GET.q }}" style="height: 38px;">
-        <button class="btn btn-light" type="submit" style="height: 38px;">Hledat</button>
-      </form>
-
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
+        <li class="nav-item">
+          <form class="d-flex align-items-center" method="get" action="{% url 'auctions_list' %}">
+            <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci"
+              value="{{ request.GET.q }}" style="height: 38px;">
+            <button class="btn btn-light" type="submit" style="height: 38px;">Hledat</button>
+          </form>
+        </li>
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" id="userDropdown"
