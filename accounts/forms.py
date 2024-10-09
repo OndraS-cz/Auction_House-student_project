@@ -4,6 +4,7 @@ from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.core.exceptions import ValidationError
 from django.db.transaction import atomic
 from django.forms import DateField, NumberInput, IntegerField, CharField, ChoiceField, PasswordInput
+from django.utils.translation import gettext_lazy as _
 
 from accounts.models import Profile
 from accounts.check_document import check_document
@@ -18,7 +19,11 @@ password_validators_help_text_html = (
 class SignUpForm(UserCreationForm):
     class Meta(UserCreationForm.Meta):
         fields = ['username', 'first_name', 'last_name', 'date_of_birth', 'birth_nr', 'document_type', 'document_number', 'document_expiry', 'phone_number', 'email', 'password1', 'password2']
-    username = UsernameField(label="Uživatelské jméno", help_text="Vyžadováno. 150 znaků nebo méně. Pouze písmena, číslice a znaky @/./+/-/_.")
+
+
+    username = UsernameField(label="Uživatelské jméno",
+                             help_text="Vyžadováno. 150 znaků nebo méně. Pouze písmena, číslice a znaky @/./+/-/_.",
+                             error_messages={'unique': "Uživatelské jméno již existuje!"})
     first_name = CharField(label="Křestní jméno")
     last_name = CharField(label="Příjmení")
     date_of_birth = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum narození", required=True)
@@ -27,8 +32,16 @@ class SignUpForm(UserCreationForm):
     document_number = CharField(max_length=15, label="Číslo dokladu")
     document_expiry = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum platnosti dokladu", required=True)
     phone_number = IntegerField(label="Mobilní telefon")
-    password1 = CharField(widget=PasswordInput(attrs={'type': 'password'}), label="Heslo", required=True, help_text=password_validators_help_text_html)
-    password2 = CharField(widget=PasswordInput(attrs={'type': 'password'}), label="Potvrzení hesla", required=True)
+    password1 = CharField(widget=PasswordInput,
+                          label="Heslo",
+                          required=True,
+                          help_text=password_validators_help_text_html)
+    password2 = CharField(widget=PasswordInput,
+                          label="Potvrzení hesla",
+                          required=True)
+    error_messages = {
+        "password_mismatch": _("Zadaná hesla nesouhlasí!"),
+    }
 
     @atomic
     def save(self, commit=True):
@@ -42,7 +55,6 @@ class SignUpForm(UserCreationForm):
         phone_number = self.cleaned_data['phone_number']
         email = self.cleaned_data['email']
         result = check_document(document_number, document_type)
-        print(result)
         profile = Profile(user=user,
                           date_of_birth=date_of_birth,
                           birth_nr=birth_nr,
@@ -58,35 +70,26 @@ class SignUpForm(UserCreationForm):
     def clean_first_name(self):
         cleaned_data = self.cleaned_data
         initial = cleaned_data['first_name']
-        print(f"initial first_name: '{initial}'")
         result = initial
         if initial is not None:
             result = initial.strip()
-            print(f"result: '{result}'")
             if len(result):
                 result = result.capitalize()
-            print(f"result: '{result}'")
         return result
 
     def clean_last_name(self):
         cleaned_data = self.cleaned_data
         initial = cleaned_data['last_name']
-        print(f"initial last_name: '{initial}'")
         result = initial
         if initial is not None:
             result = initial.strip()
-            print(f"result: '{result}'")
             if len(result):
                 result = result.capitalize()
-            print(f"result: '{result}'")
         return result
 
     def clean_date_of_birth(self):
-        print("clean_date_of_birth")
         cleaned_data = self.cleaned_data
-        print(f"cleaned_data: '{cleaned_data}'")
         date_of_birth = cleaned_data['date_of_birth']
-        print(f"date_of_birth: '{date_of_birth}'")
         if date_of_birth and date_of_birth >= date.today():
             raise ValidationError('Datum narození musí být v minulosti!')
         return date_of_birth
@@ -106,6 +109,13 @@ class SignUpForm(UserCreationForm):
             raise ValidationError('Je potřeba zadat jméno a příjmení')
         cleaned_data['first_name'] = name
         cleaned_data['last_name'] = surname
+        password1 = cleaned_data["password1"]
+        password2 = cleaned_data["password2"]
+        if password1 and password2 and password1 != password2:
+            raise ValidationError(
+                self.error_messages["password_mismatch"],
+                code='password_mismatch',
+            )
         return cleaned_data
 
     def clean_birth_nr(self):
@@ -132,4 +142,4 @@ class SignUpForm(UserCreationForm):
         else:
             result = True
 
-        return result, f"Rodné číslo je platné. Datum narození: {date_of_birth}"
+        return birth_nr
