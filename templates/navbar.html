@@ -9,9 +9,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="navbarNav">
-      <!-- Levá část navigace -->
       <ul class="navbar-nav me-auto mb-2 mb-lg-0">
-        <!-- Vaše navigační položky -->
         <li class="nav-item dropdown">
           <a class="nav-link dropdown-toggle text-white" href="#" id="aukceDropdown"
             role="button" data-bs-toggle="dropdown" aria-expanded="false">
@@ -37,14 +35,12 @@
         </li>
       </ul>
 
-      <!-- Formulář pro hledání -->
       <form class="d-flex align-items-center" method="get" action="{% url 'auctions_list' %}">
         <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci"
           value="{{ request.GET.q }}" style="height: 38px;">
         <button class="btn btn-light" type="submit" style="height: 38px;">Hledat</button>
       </form>
 
-      <!-- Pravá část navigace -->
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
