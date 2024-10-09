@@ -19,8 +19,6 @@ from django.contrib import admin
 from django.urls import path, include
 
 from Auction_house import settings
-from Auction_house.settings import BASE_DIR
-from accounts import views
 
 from accounts.views import SignUpView, user_logout
 
@@ -28,7 +26,7 @@ from viewer.views import home, InsertHouse, ApartmentsListView, apartment, Image
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
     UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
-    InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, aparment_types, InsertApartmentType, \
+    InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
     InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view
 
@@ -61,7 +59,7 @@ urlpatterns = [
     path('apartments/', ApartmentsListView.as_view(), name='apartments'),
     path('apartment/<pk>/', apartment, name='apartment'),
 
-    path('aparment_types/', aparment_types, name="aparment_types"),
+    path('aparment_types/', apartment_types, name="apartment_types"),
     path('insert/apartment_types', InsertApartmentType.as_view(), name="insert_apartment_types"),
     path('delete/apartment_types/<pk>', DeleteApartmentType.as_view(), name="delete_apartment_types"),
 
