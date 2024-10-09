@@ -1,5 +1,7 @@
 {% extends 'base.html' %}
+
 {% load static %}
+{% load group_tags %}
 
 {% block content %}
 <div class="container mt-4">
@@ -8,9 +10,7 @@
         {% for ground in grounds %}
             <div class="col-md-4">
                 <div class="card mb-4 shadow-sm">
-                    <!-- Zde můžete přidat obrázek pozemku, pokud existuje -->
                     <img src="{% if ground.image_set.all %}{{ ground.image_set.first.image.url }}{% else %}{% static 'path_to_default_image.jpg' %}{% endif %}" class="card-img-top" alt="Pozemek obrázek">
-
                     <div class="card-body">
                         <h5 class="card-title">{{ ground.name }} - {{ ground.city }}</h5>
                         <p class="card-text">
@@ -20,7 +20,7 @@
                             {{ ground.description|truncatewords:20 }}
                         </p>
                         <a href="{% url 'ground' ground.id %}" class="btn btn-primary">Zobrazit detail</a>
-                        {% if user.is_authenticated %}
+                        {% if user|has_group:"Admins" %}
                             <a href="{% url 'update_grounds' ground.id %}" class="btn btn-secondary">Upravit</a>
                             <a href="{% url 'delete_grounds' ground.id %}" class="btn btn-danger">Smazat</a>
                         {% endif %}

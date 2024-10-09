@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load group_tags %}
+
 {% block content %}
 <h1>{{ ground.name }}</h1>
 <div class="ground-details">
@@ -18,7 +20,7 @@
         {{ ground.description|linebreaks }}
     </div>
     <p></p>
-    {% if user.is_authenticated %}
+    {% if user|has_group:"Admins" %}
     <a href="{%  url 'update_grounds' ground.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_grounds' ground.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
     {% endif %}

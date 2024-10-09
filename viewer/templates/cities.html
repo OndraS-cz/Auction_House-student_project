@@ -1,12 +1,14 @@
 {% extends 'base.html' %}
 
+{% load group_tags %}
+
 {% block content %}
 <h1>Města</h1>
     <ul>
         {% for city in cities %}
             <li>
                 {{ city }}
-            {% if user.is_authenticated %}
+            {% if user|has_group:"Admins" %}
                     <a href="{% url 'delete_cities' city.id %}"> ❌ </a>
             {% endif %}
             </li>

@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load group_tags %}
+
 {% block content %}
 <h1>{{ apartment.name }}</h1>
 <div class="apartment-details">
@@ -18,7 +20,7 @@
         {{ apartment.description|linebreaks }}
     </div>
     <p></p>
-    {% if user.is_authenticated %}
+    {% if user|has_group:"Admins" %}
     <a href="{%  url 'update_apartments' apartment.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_apartments' apartment.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
     {% endif %}

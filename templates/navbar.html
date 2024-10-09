@@ -1,3 +1,5 @@
+{% load group_tags %}
+
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5cabdd;">
   <div class="container-fluid">
     <a class="navbar-brand text-white" href="/">Dražby nemovitostí</a>
@@ -21,17 +23,23 @@
             <li><a class="dropdown-item" href="/auctions/grounds">Pozemky</a></li>
           </ul>
         </li>
-
-        <li class="nav-item" style="width: 150px;">
-          {% if user.is_authenticated %}
+        {% if user|has_group:"Admins" %}
+        <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'insert_data' %}">Vložit data</a>
-          {% endif %}
         </li>
+        {% endif %}
 
-        <li class="nav-item" style="width: 150px;">
-          {% if user.is_authenticated %}
+        {% if user|has_group:"Users" %}
+        <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'won_auctions' %}">Vyhrané aukce</a>
-          {% endif %}
+        </li>
+        {% endif %}
+      
+        <li class="nav-item">
+          <form class="d-flex" method="get" action="{% url 'auctions_list' %}">
+            <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci" value="{{ request.GET.q }}">
+            <button class="btn btn-light" type="submit">Hledat</button>
+          </form>
         </li>
       </ul>
 

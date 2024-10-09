@@ -1,5 +1,7 @@
 {% extends "base.html" %}
 
+{% load group_tags %}
+
 {% block content %}
 <h1>{{ house.name }}</h1>
 <div class="house-details">
@@ -22,9 +24,9 @@
         {{ house.description|linebreaks }}
     </div>
     <p></p>
-    {% if user.is_authenticated %}
-    <a href="{%  url 'update_houses' house.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
-    <a href="{%  url 'delete_houses' house.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
+    {% if user|has_group:"Admins" %}
+        <a href="{%  url 'update_houses' house.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
+        <a href="{%  url 'delete_houses' house.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
     {% endif %}
 </div>
 <br>
