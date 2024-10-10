@@ -4,7 +4,10 @@ from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.core.exceptions import ValidationError
 from django.db.transaction import atomic
 from django.forms import DateField, NumberInput, IntegerField, CharField, ChoiceField, PasswordInput
+from django.http import HttpResponseRedirect
+from django.shortcuts import render
 from django.utils.translation import gettext_lazy as _
+from requests import request
 
 from accounts.models import Profile
 from accounts.check_document import check_document
@@ -41,6 +44,7 @@ class SignUpForm(UserCreationForm):
                           required=True)
     error_messages = {
         "password_mismatch": _("Zadaná hesla nesouhlasí!"),
+        "document_error": _("Doklad totožnosti byl nalezen v databázi neplatných dokladů! (viz https://aplikace.mvcr.cz/neplatne-doklady/)")
     }
 
     @atomic
@@ -54,7 +58,6 @@ class SignUpForm(UserCreationForm):
         document_expiry = self.cleaned_data['document_expiry']
         phone_number = self.cleaned_data['phone_number']
         email = self.cleaned_data['email']
-        result = check_document(document_number, document_type)
         profile = Profile(user=user,
                           date_of_birth=date_of_birth,
                           birth_nr=birth_nr,
@@ -116,6 +119,11 @@ class SignUpForm(UserCreationForm):
                 self.error_messages["password_mismatch"],
                 code='password_mismatch',
             )
+        document_type = cleaned_data['document_type']
+        document_number = cleaned_data['document_number']
+        result = check_document(document_number, document_type)
+        if not result:
+            raise ValidationError(self.error_messages["document_error"])
         return cleaned_data
 
     def clean_birth_nr(self):

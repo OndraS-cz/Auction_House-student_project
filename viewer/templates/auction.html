@@ -7,50 +7,67 @@
 
 <h1>{{ auction.property_type }}</h1>
 <br>
+
+{% if not user.is_authenticated %}
+    <h6>Pro účast v aukci je nutné přihlášení do svého profilu ⬆️</h6>
+{% endif %}
+<br>
+
 <div class="auction-details">
-    <div class="auction-property_type">
-        <strong>Adresa nemovitosti:</strong>
-        {{ auction.location }}
-    </div>
-    <p></p>
-    <div class="auction-value">
-        <strong>Odhad ceny nemovitosti:</strong>
-            {{ auction.estimate_value|custom_intcomma }} Kč
-    </div>
-    <p></p>
-    <div class="auction-min_value">
-        <strong>Nejnižší podání:</strong>
-            {{ auction.min_value|custom_intcomma }}
-    </div>
-    <p></p>
-    <div class="auction-assurance">
-        <strong>Dražební jistota:</strong>
-            {{ auction.auction_assurance|custom_intcomma }} Kč
-    </div>
-    <p></p>
-    <div class="auction-min_bid">
-        <strong>Minimální příhoz:</strong>
-            {{ auction.min_bid|custom_intcomma }} Kč
-    </div>
-    <p></p>
-    {% if auction.isnot_start %}
-        <div class="auction-date_auction">
-            <strong>Datum dražby:</strong>
-                {{ auction.date_auction|date:"d.m.Y H:i" }}
+    <p>
+        <div class="auction-property_type">
+            <strong>Adresa nemovitosti:</strong>
+                {{ auction.location }}
         </div>
-    {% endif %}
-    {% if auction.in_progress %}
-        <div class="auction-time_of">
-            <strong>Datum konce dražby:</strong>
-            {{auction.date_end_auction|date:"d.m.Y H:i" }}
+    </p>
+
+    <p>
+        <div class="auction-value">
+            <strong>Odhad ceny nemovitosti:</strong>
+                {{ auction.estimate_value|custom_intcomma }} Kč
         </div>
-    {% endif %}
-<p></p>
+    </p>
+
+    <p>
+        <div class="auction-min_value">
+            <strong>Nejnižší podání:</strong>
+                {{ auction.min_value|custom_intcomma }} Kč
+        </div>
+    </p>
+
+    <p>
+        <div class="auction-assurance">
+            <strong>Dražební jistota:</strong>
+                {{ auction.auction_assurance|custom_intcomma }} Kč
+        </div>
+    </p>
+
+    <p>
+        <div class="auction-min_bid">
+            <strong>Minimální příhoz:</strong>
+                {{ auction.min_bid|custom_intcomma }} Kč
+        </div>
+    </p>
+
+    <p>
+        {% if auction.isnot_start %}
+            <div class="auction-date_auction">
+                <strong>Datum dražby:</strong>
+                    {{ auction.date_auction|date:"d.m.Y H:i" }}
+            </div>
+        {% endif %}
+        {% if auction.in_progress %}
+            <div class="auction-time_of">
+                <strong>Datum konce dražby:</strong>
+                {{auction.date_end_auction|date:"d.m.Y H:i" }}
+            </div>
+        {% endif %}
+    </p>
 <table>
     <tr>
         <td>
             <div>
-                <strong>Aktuální čas:   </strong>
+                <strong>Aktuální čas:</strong>
             </div>
         </td>
         <td>
@@ -109,9 +126,7 @@
                                     }
                                 }, 1000);
                 }
-
                 Clock_to();
-
             </script>
         </div>
     {% endif %}
@@ -143,9 +158,7 @@
                                     }
                                 }, 1000);
                 }
-
                 Clock_to();
-
             </script>
         </div>
     {% endif %}
@@ -156,27 +169,8 @@
     {{ auction.description|linebreaksbr }}
 </div>
 
-<div>
-</div>
-    <p></p>
-<div>
-    {% if auction.end %}
-            <strong>Vydražil: </strong>
-                {{ last_one }}
-    {% endif %}
-</div>
-<div>
-    {% if auction.in_progress %}
-        <strong>Aktuální hodnota: </strong>
-                {{ auction.act_value|custom_intcomma }}
-    {% endif %}
-
-    {% if auction.end %}
-        <strong>Vydraženo za: </strong>
-                {{ auction.act_value|custom_intcomma }}
-    {% endif %}
-</div>
 <br>
+
 <div>
     <strong>Fotogalerie:</strong>
 </div>
@@ -233,22 +227,41 @@
         overlay.style.display = 'none';
     }
 </script>
-<br>
+
+<p>
+    <div>
+        {% if auction.property_type.apartment_id %}
+            <a href="{% url 'apartment' auction.property_type.apartment_id %}" class="btn btn-primary">
+                Detail nemovitosti
+            </a>
+
+        {% elif auction.property_type.house_id %}
+            <a href="{% url 'house' auction.property_type.house_id %}" class="btn btn-primary">
+                Detail nemovitosti
+            </a>
+
+        {% else %}
+            <a href="{% url 'ground' auction.property_type.ground_id %}" class="btn btn-primary">
+                Detail nemovitosti
+            </a>
+        {% endif %}
+    </div>
+</p>
+
 <div>
-    {% if auction.property_type.apartment_id %}
-        <a href="{% url 'apartment' auction.property_type.apartment_id %}" class="btn btn-primary">
-            Detail nemovitosti
-        </a>
+    {% if auction.end %}
+        <strong>Vydražil: </strong>
+            {{ last_one.anonymization_name }}
+        <p></p>
+        <strong>Vydraženo za: </strong>
+            {{ auction.act_value|custom_intcomma }} Kč
+    {% endif %}
+</div>
 
-    {% elif auction.property_type.house_id %}
-        <a href="{% url 'house' auction.property_type.house_id %}" class="btn btn-primary">
-            Detail nemovitosti
-        </a>
-
-    {% else %}
-        <a href="{% url 'ground' auction.property_type.ground_id %}" class="btn btn-primary">
-            Detail nemovitosti
-        </a>
+<div>
+    {% if auction.in_progress %}
+        <strong>Aktuální dražená cena: </strong>
+                {{ auction.act_value|custom_intcomma }} Kč
     {% endif %}
 </div>
 
@@ -264,30 +277,36 @@
 </div>
 <div>
     {% if auction.end and Bid.bid_date.exists %}
-        <strong>Prodáno </strong>
+        <strong>Prodáno</strong>
     {% endif %}
 </div>
+<p></p>
 <div>
+<p>
     {% if user.is_authenticated %}
         <div class="auction-bids">
+            <strong>Historie příhozů:</strong>
             {% for bid in auction.bid.all %}
                 <div class="auction-bid bg-light rounded mt-2 p-2 position-relative">
                     <div class="auction-bid-user-box">
                         <span class="auction-bid-user">
-                            Uživatel: {{ bid.user }}
+                            Uživatel: {{ bid.anonymization_name }},
                         </span>
                         <span class="auction-bid-created font-italic text-secondary">
-                            {{ bid.created|date:'d. m. Y H:i' }}
+                            příhoz proveden {{ bid.created|date:'d. m. Y H:i' }}
                         </span>
                     </div>
                     <div class="auction-bid-amount">
-                        Příhoz: {{ bid.bid_amount|custom_intcomma }}
+                        Výše příhozu: {{ bid.bid_amount|custom_intcomma }} Kč
                     </div>
                 </div>
+            {% empty %}
+                <p>Žádné příhozy nebyly provedeny.</p>
             {% endfor %}
         </div>
     {% endif %}
+</p>
 </div>
-<p></p>
+
 <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
 {% endblock %}
