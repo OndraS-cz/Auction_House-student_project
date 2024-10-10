@@ -202,7 +202,7 @@ class UpdateAuction(PermissionRequiredMixin, UpdateView):
     form_class = AuctionModelForm
     success_url = reverse_lazy('insert_data')
     model = Auction
-    permission_required = 'viewer.update_auction'
+    permission_required = 'viewer.change_auction'
 
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data updating.')
