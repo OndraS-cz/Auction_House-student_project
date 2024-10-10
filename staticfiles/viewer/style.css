@@ -5,6 +5,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    height: 50px;
 }
 
 .navbar-nav {
@@ -12,6 +13,7 @@
     list-style: none;
     padding-left: 0;
     margin: 0;
+    justify-content: space-between;
     align-items: center;
 }
 
@@ -31,9 +33,12 @@
 }
 
 .navbar-brand {
-    font-size: 1.5rem;
+    font-size: 1.3rem;
     font-weight: bold;
     color: white;
+    display: flex;
+    align-items: center;
+    padding: 0;
 }
 
 .navbar-collapse form {
@@ -45,7 +50,7 @@
 
 .navbar-collapse form .form-control,
 .navbar-collapse form .btn {
-    height: 38px;
+    height: 34px;
     margin-top: 5px;
     margin-bottom: 5px;
 }
@@ -56,7 +61,7 @@
 }
 
 .navbar-nav .nav-link {
-    height: 38px;
+    height: 34px;
     display: flex;
     align-items: center;
 }
@@ -92,11 +97,6 @@
     padding: 3px 10px;
 }
 
-.navbar-brand {
-    font-size: 1.1rem;
-    padding: 3px 10px;
-}
-
 body {
     font-family: Arial, sans-serif;
     background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/static/viewer/images/marble-texture.jpg');
@@ -104,11 +104,6 @@ body {
     background-attachment: fixed;
     background-repeat: no-repeat;
     color: #333;
-}
-
-.dropdown-item {
-    padding: 8px 15px;
-    font-size: 0.9rem;
 }
 
 input[type="text"],
@@ -159,20 +154,20 @@ button {
     color: white;
     border: 1px solid #ccc;
     cursor: pointer;
-    transition: background-color 0.3s ease;
+    transition: background-color 0.3s ease, color 0.3s ease;
 }
 
 button:hover {
-    background-color: #8ec1ec !important;
-    color: white !important;
-    border-color: #3498db !important;
+    background-color: #8ec1ec;
+    color: white;
+    border-color: #3498db;
 }
 
 .form-control {
     margin-right: 5px;
-    height: 36px;
-    padding: 5px;
-    font-size: 0.95rem;
+    height: 30px;
+    padding: 5px 10px;
+    font-size: 0.85rem;
     transition: background-color 1s ease, border-color 1s ease;
 }
 
@@ -192,6 +187,7 @@ button:hover {
     transition: background-color 1s ease, color 1s ease, border-color 1s ease;
 }
 
+.nav-link:hover,
 .btn-light:hover {
     background-color: #3498db;
     color: white;
@@ -207,4 +203,32 @@ button:hover {
 .navbar .dropdown-menu a:hover {
     background-color: #05fafa;
     color: #000000;
+}
+
+.navbar-collapse form .form-control,
+.navbar-collapse form .btn {
+    height: 30px;
+    padding: 5px 8px;
+    font-size: 0.85rem;
+}
+
+.btn-light:hover {
+    background-color: #3498db;
+    color: white;
+    border-color: #3498db;
+}
+
+.btn-orange {
+    background-color: #FFA500; /* Oranžová barva */
+    color: white;
+    padding: 5px 10px;
+    border-radius: 5px;
+    font-weight: bold;
+    border: 1px solid #FFA500;
+    transition: background-color 0.3s ease;
+}
+
+.btn-orange:hover {
+    background-color: #FF8C00; /* Tmavší oranžová při hoveru */
+    border-color: #FF8C00;
 }
