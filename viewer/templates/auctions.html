@@ -3,6 +3,22 @@
 {% load group_tags %}
 
 {% block content %}
+
+<h1>Aukce</h1>
+        <ul>
+        {% for auction in auctions %}
+            <li>
+                <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+            {% if user|has_group:"Admins" %}
+                <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
+                <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
+            {% endif %}
+            </li>
+        {% endfor %}
+    </ul>
+{% endblock %}
+
+/*
 <div class="card-body">
     <h5 class="card-title">{{ auction.property_type }} - {{ auction.city }}</h5>
     <p class="card-text">
@@ -19,4 +35,4 @@
         {% endif %}
     </div>
 </div>
-{% endblock %}
+*/

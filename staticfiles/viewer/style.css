@@ -98,12 +98,25 @@
 }
 
 body {
-    font-family: Arial, sans-serif;
+    font-family: Arial, Helvetica, sans-serif;
     background: linear-gradient(rgba(255, 255, 255, 0.8), rgba(255, 255, 255, 0.8)), url('/static/viewer/images/marble-texture.jpg');
     background-size: cover;
     background-attachment: fixed;
     background-repeat: no-repeat;
     color: #333;
+}
+
+h1 {
+    text-align: center;
+    font-weight: bold;
+    text-shadow: 6px 3px 6px rgb(150, 150, 150);
+}
+
+h6 {
+    text-align: right;
+    font-weight: bold;
+    font-style: italic;
+    color: red;
 }
 
 .dropdown-item {
