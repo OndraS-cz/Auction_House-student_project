@@ -1,8 +1,19 @@
+{% load static %}
 {% load group_tags %}
 
-<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5cabdd;">
+<div class="top-info-bar text-white" style="background-color: #3498db; padding: 5px 15px; font-size: 12px; text-align: left; display: flex; justify-content: flex-start; margin-bottom: 0;">
+  <span id="currentTime">Čas: 00:00:00</span>
+  {% if user.is_authenticated %}
+    &nbsp;|&nbsp; <span id="loginDuration">Doba přihlášení: 00:00:00</span>
+  {% endif %}
+</div>
+
+<nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5cabdd; margin-top: 0;">
   <div class="container-fluid">
-    <a class="navbar-brand text-white" href="/">Dražby nemovitostí</a>
+    <a class="navbar-brand text-white d-flex align-items-center" href="/">
+      <img src="{% static 'viewer/images/image.png' %}" alt="Logo" style="height: 40px; margin-right: 10px;">
+      Dražby nemovitostí
+    </a>
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
       data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false"
@@ -39,10 +50,10 @@
       <ul class="navbar-nav ms-auto mb-2 mb-lg-0">
         <li class="nav-item">
           <form class="d-flex align-items-center" method="get" action="{% url 'auctions_list' %}">
-            <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci"
-              value="{{ request.GET.q }}" style="height: 38px;">
-            <button class="btn btn-light" type="submit" style="height: 38px;">Hledat</button>
+              <input class="form-control me-2" type="text" name="q" placeholder="Hledat aukci" value="{{ request.GET.q }}">
+              <button class="btn btn-light" type="submit">Hledat</button>
           </form>
+
         </li>
         {% if user.is_authenticated %}
         <li class="nav-item dropdown">
@@ -52,12 +63,12 @@
           </a>
           <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="userDropdown">
             <li><a class="dropdown-item" href="{% url 'password_change' %}">Změnit heslo</a></li>
-            <li><a class="dropdown-item" href="{% url 'logout' %}">Odhlásit se</a></li>
+            <li><a class="dropdown-item" href="{% url 'logout' %}" onclick="resetLoginDuration()">Odhlásit se</a></li>
           </ul>
         </li>
         {% else %}
         <li class="nav-item">
-          <a class="nav-link text-white" href="{% url 'login' %}">Přihlásit</a>
+          <a class="nav-link text-white btn-orange" href="{% url 'login' %}">Přihlásit</a>
         </li>
         <li class="nav-item">
           <a class="nav-link text-white" href="{% url 'signup' %}">Registrovat</a>
@@ -67,3 +78,33 @@
     </div>
   </div>
 </nav>
+
+<script>
+  function updateTime() {
+    const currentTime = new Date();
+    document.getElementById('currentTime').textContent = `Čas: ${currentTime.toLocaleTimeString()}`;
+  }
+
+  function updateLoginDuration() {
+    const loginTime = new Date(sessionStorage.getItem('loginTime'));
+    const now = new Date();
+    const duration = new Date(now - loginTime);
+    const hours = String(duration.getUTCHours()).padStart(2, '0');
+    const minutes = String(duration.getUTCMinutes()).padStart(2, '0');
+    const seconds = String(duration.getUTCSeconds()).padStart(2, '0');
+    document.getElementById('loginDuration').textContent = `Doba přihlášení: ${hours}:${minutes}:${seconds}`;
+  }
+
+  if (!sessionStorage.getItem('loginTime')) {
+    sessionStorage.setItem('loginTime', new Date().toISOString());
+  }
+
+  function resetLoginDuration() {
+    sessionStorage.removeItem('loginTime');
+  }
+
+  setInterval(updateTime, 1000);
+  {% if user.is_authenticated %}
+  setInterval(updateLoginDuration, 1000);
+  {% endif %}
+</script>
