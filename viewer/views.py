@@ -71,7 +71,7 @@ class HousesListView(ListView):
     context_object_name = 'houses'
 
 def auction_houses(request):
-    auction_houses = Auction.objects.filter(property_type__house__isnull=False)
+    auction_houses = Auction.objects.filter(property_type__house__isnull=False).order_by('date_auction')
     return render(request, 'auction_houses.html', {'auction_houses': auction_houses})
 
 
@@ -246,7 +246,7 @@ class ApartmentsView(View):
         return render(request, "apartments.html", context)
 
 def auction_apartments(request):
-    auction_aparmtnets = Auction.objects.filter(property_type__apartment__isnull=False)
+    auction_aparmtnets = Auction.objects.filter(property_type__apartment__isnull=False).order_by('date_auction')
     return render(request, 'auction_apartments.html', {'auction_apartments': auction_aparmtnets})
 
 class DeleteApartmentType(PermissionRequiredMixin, DeleteView):
@@ -305,7 +305,7 @@ class GroundsView(View):
 
 
 def auction_grounds(request):
-    auction_grounds = Auction.objects.filter(property_type__ground__isnull=False)
+    auction_grounds = Auction.objects.filter(property_type__ground__isnull=False).order_by('date_auction')
     return render(request, 'auction_grounds.html', {'auction_grounds': auction_grounds})
 
 class GroundsTemplateView(TemplateView):
