@@ -1,6 +1,7 @@
 {% extends "base.html" %}
 
 {% load number_format %}
+{% load group_tags %}
 
 {% block content %}
 
@@ -31,12 +32,6 @@
 <script>
 const API_KEY = '8tyXqY5NkGC-5UHPeAWJ4ZWGm7lcbkiysBJDFU8_j28';
 
-/*
-We create a map with initial coordinates zoom, a raster tile source and a layer using that source.
-See https://maplibre.org/maplibre-gl-js-docs/example/map-tiles/
-See https://maplibre.org/maplibre-gl-js-docs/style-spec/sources/#raster
-See https://maplibre.org/maplibre-gl-js-docs/style-spec/layers/
-*/
 const map = new maplibregl.Map({
 	container: 'map',
 	center: [14.8981184, 49.8729317],
@@ -80,12 +75,6 @@ const map = new maplibregl.Map({
 	},
 });
 
-/*
-We also require you to include our logo somewhere over the map.
-We create our own map control implementing a documented interface,
-that shows a clickable logo.
-See https://maplibre.org/maplibre-gl-js-docs/api/markers/#icontrol
-*/
 class LogoControl {
 	onAdd(map) {
 		this._map = map;
@@ -102,10 +91,8 @@ class LogoControl {
 	}
 }
 
-// finally we add our LogoControl to the map
 map.addControl(new LogoControl(), 'bottom-left');
 
-// function for calculating a bbox from an array of coordinates
 function bbox(coords) {
 	let minLatitude = Infinity;
 	let minLongitude = Infinity;
@@ -170,7 +157,6 @@ async function geocode(query) {
       });
     }
 
-    // finally we set the map to show the whole geometry in the viewport
     map.jumpTo(
     	map.cameraForBounds(
       	bbox(json.items.map(item => ([item.position.lon, item.position.lat]))),
@@ -417,6 +403,11 @@ map.on('load', function () {
             <a href="{% url 'ground' auction.property_type.ground_id %}" class="btn btn-primary">
                 Detail nemovitosti
             </a>
+        {% endif %}
+
+        {% if user|has_group:"Admins" %}
+        <a href="{%  url 'update_auction' auction.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
+        <a href="{%  url 'delete_auction' auction.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
         {% endif %}
     </div>
 </p>
