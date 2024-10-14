@@ -104,7 +104,8 @@ urlpatterns = [
 
     path('auctions/houses/', auction_houses, name='auction_houses'),
     path('auctions/apartments/', auction_apartments,  name='auction_apartments'),
-    path('auctions/grounds/', auction_grounds, name='auction_grounds')
+    path('auctions/grounds/', auction_grounds, name='auction_grounds'),
+
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

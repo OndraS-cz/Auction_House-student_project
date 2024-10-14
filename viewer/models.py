@@ -233,6 +233,9 @@ class Bid(Model):
     bid_amount = IntegerField(null=False)
     created = DateTimeField(auto_now_add=True)
 
+    class Meta:
+        ordering = ['-created']
+
     def save(self, *args, **kwargs):
         self.clean()
         is_new = self.pk is None
@@ -263,8 +266,8 @@ class Bid(Model):
     def __str__(self):
         return f"{self.user}"
 
-    @staticmethod
-    def anonymization_name(name):
+    def anonymization_name(self):
+        name = self.user.user.username
         if len(name) <= 2:
             return name
         else:
