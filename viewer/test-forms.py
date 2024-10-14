@@ -44,7 +44,7 @@ class CreatorFormTest(TestCase):
             'plot_area': 300,
             'garden_area': 50,
             'description': 'Krásný cihlový dům s velkou zahradou',
-            'property_type': house_type.id  # Přiřazení ID vytvořeného typu
+            'property_type': house_type.id
         })
 
         self.assertTrue(form.is_valid())
