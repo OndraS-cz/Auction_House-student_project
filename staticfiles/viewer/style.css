@@ -219,7 +219,7 @@ button:hover {
 }
 
 .btn-orange {
-    background-color: #FFA500; /* Oranžová barva */
+    background-color: #FFA500;
     color: white;
     padding: 5px 10px;
     border-radius: 5px;
@@ -229,6 +229,18 @@ button:hover {
 }
 
 .btn-orange:hover {
-    background-color: #FF8C00; /* Tmavší oranžová při hoveru */
+    background-color: #FF8C00;
     border-color: #FF8C00;
+}
+
+.text-error {
+    color: red;
+    font-weight: bold;
+    margin-bottom: 5px;
+}
+
+.error-messages p {
+    font-size: 14px;
+    margin: 0;
+    padding: 0;
 }
