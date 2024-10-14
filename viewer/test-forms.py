@@ -31,12 +31,11 @@ class CreatorFormTest(TestCase):
     def test_house_model_form(self):
         form = HouseModelForm(
             data={
-                'name': 'Cihlový dům',
+                'name': 'Panelák',
                 'area': '89',
                 'plot_area': '55',
                 'garden_area': '100',
                 'description': 'Popis'
-
         }
         )
         print(f"\ntest_cities_is_valid: {form.data}")

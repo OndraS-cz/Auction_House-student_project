@@ -146,22 +146,22 @@ class Auction(Model):
     def clean(self):
         if self.date_auction > self.date_end_auction:
             raise ValidationError({
-                'date_auction': ('The start date of the auction cannot be after the end date.'),
-                'date_end_auction': ('The end date of the auction must be after the start date.'),
+                'date_auction': ('Začátek dražby nesmí být po jejím konci.'),
+                'date_end_auction': ('Konec dražby nesmí být před začátkem.'),
             })
         if self.min_bid > self.estimate_value or self.min_bid > self.min_value or self.min_bid > self.auction_assurance:
             raise ValidationError({
-                'min_bid': ('The value is too big.'),
+                'min_bid': ('Hodnota je příliž velká.'),
             })
         if self.min_value > self.estimate_value:
             raise ValidationError({
-                'min_value': ('The value is too big.'),
-                'estimate_value': ('The value is too big.')
+                'min_value': ('Hodnota je příliž velká.'),
+                'estimate_value': ('Hodnota je příliž velká.')
             })
         if self.auction_assurance > self.estimate_value:
             raise ValidationError({
-                'auction_assurance': ('The value is too big.'),
-                'estimate_value': ('The value is too big.')
+                'auction_assurance': ('Hodnota je příliž velká.'),
+                'estimate_value': ('Hodnota je příliž velká.')
             })
 
     def loc_time(self):
