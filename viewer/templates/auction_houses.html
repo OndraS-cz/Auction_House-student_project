@@ -5,14 +5,29 @@
 {% block content %}
 <h1>Aukce domů</h1>
     <ul>
-        {% for auction in auction_houses %}
-            <li>
-                <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
-            {% if user|has_group:"Admins" %}
-                <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
-                <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
-            {% endif %}
-            </li>
-        {% endfor %}
+        {%if future_auctions%}
+            {% for auction in future_auctions%}
+
+                <li>
+                    <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+                {% if user|has_group:"Admins" %}
+                    <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
+                    <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
+                {% endif %}
+                </li>
+            {% endfor %}
+        {% endif %}
+        {%if past_auctions%}
+            {% for auction in past_auctions%}
+
+                <li>
+                    <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+                {% if user|has_group:"Admins" %}
+                    <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
+                    <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
+                {% endif %}
+                </li>
+            {% endfor %}
+        {% endif %}
     </ul>
 {% endblock %}
