@@ -6,6 +6,7 @@
 <h1>Aukce bytů</h1>
     <ul>
         {%if future_auctions%}
+            <strong>Aukce</strong>
             {% for auction in future_auctions%}
 
                 <li>
@@ -17,7 +18,9 @@
                 </li>
             {% endfor %}
         {% endif %}
+
         {%if past_auctions%}
+            <strong>Skončené aukce:</strong>
             {% for auction in past_auctions%}
 
                 <li>
