@@ -76,7 +76,7 @@ def auction_houses(request):
     current_date = timezone.now()
     auction_houses = Auction.objects.filter(property_type__house__isnull=False).order_by('date_auction')
     future_auctions = Auction.objects.filter(property_type__house__isnull=False, date_auction__gte=current_date).order_by('date_auction')
-    past_auctions = Auction.objects.filter(property_type__house__isnull=False, date_end_auction__lt=current_date)
+    past_auctions = Auction.objects.filter(property_type__house__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
     return render(request, 'auction_houses.html', {'auction_houses': auction_houses,
                                                        'future_auctions': future_auctions,
                                                        'past_auctions': past_auctions})
@@ -256,7 +256,7 @@ def auction_apartments(request):
     current_date = timezone.now()
     auction_aparmtnets = Auction.objects.filter(property_type__apartment__isnull=False).order_by('date_auction')
     future_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_auction__gte=current_date).order_by('date_auction')
-    past_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_end_auction__lt=current_date)
+    past_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
 
     return render(request, 'auction_apartments.html', {'auction_apartments': auction_aparmtnets,
                                                        'future_auctions': future_auctions,
@@ -321,7 +321,7 @@ def auction_grounds(request):
     current_date = timezone.now()
     auction_grounds = Auction.objects.filter(property_type__ground__isnull=False).order_by('date_auction')
     future_auctions = Auction.objects.filter(property_type__ground__isnull=False,date_auction__gte=current_date).order_by('date_auction')
-    past_auctions = Auction.objects.filter(property_type__ground__isnull=False, date_end_auction__lt=current_date)
+    past_auctions = Auction.objects.filter(property_type__ground__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
     return render(request, 'auction_grounds.html', {'auction_grounds': auction_grounds,
                                                                       'future_auctions': future_auctions,
                                                                       'past_auctions': past_auctions})
