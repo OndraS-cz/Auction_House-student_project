@@ -51,6 +51,8 @@ class SignUpForm(UserCreationForm):
     def save(self, commit=True):
         self.instance.is_active = True
         user = super().save(commit)
+        user.set_password(self.cleaned_data['password1'])
+
         date_of_birth = self.cleaned_data['date_of_birth']
         birth_nr = self.cleaned_data['birth_nr']
         document_type = self.cleaned_data['document_type']

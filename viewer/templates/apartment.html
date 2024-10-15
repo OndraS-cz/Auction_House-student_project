@@ -9,21 +9,24 @@
         <strong>Typ bytu:</strong>
         {{ apartment.property_type }}
     </div>
-    <p></p>
+    <p>
     <div class="apartment-area">
         <strong>Výměra:</strong>
             {{ apartment.area }} m2
     </div>
-    <p></p>
+    </p>
+    <p>
     <div class="apartment-description">
         <strong>Popis nemovitosti: </strong>
         {{ apartment.description|linebreaks }}
     </div>
-    <p></p>
+    </p>
+    <p>
     {% if user|has_group:"Admins" %}
     <a href="{%  url 'update_apartments' apartment.id %}"><button type="button" class="btn btn-light">Aktualizovat</button></a>
     <a href="{%  url 'delete_apartments' apartment.id %}"><button type="button" class="btn btn-light">Vymazat</button></a>
     {% endif %}
+    </p>
 </div>
 <br>
 <div>
