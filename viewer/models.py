@@ -149,7 +149,7 @@ class Auction(Model):
                 'date_auction': ('Začátek dražby nesmí být po jejím konci.'),
                 'date_end_auction': ('Konec dražby nesmí být před začátkem.'),
             })
-        if self.min_bid > self.estimate_value or self.min_bid > self.min_value or self.min_bid > self.auction_assurance:
+        if self.min_bid > self.estimate_value or self.min_bid > self.min_value or self.min_bid:
             raise ValidationError({
                 'min_bid': ('Hodnota je příliž velká.'),
             })
