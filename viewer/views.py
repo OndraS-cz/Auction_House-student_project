@@ -1,5 +1,6 @@
 
 from django.contrib.auth.decorators import user_passes_test
+from django.db.models.functions import datetime
 from django.utils import timezone
 from django.utils.timezone import now
 from django.contrib.auth.mixins import PermissionRequiredMixin
@@ -73,13 +74,17 @@ class HousesListView(ListView):
     context_object_name = 'houses'
 
 def auction_houses(request):
-    current_date = timezone.now()
+    current_date = datetime.datetime.now()
     auction_houses = Auction.objects.filter(property_type__house__isnull=False).order_by('date_auction')
     future_auctions = Auction.objects.filter(property_type__house__isnull=False, date_auction__gte=current_date).order_by('date_auction')
     past_auctions = Auction.objects.filter(property_type__house__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
+    ongoing_auctions = Auction.objects.filter(property_type__house__isnull=False, date_end_auction__gte=current_date,
+                                              date_auction__lte=current_date).order_by('date_auction')
+
     return render(request, 'auction_houses.html', {'auction_houses': auction_houses,
                                                        'future_auctions': future_auctions,
-                                                       'past_auctions': past_auctions})
+                                                       'past_auctions': past_auctions,
+                                                        'ongoing_auctions': ongoing_auctions})
 
 
 class InsertDataListView(ListView):
@@ -253,14 +258,17 @@ class ApartmentsView(View):
         return render(request, "apartments.html", context)
 
 def auction_apartments(request):
-    current_date = timezone.now()
+    current_date = datetime.datetime.now()
     auction_aparmtnets = Auction.objects.filter(property_type__apartment__isnull=False).order_by('date_auction')
     future_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_auction__gte=current_date).order_by('date_auction')
     past_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
+    ongoing_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_end_auction__gte=current_date,
+                                              date_auction__lte=current_date).order_by('date_auction')
 
     return render(request, 'auction_apartments.html', {'auction_apartments': auction_aparmtnets,
                                                        'future_auctions': future_auctions,
-                                                       'past_auctions': past_auctions})
+                                                       'past_auctions': past_auctions,
+                                                       'ongoing_auctions': ongoing_auctions})
 
 class DeleteApartmentType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
@@ -318,13 +326,16 @@ class GroundsView(View):
 
 
 def auction_grounds(request):
-    current_date = timezone.now()
+    current_date = datetime.datetime.now()
     auction_grounds = Auction.objects.filter(property_type__ground__isnull=False).order_by('date_auction')
     future_auctions = Auction.objects.filter(property_type__ground__isnull=False,date_auction__gte=current_date).order_by('date_auction')
     past_auctions = Auction.objects.filter(property_type__ground__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
+    ongoing_auctions = Auction.objects.filter(property_type__ground__isnull=False, date_end_auction__gte=current_date,
+                                              date_auction__lte=current_date).order_by('date_auction')
     return render(request, 'auction_grounds.html', {'auction_grounds': auction_grounds,
                                                                       'future_auctions': future_auctions,
-                                                                      'past_auctions': past_auctions})
+                                                                      'past_auctions': past_auctions,
+                                                                      'ongoing_auctions': ongoing_auctions})
 
 
 class GroundsTemplateView(TemplateView):
