@@ -18,15 +18,19 @@ from logging import getLogger
 LOGGER = getLogger()
 
 
-
-
 def home(request):
-    return render(request, "home.html")
+    auctions = Auction.objects.order_by('?')[:5]
+    context = {
+        'auctions': auctions
+    }
+    return render(request, "home.html", context)
+
 
 def houses(request):
     houses_ = House.objects.all()
     context = {'houses': houses_}
     return render(request, 'houses.html', context)
+
 
 def house(request, pk):
     if House.objects.filter(id=pk).exists():
@@ -35,10 +39,12 @@ def house(request, pk):
         return render(request, 'house.html', context)
     return grounds(request)
 
+
 def house_types(request):
     house_types = HouseType.objects.all()
     context = {'house_types': house_types}
     return render(request, 'house_types.html', context)
+
 
 class HousesView(View):
     def get(self, request):
@@ -69,6 +75,7 @@ class HousesListView(ListView):
     template_name = "houses.html"
     model = House
     context_object_name = 'houses'
+
 
 def auction_houses(request):
     auction_houses = Auction.objects.filter(property_type__house__isnull=False)
@@ -229,15 +236,18 @@ def apartment(request, pk):
         return render(request, 'apartment.html', context)
     return apartments(request)
 
+
 def apartments(request):
     apartments_ = Apartment.objects.all()
     context = {'apartments': apartments_}
     return render(request, 'apartments.html', context)
 
+
 def apartment_types(request):
     apartment_types_ = ApartmentType.objects.all()
     context = {'apartment_types': apartment_types_}
     return render(request, 'apartment_types.html', context)
+
 
 class ApartmentsView(View):
     def get(self, request):
@@ -245,9 +255,11 @@ class ApartmentsView(View):
         context = {'apartments': apartments_}
         return render(request, "apartments.html", context)
 
+
 def auction_apartments(request):
     auction_aparmtnets = Auction.objects.filter(property_type__apartment__isnull=False)
     return render(request, 'auction_apartments.html', {'auction_apartments': auction_aparmtnets})
+
 
 class DeleteApartmentType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
@@ -266,10 +278,12 @@ class ApartmentsListView(ListView):
     model = Apartment
     context_object_name = 'apartments'
 
+
 def grounds(request):
     grounds_ = Ground.objects.all()
     context = {'grounds': grounds_}
     return render(request, 'grounds.html', context)
+
 
 def ground(request, pk):
     if Ground.objects.filter(id=pk).exists():
@@ -278,10 +292,12 @@ def ground(request, pk):
         return render(request, 'ground.html', context)
     return grounds(request)
 
+
 def ground_types(request):
     ground_types_ = GroundType.objects.all()
     context = {'ground_types': ground_types_}
     return render(request, 'ground_types.html', context)
+
 
 class DeleteGroundType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
@@ -307,6 +323,7 @@ class GroundsView(View):
 def auction_grounds(request):
     auction_grounds = Auction.objects.filter(property_type__ground__isnull=False)
     return render(request, 'auction_grounds.html', {'auction_grounds': auction_grounds})
+
 
 class GroundsTemplateView(TemplateView):
     template_name = "grounds.html"
@@ -385,10 +402,12 @@ class ImageDetailView(DetailView):
     model = Image
     template_name = 'image.html'
 
+
 def cities(request):
         cities_ = Cities.objects.all()
         context = {'cities': cities_}
         return render(request, 'cities.html', context)
+
 
 class InsertCity(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
@@ -446,6 +465,7 @@ def auction_bids(request, pk):
     bids = Bid.objects.filter(auction_id = pk)
     return render(request, 'auction_bids.html', {'bids': bids})
 
+
 def won_auctions_view(request):
     won_auctions = Auction.objects.filter(
         date_end_auction__lt=now(),
@@ -462,6 +482,7 @@ def won_auctions_view(request):
 
     return render(request, 'win_auctions.html', context)
 
+
 def auctions_list_view(request):
     query = request.GET.get('q')
     auctions = Auction.objects.all()
@@ -475,6 +496,7 @@ def auctions_list_view(request):
         'auctions': auctions,
     }
     return render(request, 'auction_search.html', context)
+
 
 def zobraz_mapu(request):
     return render(request, 'map.html')

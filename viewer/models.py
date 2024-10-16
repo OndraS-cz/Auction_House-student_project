@@ -142,6 +142,7 @@ class Auction(Model):
     date_auction = DateTimeField(null=False)
     date_end_auction = DateTimeField(null=False)
     description = TextField(null=True, blank=True)
+    image = ImageField(upload_to='auctions/', blank=True, null=True)
 
     def clean(self):
         if self.date_auction > self.date_end_auction:
