@@ -6,7 +6,7 @@
 <h1>Aukce domů</h1>
     <ul>
         {%if ongoing_auctions%}
-            <strong>Právě probýhající aukce</strong>
+            <strong>Právě probíhající aukce</strong>
             {% for auction in ongoing_auctions%}
                 <li>
                     <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
