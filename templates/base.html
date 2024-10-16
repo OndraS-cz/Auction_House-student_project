@@ -13,10 +13,8 @@
 
     <link rel="stylesheet" type="text/css" href="{% static 'viewer/style.css' %}">
 
-      <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
-      <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
-
-  </head>
+    <link href="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.css" rel="stylesheet" />
+    <script src="https://unpkg.com/maplibre-gl@2.4.0/dist/maplibre-gl.js"></script>
 
     <style>
         #clock {
@@ -37,13 +35,11 @@
 
     {% include 'footer.html' %}
 
-    <!-- JavaScript pro reset doby přihlášení při odhlášení -->
     <script>
       function resetLoginDuration() {
         sessionStorage.removeItem('loginTime');
       }
 
-      // Reset při kliknutí na odhlášení (Logout link)
       document.addEventListener('DOMContentLoaded', function() {
         const logoutLink = document.querySelector('a[href="{% url 'logout' %}"]');
         if (logoutLink) {

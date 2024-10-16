@@ -1,7 +1,7 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Aukce</h1>
+<h1>Vyhrané aukce</h1>
     <ul>
     {% if won_auctions %}
         {% for auction in won_auctions %}
@@ -9,9 +9,8 @@
                 <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
             </li>
         {% endfor %}
-    {% endif %}
-    {% if not won_auctions %}
-        Nemáte žádné vyhrané aukce
+    {% else %}
+        <p>Nemáte žádné vyhrané aukce.</p>
     {% endif %}
     </ul>
 {% endblock %}

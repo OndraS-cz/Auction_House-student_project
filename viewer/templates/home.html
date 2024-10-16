@@ -1,5 +1,41 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Auction house - dražby nemovitostí</h1>
+<h1>Aktuální náhodné aukce</h1>
+
+{% if auctions %}
+  <p>{{ auctions.count }} aukcí načteno.</p>
+  <div id="auctionCarousel" class="carousel slide" data-bs-ride="carousel" data-bs-interval="5000">
+    <div class="carousel-inner">
+      {% for auction in auctions %}
+        <div class="carousel-item {% if forloop.first %}active{% endif %}">
+            {% if auction.image %}
+                <img src="{{ auction.image.url }}" class="d-block w-100" alt="{{ auction.name }}">
+            {% else %}
+                <img src="https://via.placeholder.com/800x300" class="d-block w-100" alt="{{ auction.name }}">
+            {% endif %}
+
+            <div class="carousel-caption">
+                <h5>{{ auction.property_type }}</h5>
+                <p>{{ auction.description|truncatewords:30 }}</p>
+                <p><strong>Datum konce:</strong> {{ auction.date_end_auction }}</p>
+                <a href="{% url 'auction' auction.id %}" class="btn btn-primary">Zobrazit aukci</a>
+            </div>
+        </div>
+      {% endfor %}
+    </div>
+
+    <button class="carousel-control-prev" type="button" data-bs-target="#auctionCarousel" data-bs-slide="prev">
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Předchozí</span>
+    </button>
+    <button class="carousel-control-next" type="button" data-bs-target="#auctionCarousel" data-bs-slide="next">
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Další</span>
+    </button>
+  </div>
+{% else %}
+  <p>Žádné aukce nejsou k dispozici.</p>
+{% endif %}
+
 {% endblock %}

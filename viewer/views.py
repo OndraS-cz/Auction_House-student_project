@@ -23,8 +23,14 @@ LOGGER = getLogger()
 
 
 
+from viewer.models import Auction
+
 def home(request):
-    return render(request, "home.html")
+    auctions = Auction.objects.order_by('?')[:5]
+    context = {
+        'auctions': auctions
+    }
+    return render(request, "home.html", context)
 
 def houses(request):
     houses_ = House.objects.all()
