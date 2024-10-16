@@ -35,19 +35,54 @@
       </div>
     </div>
 
-    {% include 'footer.html' %}
+    <div id="cookie-banner" style="display: none; position: fixed; bottom: 0; width: 100%; background: #333; color: white; text-align: center; padding: 10px;">
+      <p>Kliknutím na tlačítko "Souhlasím" potvrzujete, že máte rádi sušenky!</p>
+      <button id="accept-cookies" style="background-color: green; color: white; padding: 5px 10px;">Souhlasím</button>
+    </div>
 
-    <!-- JavaScript pro reset doby přihlášení při odhlášení -->
+    {% include 'footer.html' %}
+    
     <script>
       function resetLoginDuration() {
         sessionStorage.removeItem('loginTime');
       }
-
-      // Reset při kliknutí na odhlášení (Logout link)
+      
       document.addEventListener('DOMContentLoaded', function() {
         const logoutLink = document.querySelector('a[href="{% url 'logout' %}"]');
         if (logoutLink) {
           logoutLink.addEventListener('click', resetLoginDuration);
+        }
+      });
+    </script>
+    
+    <script>
+      document.addEventListener("DOMContentLoaded", function() {
+        if (!getCookie('cookies_accepted')) {
+          document.getElementById('cookie-banner').style.display = 'block';
+        }
+    
+        document.getElementById('accept-cookies').addEventListener('click', function() {
+          setCookie('cookies_accepted', true, 365);
+          document.getElementById('cookie-banner').style.display = 'none';
+        });
+    
+        function setCookie(name, value, days) {
+          const d = new Date();
+          d.setTime(d.getTime() + (days * 24 * 60 * 60 * 1000));
+          const expires = "expires=" + d.toUTCString();
+          document.cookie = name + "=" + value + ";" + expires + ";path=/";
+        }
+    
+        function getCookie(name) {
+          const decodedCookie = decodeURIComponent(document.cookie);
+          const ca = decodedCookie.split(';');
+          for (let i = 0; i < ca.length; i++) {
+            let c = ca[i].trim();
+            if (c.indexOf(name + "=") === 0) {
+              return c.substring(name.length + 1);
+            }
+          }
+          return null;
         }
       });
     </script>
