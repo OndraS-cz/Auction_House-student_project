@@ -5,8 +5,20 @@
 {% block content %}
 <h1>Aukce pozemků</h1>
     <ul>
+        {%if ongoing_auctions%}
+            <strong>Právě probíhající aukce</strong>
+            {% for auction in ongoing_auctions%}
+                <li>
+                    <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
+                {% if user|has_group:"Admins" %}
+                    <a href="{% url 'update_auction' auction.id %}"> 🔧 </a>
+                    <a href="{% url 'delete_auction' auction.id %}"> ❌ </a>
+                {% endif %}
+                </li>
+            {% endfor %}
+        {% endif %}
         {%if future_auctions%}
-            <strong>Aukce</strong>
+            <strong>Budoucí aukce</strong>
             {% for auction in future_auctions%}
                 <li>
                     <a href="{% url 'auction' auction.id %}"> {{ auction }} </a>
