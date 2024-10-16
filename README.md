@@ -1,4 +1,4 @@
-# Auction House - Dražby Nemovitostí
+# Auction House - Dražby nemovitostí
 
 ## Popis projektu
 Tento projekt je webová aplikace pro aukční dům postavená na frameworku Django. Umožňuje uživatelům (dle přiřazených práv) přidávat a spravovat aukce, podávat nabídky a spravovat svůj účet. Aukční dům je určen pouze pro uživatele s českým občanstvím.
