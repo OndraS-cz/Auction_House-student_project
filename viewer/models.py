@@ -20,6 +20,12 @@ class Cities(Model):
         verbose_name_plural = "Cities"
         ordering = ['name']
 
+    def clean(self):
+        if not self.name[0].isupper():
+            raise ValidationError({
+                'name': ('Město je s velkým počátečním písmenem.')
+            })
+
     def __repr__(self):
         return f"City(name={self.name})"
 
