@@ -373,7 +373,8 @@ class AuctionTemplateView(TemplateView):
         last_one = Bid.objects.filter(auction_id = pk).order_by("created").last()
         context_ = self.get_context_data()
         context_['last_one'] = last_one
-        Bid.objects.create(auction = context_['auction'],
+        if Profile.objects.filter(user=request.user).exists():
+            Bid.objects.create(auction = context_['auction'],
                             user = Profile.objects.get(user=request.user),
                             bid_amount = request.POST.get('bid_amount'),
                             )
