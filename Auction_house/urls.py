@@ -22,10 +22,10 @@ from Auction_house import settings
 
 from accounts.views import SignUpView, user_logout
 
-from viewer.views import home, InsertHouse, ApartmentsListView, apartment, ImageCreateView, \
+from viewer.views import home, InsertHouse, ApartmentsListView, apartment, InsertImage, \
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
-    UpdateAuction, DeleteAuction, ImageUpdateView, ImageDeleteView, InsertPropertyType, AuctionTemplateView, \
+    UpdateAuction, DeleteAuction, UpdateImage, DeleteImage, InsertPropertyType, AuctionTemplateView, \
     InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
     InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view, auction_houses, \
@@ -35,8 +35,6 @@ urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),
-
-    path('image/create', ImageCreateView.as_view(), name='image_create'),
 
     path('insert/bid', InsertBid.as_view(), name='insert_bid'),
 
@@ -93,9 +91,9 @@ urlpatterns = [
     path('won_auctions', won_auctions_view ,name='won_auctions'),
 
     path('images/', ImageDetailView.as_view(), name='images'),
-    path('image/create/', ImageCreateView.as_view(), name='image_create'),
-    path('image/update/<pk>/', ImageUpdateView.as_view(), name='image_update'),
-    path('image/delete/<pk>/', ImageDeleteView.as_view(), name='image_delete'),
+    path('image/create/', InsertImage.as_view(), name='image_create'),
+    path('image/update/<pk>/', UpdateImage.as_view(), name='image_update'),
+    path('image/delete/<pk>/', DeleteImage.as_view(), name='image_delete'),
     path('image/<pk>/', ImageDetailView.as_view(), name='image'),
 
     path('accounts/signup/', SignUpView.as_view(), name='signup'),

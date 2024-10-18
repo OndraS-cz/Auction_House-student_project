@@ -204,7 +204,7 @@ class InsertPropertyType(PermissionRequiredMixin, CreateView):
 class InsertAuction(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = AuctionModelForm
-    success_url = reverse_lazy('image_create')
+    success_url = reverse_lazy('insert_auction')
     permission_required = 'viewer.add_auction'
 
     def form_invalid(self, form):
@@ -399,7 +399,7 @@ class AuctionsTemplateView(ListView):
     context_object_name = 'auctions'
 
 
-class ImageCreateView(PermissionRequiredMixin, CreateView):
+class InsertImage(PermissionRequiredMixin, CreateView):
     template_name = 'form_image.html'
     form_class = ImageModelForm
     success_url = reverse_lazy('home')
@@ -410,7 +410,7 @@ class ImageCreateView(PermissionRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
-class ImageUpdateView(PermissionRequiredMixin, UpdateView):
+class UpdateImage(PermissionRequiredMixin, UpdateView):
     template_name = 'form_image.html'
     form_class = ImageModelForm
     success_url = reverse_lazy('images')
@@ -422,7 +422,7 @@ class ImageUpdateView(PermissionRequiredMixin, UpdateView):
         return super().form_invalid(form)
 
 
-class ImageDeleteView(PermissionRequiredMixin, DeleteView):
+class DeleteImage(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = Image
     success_url = reverse_lazy('images')
