@@ -4,8 +4,8 @@ from django.db.models.functions import datetime
 from django.utils import timezone
 from django.utils.timezone import now
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Max, F, Q
-from django.shortcuts import render
+from django.db.models import Max, F, Q, Subquery, OuterRef
+from django.shortcuts import render, get_object_or_404, redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView, TemplateView, ListView, CreateView, DetailView
 from django.views import View
@@ -387,7 +387,7 @@ class AuctionTemplateView(TemplateView):
         context_['auction'] = auction_
         context_['form'] = BidModelForm
         if Bid.objects.filter(auction_id=pk).exists():
-            context_['last_one'] = Bid.objects.filter(auction_id=pk).latest("created")
+            context_['last_one'] = Bid.objects.filter(auction_id=pk).order_by('-created').first()
         else:
             context_['last_one'] = None
         return context_
@@ -498,20 +498,23 @@ def auction_bids(request, pk):
 
 
 def won_auctions_view(request):
-    won_auctions = Auction.objects.filter(
-        date_end_auction__lt=now(),
-        bid__user=request.user.profile
-    ).annotate(
-        highest_bid_amount=Max('bid__bid_amount')
-    ).filter(
-        bid__bid_amount=F('highest_bid_amount')
-    )
-
-    context = {
-        'won_auctions': won_auctions
-    }
-
-    return render(request, 'win_auctions.html', context)
+    try:
+        last_bid = Bid.objects.filter(
+            auction=OuterRef('pk')
+        ).order_by('-created').values('user')[:1]
+        won_auctions = Auction.objects.filter(
+            date_end_auction__lt=datetime.datetime.now()
+        ).annotate(
+            last_bid_user=Subquery(last_bid)
+        ).filter(
+            last_bid_user=request.user.profile
+        )
+        context = {
+            'won_auctions': won_auctions
+        }
+        return render(request, 'won_auctions.html', context)
+    except Exception as e:
+        return redirect('home')
 
 
 def auctions_list_view(request):

@@ -426,10 +426,11 @@ map.on('load', function () {
 </div>
 
 <div>
-    {% if auction.in_progress %}
+    {% if auction.in_progress and auction.act_value != None %}
         <strong>Aktuální dražená cena: </strong>
                 {{ auction.act_value|custom_intcomma }} Kč
     {% endif %}
+
 </div>
 
 <div>
