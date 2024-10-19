@@ -8,7 +8,6 @@ import time
 import datetime
 
 import pytz
-from django.utils import timezone
 
 from accounts.models import Profile
 
@@ -152,17 +151,17 @@ class Auction(Model):
             })
         if self.min_bid > self.estimate_value or self.min_bid > self.min_value:
             raise ValidationError({
-                'min_bid': ('Hodnota je příliž velká.'),
+                'min_bid': ('Hodnota je příliš velká.'),
             })
         if self.min_value > self.estimate_value:
             raise ValidationError({
-                'min_value': ('Hodnota je příliž velká.'),
-                'estimate_value': ('Hodnota je příliž velká.')
+                'min_value': ('Hodnota je příliš velká.'),
+                'estimate_value': ('Hodnota je příliš velká.')
             })
         if self.auction_assurance > self.estimate_value:
             raise ValidationError({
-                'auction_assurance': ('Hodnota je příliž velká.'),
-                'estimate_value': ('Hodnota je příliž velká.')
+                'auction_assurance': ('Hodnota je příliš velká.'),
+                'estimate_value': ('Hodnota je příliš velká.')
             })
 
     def loc_time(self):
