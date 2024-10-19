@@ -127,6 +127,34 @@ class PropertyType(Model):
     ground = ForeignKey(Ground, null=True, blank=True, on_delete=SET_NULL, related_name='ground')
     apartment = ForeignKey(Apartment, null=True, blank=True, on_delete=SET_NULL, related_name='apartment')
 
+    def clean(self):
+        if self.house == None and self.ground == None and self.apartment == None:
+            raise ValidationError({
+                'house': ('Nezadaly jste nemovitost.'),
+                'ground': ('Nezadaly jste nemovitost.'),
+                'apartment': ('Nezadaly jste nemovitost.'),
+            })
+        if self.house == None:
+            raise ValidationError({
+                'ground': ('Zadaly jste více nemovitostí.'),
+                'apartment': ('Zadaly jste více nemovitostí.'),
+            })
+        if self.ground == None:
+            raise ValidationError({
+                'house': ('Zadaly jste více nemovitostí.'),
+                'apartment': ('Zadaly jste více nemovitostí.'),
+            })
+        if self.apartment == None:
+            raise ValidationError({
+                'ground': ('Zadaly jste více nemovitostí.'),
+                'house': ('Zadaly jste více nemovitostí.'),
+            })
+        if self.apartment and self.house and self.ground:
+            raise ValidationError({
+                'ground': ('Zadaly jste více nemovitostí.'),
+                'house': ('Zadaly jste více nemovitostí.'),
+                'apartment': ('Zadaly jste více nemovitostí.'),
+            })
     def __str__(self):
         if self.house:
             return str(self.house)
