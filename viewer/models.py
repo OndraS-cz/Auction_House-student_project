@@ -230,7 +230,7 @@ class Auction(Model):
 
     def in_progress(self):
         auction_start = self.date_auction.replace(tzinfo=pytz.utc)
-        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        actual_time = timezone.now().replace(tzinfo=pytz.utc)
         auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
         if actual_time > auction_start and actual_time < auction_end:
             return True
@@ -239,14 +239,14 @@ class Auction(Model):
 
     def isnot_start(self):
         auction_start = self.date_auction.replace(tzinfo=pytz.utc)
-        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        actual_time = timezone.now().replace(tzinfo=pytz.utc)
         if actual_time < auction_start:
             return True
         else:
             return False
 
     def end(self):
-        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        actual_time = timezone.now().replace(tzinfo=pytz.utc)
         auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
         if actual_time > auction_end:
             return True
@@ -276,10 +276,9 @@ class Bid(Model):
         self.clean()
         is_new = self.pk is None
         super().save(*args, **kwargs)
-
+        if self.auction.act_value == None:
+            self.auction.act_value = self.auction.min_value
         if is_new:
-            if self.auction.act_value == None:
-                self.auction.act_value = self.auction.min_value
             self.auction.act_value = int(self.auction.act_value) + int(self.bid_amount)
             self.auction.save()
             time = self.auction.date_end_auction.replace(tzinfo=pytz.utc) - datetime.datetime.now().replace(tzinfo=pytz.utc)
