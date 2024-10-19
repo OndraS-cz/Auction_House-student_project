@@ -1,7 +1,51 @@
-from django.forms import CharField, ModelChoiceField, IntegerField, ModelForm, Textarea, DateTimeField, ImageField
+from django.forms import CharField, ModelChoiceField, IntegerField, ModelForm, Textarea, DateTimeField, ImageField, \
+    Form, ChoiceField
 
 from viewer.models import HouseType, GroundType, ApartmentType, Cities, PropertyType, House, Ground, Apartment, Auction, \
     Image, Bid
+
+
+PROPERTY_TYPE_CHOICES = [
+    ('house', 'Dům'),
+    ('apartment', 'Byt'),
+    ('ground', 'Pozemek'),
+]
+
+class PropertyTypeForm(Form):
+    property_type = ChoiceField(choices=PROPERTY_TYPE_CHOICES, label="Vyberte typ nemovitosti")
+
+class HouseForm(ModelForm):
+    class Meta:
+        model = House
+        fields = ['name', 'house_type', 'area', 'plot_area', 'garden_area', 'description']
+
+    name = CharField(label="Název domu", required=False)
+    house_type = ModelChoiceField(queryset=HouseType.objects.all(), label="Kategorie domu", required=False)
+    area = IntegerField(label="Celková plocha", required=False)
+    plot_area = IntegerField(label="Zastavěná plocha", required=False)
+    garden_area = IntegerField(label="Výměra pozemku", required=False)
+    description = CharField(widget=Textarea, label="Popis domu", required=False)
+
+class ApartmentForm(ModelForm):
+    class Meta:
+        model = Apartment
+        fields = ['name', 'apartment_type', 'area', 'description']
+
+    name = CharField(label="Název bytu", required=False)
+    apartment_type = ModelChoiceField(queryset=ApartmentType.objects.all(), label="Kategorie bytu", required=False)
+    area = IntegerField(label="Výměra bytu", required=False)
+    description = CharField(widget=Textarea, label="Popis bytu", required=False)
+
+
+class GroundForm(ModelForm):
+    class Meta:
+        model = Ground
+        fields = ['name', 'ground_type', 'property_area', 'description']
+
+    name = CharField(label="Název pozemku", required=False)
+    ground_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Kategorie pozemku", required=False)
+    property_area = IntegerField(label="Výměra pozemku", required=False)
+    description = CharField(widget=Textarea, label="Popis pozemku", required=False)
 
 
 class HouseModelForm(ModelForm):
@@ -10,7 +54,7 @@ class HouseModelForm(ModelForm):
         fields = '__all__'
 
     name = CharField(label="Název nemovitosti")
-    property_type = ModelChoiceField(queryset=HouseType.objects.all(), label="Počet pokojů")
+    property_type = ModelChoiceField(queryset=HouseType.objects.all(), label="Kategorie domu")
     area = IntegerField(label="Celková výměra")
     plot_area = IntegerField(label="Zastavěná plocha")
     garden_area = IntegerField(label="Výměra pozemku")
@@ -23,7 +67,7 @@ class ApartmentModelForm(ModelForm):
         fields = '__all__'
 
     name = CharField(label="Název nemovitosti")
-    property_type = ModelChoiceField(queryset=ApartmentType.objects.all(), label="Kategorizace bytu")
+    property_type = ModelChoiceField(queryset=ApartmentType.objects.all(), label="Kategorie bytu")
     area = IntegerField(label="Výměra bytu")
     description = CharField(widget=Textarea, label="Popis nemovitosti")
 
@@ -34,7 +78,7 @@ class GroundModelForm(ModelForm):
         fields = '__all__'
 
     name = CharField(label="Název nemovitosti")
-    property_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Typ pozemku")
+    property_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Kategorie pozemku")
     property_area = IntegerField(label="Výměra pozemku")
     description = CharField(widget=Textarea, label="Popis nemovitosti")
 
@@ -56,7 +100,7 @@ class AuctionModelForm(ModelForm):
         exclude = ['act_value']
 
     property_type = ModelChoiceField(queryset=PropertyType.objects.all(), label="Nemovitost")
-    city = ModelChoiceField(queryset=Cities.objects.all(), label="Město")
+    city = ModelChoiceField(queryset=Cities.objects.all(), label="Okres")
     location = CharField(label="Adresa (lokace)")
     estimate_value = IntegerField(label="Odhadní cena")
     min_value = IntegerField(label="Nejnižší podání")
@@ -65,6 +109,7 @@ class AuctionModelForm(ModelForm):
     date_auction = DateTimeField(label="Datum aukce")
     date_end_auction = DateTimeField(label="Datum konce aukce")
     description = CharField(widget=Textarea, label="Popis aukce")
+
 
 
 class ImageModelForm(ModelForm):
@@ -92,7 +137,7 @@ class CitiesModelForm(ModelForm):
         model = Cities
         fields = '__all__'
 
-    name = CharField(label="Název města")
+    name = CharField(label="Nový okres")
 
 
 class HouseTypeModelForm(ModelForm):
@@ -100,7 +145,7 @@ class HouseTypeModelForm(ModelForm):
         model = HouseType
         fields = '__all__'
 
-    property_type = CharField(label="Počet pokojů")
+    property_type = CharField(label="Kategorie domu")
 
 
 class ApartmentTypeModelForm(ModelForm):
@@ -108,7 +153,7 @@ class ApartmentTypeModelForm(ModelForm):
         model = ApartmentType
         fields = '__all__'
 
-    property_type = CharField(label="Kategorizace bytu")
+    property_type = CharField(label="Kategorie bytu")
 
 
 class GroundTypeModelForm(ModelForm):
@@ -116,4 +161,4 @@ class GroundTypeModelForm(ModelForm):
         model = GroundType
         fields = '__all__'
 
-    property_type = CharField(label="Typ pozemku")
+    property_type = CharField(label="Kategorie pozemku")

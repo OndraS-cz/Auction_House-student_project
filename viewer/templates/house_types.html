@@ -3,7 +3,11 @@
 {% load group_tags %}
 
 {% block content %}
-<h1>Typy domů</h1>
+<h1>Kategorie domů</h1>
+    <ul>
+    <a href="{% url 'insert_house_type' %}" class="btn btn-primary">
+     Vložit novou kategorii </a>
+    </ul>
     <ul>
         {% for house_type in house_types %}
             <li>
@@ -13,5 +17,8 @@
             {% endif %}
             </li>
         {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
     </ul>
 {% endblock %}
