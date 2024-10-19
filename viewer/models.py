@@ -134,17 +134,17 @@ class PropertyType(Model):
                 'ground': ('Nezadali jste nemovitost.'),
                 'apartment': ('Nezadali jste nemovitost.'),
             })
-        if self.house == None:
+        if self.house == None and self.ground and self.apartment:
             raise ValidationError({
                 'ground': ('Zadali jste více nemovitostí.'),
                 'apartment': ('Zadali jste více nemovitostí.'),
             })
-        if self.ground == None:
+        if self.ground == None and self.apartment and self.house:
             raise ValidationError({
                 'house': ('Zadali jste více nemovitostí.'),
                 'apartment': ('Zadali jste více nemovitostí.'),
             })
-        if self.apartment == None:
+        if self.apartment == None and self.house and self.ground:
             raise ValidationError({
                 'ground': ('Zadali jste více nemovitostí.'),
                 'house': ('Zadali jste více nemovitostí.'),

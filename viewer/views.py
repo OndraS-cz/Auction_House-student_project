@@ -204,7 +204,7 @@ class InsertPropertyType(PermissionRequiredMixin, CreateView):
 class InsertAuction(PermissionRequiredMixin, CreateView):
     template_name = "form.html"
     form_class = AuctionModelForm
-    success_url = reverse_lazy('insert_auction')
+    success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.add_auction'
 
     def form_invalid(self, form):
