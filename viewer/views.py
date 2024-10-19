@@ -124,7 +124,7 @@ class UpdateHouse(PermissionRequiredMixin, UpdateView):
 
 
 class DeleteHouse(PermissionRequiredMixin, DeleteView):
-    template_name = 'creator_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     model = House
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_house'
@@ -154,7 +154,7 @@ class UpdateApartments(PermissionRequiredMixin, UpdateView):
 
 
 class DeleteApartments(PermissionRequiredMixin, DeleteView):
-    template_name = 'creator_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     model = Apartment
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_apartment'
@@ -184,7 +184,7 @@ class UpdateGrounds(PermissionRequiredMixin, UpdateView):
 
 
 class DeleteGrounds(PermissionRequiredMixin, DeleteView):
-    template_name = 'creator_confirm_delete.html'
+    template_name = 'confirm_delete.html'
     model = Ground
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.delete_ground'
