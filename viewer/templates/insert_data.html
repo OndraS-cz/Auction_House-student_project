@@ -3,18 +3,26 @@
 {% block content %}
 <h1>Administrace dat</h1>
     <ul>
-        <a href="{% url 'insert_property' %}" class="btn btn-primary"> Vložit nový záznam </a>
+        <a href="{% url 'insert_property' %}" class="btn btn-primary"> Vložit nový kompletní záznam </a>
     </ul>
+    <br>
     <ul>
-        <li><a href="{% url 'cities' %}"> Okresy </a></li>
-        <li><a href="{% url 'house_types' %}"> Kategorie domů </a></li>
+        <h5>Nemovitosti:</h5>
         <li><a href="{% url 'houses' %}"> Domy </a></li>
-        <li><a href="{% url 'apartment_types' %}"> Kategorie bytů </a></li>
         <li><a href="{% url 'apartments' %}"> Byty </a></li>
-        <li><a href="{% url 'ground_types' %}"> Kategorie pozemků </a></li>
         <li><a href="{% url 'grounds' %}"> Pozemky </a></li>
-        <li><a href="{% url 'property_types' %}"> Typy nemovitostí </a></li>
+        <br>
+
+        <h5>Kategorie nemovitostí:</h5>
+        <li><a href="{% url 'house_types' %}"> Kategorie domů </a></li>
+        <li><a href="{% url 'apartment_types' %}"> Kategorie bytů </a></li>
+        <li><a href="{% url 'ground_types' %}"> Kategorie pozemků </a></li>
+        <br>
+
+        <h5>Aukce a ostatní:</h5>
         <li><a href="{% url 'auctions' %}"> Aukce </a></li>
+        <li><a href="{% url 'property_types' %}"> Typy nemovitostí </a></li>
         <li><a href="{% url 'image_create' %}"> Vložit obrázek </a></li>
+        <li><a href="{% url 'cities' %}"> Okresy </a></li>
     </ul>
 {% endblock %}

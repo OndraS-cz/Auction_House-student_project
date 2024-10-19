@@ -109,7 +109,7 @@ class AuctionModelForm(ModelForm):
     date_auction = DateTimeField(label="Datum aukce")
     date_end_auction = DateTimeField(label="Datum konce aukce")
     description = CharField(widget=Textarea, label="Popis aukce")
-
+    image = ImageField(label="Náhledový obrázek", required=False)
 
 
 class ImageModelForm(ModelForm):
