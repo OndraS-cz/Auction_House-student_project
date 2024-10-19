@@ -24,7 +24,7 @@ from accounts.views import SignUpView, user_logout
 
 from viewer.views import home, InsertHouse, ApartmentsListView, apartment, InsertImage, \
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
-    GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
+    GroundsTemplateView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
     UpdateAuction, DeleteAuction, UpdateImage, DeleteImage, InsertPropertyType, AuctionTemplateView, \
     InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
@@ -66,7 +66,7 @@ urlpatterns = [
     path('update/grounds/<pk>', UpdateGrounds.as_view(), name="update_grounds"),
     path('delete/grounds/<pk>', DeleteGrounds.as_view(), name="delete_grounds"),
 
-    path('grounds/', GroundsListView.as_view(), name='grounds'),
+    path('grounds/', GroundsTemplateView.as_view(), name='grounds'),
     path('ground/<pk>/', ground, name='ground'),
 
     path('insert/ground_type', InsertGroundType.as_view(), name="insert_ground_type"),

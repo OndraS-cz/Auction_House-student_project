@@ -333,14 +333,6 @@ class InsertGroundType(PermissionRequiredMixin, CreateView):
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.add_groundtype'
 
-
-class GroundsView(View):
-    def get(self, request):
-        grounds_ = Ground.objects.all()
-        context = {'grounds': grounds_}
-        return render(request, "grounds.html", context)
-
-
 def auction_grounds(request):
     current_date = datetime.datetime.now()
     auction_grounds = Auction.objects.filter(property_type__ground__isnull=False).order_by('date_auction')
@@ -530,7 +522,3 @@ def auctions_list_view(request):
         'auctions': auctions,
     }
     return render(request, 'auction_search.html', context)
-
-
-def zobraz_mapu(request):
-    return render(request, 'map.html')
