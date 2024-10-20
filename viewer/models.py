@@ -122,11 +122,12 @@ class PropertyType(Model):
 
     def __str__(self):
         if self.house:
-            return f"{self.house}"
-        if self.ground:
-            return f"{self.ground}"
-        if self.apartment:
-            return f"{self.apartment}"
+            return str(self.house)
+        elif self.ground:
+            return str(self.ground)
+        elif self.apartment:
+            return str(self.apartment)
+        return "Nedefinováno"
 
 
 class Auction(Model):
