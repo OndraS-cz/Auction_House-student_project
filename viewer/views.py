@@ -480,7 +480,7 @@ class AuctionsTemplateView(ListView):
 class InsertImage(PermissionRequiredMixin, CreateView):
     template_name = 'form_image.html'
     form_class = ImageModelForm
-    success_url = reverse_lazy('home')
+    success_url = reverse_lazy('image_create')
     permission_required = 'viewer.add_image'
 
     def form_invalid(self, form):

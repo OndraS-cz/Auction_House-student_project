@@ -41,8 +41,6 @@ urlpatterns = [
 
     path('insert/property/', select_property_type, name="insert_property"),
 
-    path('image/create', InsertImage.as_view(), name='image_create'),
-
     path('insert/bid', InsertBid.as_view(), name='insert_bid'),
 
     path('insert/', InsertDataListView.as_view(), name="insert_data"),

@@ -45,7 +45,7 @@ class GroundForm(ModelForm):
 
     name = CharField(label="Název pozemku", required=True)
     ground_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Kategorie pozemku", required=True)
-    property_area = IntegerField(label="Výměra pozemku", required=False)
+    property_area = IntegerField(label="Výměra pozemku", required=True)
     description = CharField(widget=Textarea, label="Popis pozemku", required=False)
 
 
