@@ -40,6 +40,11 @@ Projekt také využívá API od mapy.cz.
 
 ## Testování
 Testy obsahují kontrolu registrace nového uživatele, testy formulářů a testy modelů.
+
+## Dražba
+Po zpřístupnění dražby uživatelé přihazují. Pokud je čas menší než 5 minut po příhozu se nastaví zase na 5 minut.
+
+Po ukončení dražby se vypíše výherce a dražba se uloží do jeho vyhraných aukcí.
 ```bash
 # Spuštění testů
 python manage.py test
