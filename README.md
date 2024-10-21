@@ -30,21 +30,26 @@ Aukce jsou rozdělené do tří sekcí - domy, byty a pozemky. Při registraci j
 
 Pro úspěšnou registraci je (z důvodů opatření proti praní špinavých peněz) potřeba uvést i údaje dokladu totožnosti (občanský průkaz či pas). Doklad je následně automaticky ověřen v databázi neplatných dokladů (https://aplikace.mvcr.cz/neplatne-doklady/).
 
-Projekt také využívá API od mapy.cz.
+Projekt také využívá API od mapy.cz na bázi zobrazení mapy a vyhledání adresy nemovitosti.
 
-## Postup pro uživatele ze skupiny práv "Admins" pro přidání aukce
+## Postup pro zalogované uživatele ze skupiny práv "Admins" pro přidání aukce
 1. Vytvořit záznam pro nemovitost.
 2. Přiřadit záznamu typ nemovitosti.
 3. Vytvořit samotnou aukci.
 4. Přidat fotodokumentaci (obrázky) dle potřeby, buď ke konkrétní nemovitosti, nebo i k příslušné aukci.
 
+- vše probíhá postupně a intuitivně bez nutnosti překlikávání
+
+## Postup pro zalogované uživatele ze skupiny práv "Users" pro podání příhozu v aukci
+1. V přednastavený datum a čas začátku aukce se uživateli zpřístupní možnost příhozu.
+2. Uživatel vyplní políčko příhozu v minimální částce pro příhoz, která je uvedena v parametrech aukce. Toto minimum pro příhoz je automaticky kontrolováno.
+3. Záznam o provedeném příhozu je zpřístupněn v historii přihazování i ostatním uživatelům. Z důvodu bezpečnosti jsou provedené příhozy vždy zobrazeny s anonymizovaným uživatelským jménem.
+4. Pokud je příhoz proveden v době, kdy do konce aukce zbývá méně než pět minut, po příhozu je doba konce aukce nastavena na pět minut.
+5. Po skončení aukce, tedy v posledních pěti minutách aukce není proveden žádný platný příhoz, výherce se vypíše a zároveň se aukce uloží do seznamu vyhraných aukcí daného uživatele. 
+
 ## Testování
 Testy obsahují kontrolu registrace nového uživatele, testy formulářů a testy modelů.
 
-## Dražba
-Po zpřístupnění dražby uživatelé přihazují. Pokud je čas menší než 5 minut po příhozu se nastaví zase na 5 minut.
-
-Po ukončení dražby se vypíše výherce a dražba se uloží do jeho vyhraných aukcí.
 ```bash
 # Spuštění testů
 python manage.py test
