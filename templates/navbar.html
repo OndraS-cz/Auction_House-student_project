@@ -1,11 +1,16 @@
 {% load static %}
 {% load group_tags %}
 
-<div class="top-info-bar text-white" style="background-color: #3498db; padding: 5px 15px; font-size: 12px; text-align: left; display: flex; justify-content: flex-start; margin-bottom: 0;">
-  <span id="currentTime">Čas: 00:00:00</span>
-  {% if user.is_authenticated %}
-    &nbsp;|&nbsp; <span id="loginDuration">Doba přihlášení: 00:00:00</span>
-  {% endif %}
+<div class="top-info-bar text-white" style="background-color: #3498db; padding: 5px 15px; font-size: 12px; text-align: left; display: flex; justify-content: space-between; align-items: center;">
+  <div>
+    <span id="currentTime">Čas: 00:00:00</span>
+    {% if user.is_authenticated %}
+      &nbsp;|&nbsp; <span id="loginDuration">Doba přihlášení: 00:00:00</span>
+    {% endif %}
+  </div>
+  <div>
+    <a href="{% url 'kontakt' %}" class="text-white" style="text-decoration: none;">Kontakt</a>
+  </div>
 </div>
 
 <nav class="navbar navbar-expand-lg navbar-light" style="background-color: #5cabdd; margin-top: 0;">

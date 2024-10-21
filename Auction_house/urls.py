@@ -21,6 +21,7 @@ from django.urls import path, include
 from Auction_house import settings
 
 from accounts.views import SignUpView, user_logout
+from viewer import views
 
 from viewer.views import home, InsertHouse, ApartmentsListView, apartment, ImageCreateView, \
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
@@ -106,6 +107,7 @@ urlpatterns = [
     path('auctions/apartments/', auction_apartments,  name='auction_apartments'),
     path('auctions/grounds/', auction_grounds, name='auction_grounds'),
 
+    path('contact/', views.contact, name='kontakt'),
 
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
 

@@ -530,3 +530,6 @@ def auctions_list_view(request):
 
 def zobraz_mapu(request):
     return render(request, 'map.html')
+
+def contact(request):
+    return render(request, 'contact.html')

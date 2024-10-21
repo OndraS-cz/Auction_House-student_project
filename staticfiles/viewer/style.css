@@ -251,15 +251,26 @@ button:hover {
     border-color: #FF8C00;
 }
 
-.carousel {
-    max-width: 800px;
+.square-carousel {
+    width: 700px;
+    height: 650px;
     margin: 0 auto;
-    padding: 20px 0;
+    border-radius: 15px;
+    overflow: hidden;
+    position: relative;
+}
+
+.carousel-inner {
+    width: 100%;
+    height: 100%;
 }
 
 .carousel-item {
-    height: 300px;
-    background-color: #f0f0f0;
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
 }
 
 .carousel-caption {
@@ -271,14 +282,36 @@ button:hover {
     margin: 0 auto;
 }
 
-
-.carousel-item img {
-    width: 100%;
-    height: auto;
+.square-carousel .carousel-item img {
     object-fit: cover;
-    border-radius: 10px;
+    width: 100%;
+    height: 100%;
+    border-radius: 15px;
 }
 
+.carousel-control-prev,
+.carousel-control-next {
+    width: 5%;
+    z-index: 1000;
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    color: white;
+}
+
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+    width: 3rem;
+    height: 3rem;
+    background-color: rgba(0, 0, 0, 0.5);
+    border-radius: 50%;
+}
+
+.carousel-control-prev-icon,
+.carousel-control-next-icon {
+    background-size: 100%, 100%;
+    filter: brightness(1.5);
+}
 
 .btn {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;

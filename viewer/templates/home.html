@@ -8,18 +8,18 @@
     <div class="carousel-inner">
       {% for auction in auctions %}
         <div class="carousel-item {% if forloop.first %}active{% endif %}">
-            {% if auction.image %}
-                <img src="{{ auction.image.url }}" class="d-block w-100" alt="{{ auction.name }}">
-            {% else %}
-                <img src="https://via.placeholder.com/800x300" class="d-block w-100" alt="{{ auction.name }}">
-            {% endif %}
+          {% if auction.image %}
+              <img src="{{ auction.image.url }}" class="d-block w-100" alt="{{ auction.name }}" style="object-fit: cover; height: 600px;">
+          {% else %}
+              <img src="https://via.placeholder.com/800x800" class="d-block w-100" alt="{{ auction.name }}" style="object-fit: cover; height: 600px;">
+          {% endif %}
 
-            <div class="carousel-caption">
-                <h5>{{ auction.property_type }}</h5>
-                <p>{{ auction.description|truncatewords:30 }}</p>
-                <p><strong>Datum konce dražby:</strong> {{ auction.date_end_auction|date:'d. m. Y H:i' }}</p>
-                <a href="{% url 'auction' auction.id %}" class="btn btn-primary">Zobrazit aukci</a>
-            </div>
+          <div class="carousel-caption">
+            <h5>{{ auction.property_type }}</h5>
+            <p>{{ auction.description|truncatewords:30 }}</p>
+            <p><strong>Datum konce dražby:</strong> {{ auction.date_end_auction|date:'d. m. Y H:i' }}</p>
+            <a href="{% url 'auction' auction.id %}" class="btn btn-primary">Zobrazit aukci</a>
+          </div>
         </div>
       {% endfor %}
     </div>
@@ -38,3 +38,4 @@
 {% endif %}
 
 {% endblock %}
+
