@@ -13,7 +13,7 @@ from django.views import View
 from accounts.models import Profile
 
 from viewer.forms import CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, GroundTypeModelForm, BidModelForm, \
-    ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm, \
+    ImageModelForm, AuctionModelForm, PropertyTypeModelForm, \
     PropertyTypeForm, HouseForm, ApartmentForm, GroundForm
 from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseType, ApartmentType, Cities, GroundType, \
     PropertyType
@@ -182,7 +182,7 @@ class InsertDataListView(ListView):
 
 class InsertHouse(PermissionRequiredMixin, CreateView):
     template_name = 'form_create.html'
-    form_class = HouseModelForm
+    form_class = HouseForm
     success_url = reverse_lazy('insert_property_type')
     permission_required = 'viewer.add_house'
 
@@ -193,7 +193,7 @@ class InsertHouse(PermissionRequiredMixin, CreateView):
 
 class UpdateHouse(PermissionRequiredMixin, UpdateView):
     template_name = 'form_create_back.html'
-    form_class = HouseModelForm
+    form_class = HouseForm
     success_url = reverse_lazy('insert_data')
     model = House
     permission_required = 'viewer.change_house'
@@ -212,7 +212,7 @@ class DeleteHouse(PermissionRequiredMixin, DeleteView):
 
 class InsertApartments(PermissionRequiredMixin, CreateView):
     template_name = "form_create.html"
-    form_class = ApartmentModelForm
+    form_class = ApartmentForm
     success_url = reverse_lazy('insert_property_type')
     permission_required = 'viewer.add_apartment'
 
@@ -223,7 +223,7 @@ class InsertApartments(PermissionRequiredMixin, CreateView):
 
 class UpdateApartments(PermissionRequiredMixin, UpdateView):
     template_name = 'form_create_back.html'
-    form_class = ApartmentModelForm
+    form_class = ApartmentForm
     success_url = reverse_lazy('insert_data')
     model = Apartment
     permission_required = 'viewer.change_apartment'
@@ -242,7 +242,7 @@ class DeleteApartments(PermissionRequiredMixin, DeleteView):
 
 class InsertGrounds(PermissionRequiredMixin, CreateView):
     template_name = "form_create.html"
-    form_class = GroundModelForm
+    form_class = GroundForm
     success_url = reverse_lazy('insert_property_type')
     permission_required = 'viewer.add_ground'
 
@@ -253,7 +253,7 @@ class InsertGrounds(PermissionRequiredMixin, CreateView):
 
 class UpdateGrounds(PermissionRequiredMixin, UpdateView):
     template_name = 'form_create_back.html'
-    form_class = GroundModelForm
+    form_class = GroundForm
     success_url = reverse_lazy('insert_data')
     model = Ground
     permission_required = 'viewer.change_ground'

@@ -19,12 +19,12 @@ class HouseForm(ModelForm):
         model = House
         fields = ['name', 'house_type', 'area', 'plot_area', 'garden_area', 'description']
 
-    name = CharField(label="Název domu", required=True)
+    name = CharField(label="Název nemovitosti", required=True)
     house_type = ModelChoiceField(queryset=HouseType.objects.all(), label="Kategorie domu", required=True)
     area = IntegerField(label="Celková plocha", required=True)
     plot_area = IntegerField(label="Zastavěná plocha", required=False)
     garden_area = IntegerField(label="Výměra pozemku", required=False)
-    description = CharField(widget=Textarea, label="Popis domu", required=True)
+    description = CharField(widget=Textarea, label="Popis nemovitosti", required=False)
 
 
 class ApartmentForm(ModelForm):
@@ -47,41 +47,6 @@ class GroundForm(ModelForm):
     ground_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Kategorie pozemku", required=True)
     property_area = IntegerField(label="Výměra pozemku", required=False)
     description = CharField(widget=Textarea, label="Popis pozemku", required=False)
-
-
-class HouseModelForm(ModelForm):
-    class Meta:
-        model = House
-        fields = '__all__'
-
-    name = CharField(label="Název nemovitosti", required=True)
-    property_type = ModelChoiceField(queryset=HouseType.objects.all(), label="Kategorie domu", required=True)
-    area = IntegerField(label="Celková výměra", required=False)
-    plot_area = IntegerField(label="Zastavěná plocha", required=False)
-    garden_area = IntegerField(label="Výměra pozemku", required=False)
-    description = CharField(widget=Textarea, label="Popis nemovitosti", required=False)
-
-
-class ApartmentModelForm(ModelForm):
-    class Meta:
-        model = Apartment
-        fields = '__all__'
-
-    name = CharField(label="Název nemovitosti", required=True)
-    property_type = ModelChoiceField(queryset=ApartmentType.objects.all(), label="Kategorie bytu", required=True)
-    area = IntegerField(label="Výměra bytu", required=False)
-    description = CharField(widget=Textarea, label="Popis nemovitosti", required=False)
-
-
-class GroundModelForm(ModelForm):
-    class Meta:
-        model = Ground
-        fields = '__all__'
-
-    name = CharField(label="Název nemovitosti", required=True)
-    property_type = ModelChoiceField(queryset=GroundType.objects.all(), label="Kategorie pozemku", required=True)
-    property_area = IntegerField(label="Výměra pozemku", required=False)
-    description = CharField(widget=Textarea, label="Popis nemovitosti", required=False)
 
 
 class PropertyTypeModelForm(ModelForm):
