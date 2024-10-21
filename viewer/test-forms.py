@@ -44,9 +44,8 @@ class CreatorFormTest(TestCase):
             'plot_area': 300,
             'garden_area': 50,
             'description': 'Krásný cihlový dům s velkou zahradou',
-            'property_type': house_type.id
+            'house_type': house_type.id
         })
-
         self.assertTrue(form.is_valid())
 
     def test_cities_model_form(self):
