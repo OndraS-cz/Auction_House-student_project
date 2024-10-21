@@ -25,10 +25,7 @@ from accounts.views import SignUpView, user_logout
 from viewer.views import home, InsertHouse, ApartmentsListView, apartment, InsertImage, \
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsTemplateView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
-    UpdateAuction, DeleteAuction, InsertPropertyType, AuctionTemplateView, \
-    GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
-    UpdateAuction, DeleteAuction, InsertPropertyType, AuctionTemplateView, \
-    InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
+    UpdateAuction, DeleteAuction, InsertPropertyType, AuctionTemplateView, InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
     InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view, auction_houses, \
     auction_apartments, auction_grounds, PropertyTypesListView, DeletePropertyType, select_property_type, \
@@ -43,7 +40,7 @@ urlpatterns = [
 
     path('insert/property/', select_property_type, name="insert_property"),
 
-    path('image/create', ImageCreateView.as_view(), name='image_create'),
+    path('image/create', InsertImage.as_view(), name='image_create'),
 
     path('insert/bid', InsertBid.as_view(), name='insert_bid'),
 
@@ -113,7 +110,4 @@ urlpatterns = [
     path('auctions/houses/', auction_houses, name='auction_houses'),
     path('auctions/apartments/', auction_apartments,  name='auction_apartments'),
     path('auctions/grounds/', auction_grounds, name='auction_grounds'),
-
-
 ] + static(settings.MEDIA_URL, document_root=settings.MEDIA_ROOT)
-

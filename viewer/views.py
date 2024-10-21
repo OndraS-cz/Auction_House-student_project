@@ -226,7 +226,7 @@ class UpdateApartments(PermissionRequiredMixin, UpdateView):
     form_class = ApartmentModelForm
     success_url = reverse_lazy('insert_data')
     model = Apartment
-    permission_required = 'viewer.update_apartment'
+    permission_required = 'viewer.change_apartment'
 
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data updating.')
@@ -256,7 +256,7 @@ class UpdateGrounds(PermissionRequiredMixin, UpdateView):
     form_class = GroundModelForm
     success_url = reverse_lazy('insert_data')
     model = Ground
-    permission_required = 'viewer.update_ground'
+    permission_required = 'viewer.change_ground'
 
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data updating.')
