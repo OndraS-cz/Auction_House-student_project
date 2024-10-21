@@ -276,8 +276,9 @@ class Bid(Model):
         self.clean()
         is_new = self.pk is None
         super().save(*args, **kwargs)
-        if self.auction.act_value == None:
+        if self.auction.act_value is None:
             self.auction.act_value = self.auction.min_value
+            self.auction.save()
         if is_new:
             self.auction.act_value = int(self.auction.act_value) + int(self.bid_amount)
             self.auction.save()

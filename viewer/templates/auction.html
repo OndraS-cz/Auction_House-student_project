@@ -428,7 +428,12 @@ map.on('load', function () {
 <div>
     {% if auction.in_progress %}
         <strong>Aktuální dražená cena: </strong>
-                {{ auction.act_value|custom_intcomma }} Kč
+        {% if auction.act_value is None %}
+            {{ auction.min_value }}
+        {% else %}
+            {{ auction.act_value|custom_intcomma }} Kč
+        {% endif %}
+
     {% endif %}
 
 </div>
