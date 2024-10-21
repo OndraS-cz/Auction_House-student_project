@@ -5,6 +5,6 @@
     {% csrf_token %}
     <table>{{ form.as_table }}</table>
     <input id="id_submit" type="submit" value="Uložit" class="btn btn-primary">
-    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
+    <a href="{%  url 'insert_data' %}"><button type="button" class="btn btn-primary">Pokračovat bez vložení</button></a>
 </form>
 {% endblock %}

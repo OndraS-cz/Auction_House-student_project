@@ -1,33 +1,27 @@
 {% extends 'base.html' %}
 
-{% load static %}
 {% load group_tags %}
 
 {% block content %}
-<div class="container mt-4">
-    <h1 class="mb-4">Pozemky</h1>
-    <div class="row">
-        {% for ground in grounds %}
-            <div class="col-md-4">
-                <div class="card mb-4 shadow-sm">
-                    <img src="{% if ground.image_set.all %}{{ ground.image_set.first.image.url }}{% else %}{% static 'path_to_default_image.jpg' %}{% endif %}" class="card-img-top" alt="Pozemek obrázek">
-                    <div class="card-body">
-                        <h5 class="card-title">{{ ground.name }} - {{ ground.city }}</h5>
-                        <p class="card-text">
-                            Plocha: {{ ground.property_area }} m²
-                        </p>
-                        <p class="card-text">
-                            {{ ground.description|truncatewords:20 }}
-                        </p>
-                        <a href="{% url 'ground' ground.id %}" class="btn btn-primary">Zobrazit detail</a>
-                        {% if user|has_group:"Admins" %}
-                            <a href="{% url 'update_grounds' ground.id %}" class="btn btn-secondary">Upravit</a>
-                            <a href="{% url 'delete_grounds' ground.id %}" class="btn btn-danger">Smazat</a>
-                        {% endif %}
-                    </div>
-                </div>
-            </div>
-        {% endfor %}
-    </div>
-</div>
+
+    <h1>Pozemky</h1>
+    <ul>
+    <a href="{% url 'insert_grounds' %}" class="btn btn-primary">
+     Vložit nový pozemek </a>
+    </ul>
+    <ul>
+    {% for ground in grounds %}
+        <li>
+            <a href="{% url 'ground' ground.id %}"> {{ ground }} </a>
+        {% if user|has_group:"Admins" %}
+            <a href="{% url 'update_grounds' ground.id %}"> 🔧 </a>
+            <a href="{% url 'delete_grounds' ground.id %}"> ❌ </a>
+        {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
+    </ul>
+
 {% endblock %}

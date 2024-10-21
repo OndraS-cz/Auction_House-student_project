@@ -1,7 +1,7 @@
 
 from django.test import TestCase
 
-from viewer.forms import CitiesModelForm, HouseModelForm, AuctionModelForm, HouseTypeModelForm, GroundTypeModelForm
+from viewer.forms import CitiesModelForm, HouseForm, AuctionModelForm, HouseTypeModelForm, GroundTypeModelForm
 from viewer.models import HouseType, Cities, PropertyType
 
 
@@ -38,7 +38,7 @@ class CreatorFormTest(TestCase):
     def test_house_form_valid_data(self):
         house_type = HouseType.objects.create(property_type='Rodinný dům')
 
-        form = HouseModelForm(data={
+        form = HouseForm(data={
             'name': 'Cihlový dům',
             'area': 120,
             'plot_area': 300,

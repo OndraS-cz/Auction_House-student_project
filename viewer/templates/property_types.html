@@ -3,6 +3,10 @@
 {% block content %}
 <h1>Nemovitosti</h1>
     <ul>
+    <a href="{% url 'insert_property_type' %}" class="btn btn-primary">
+     Vložit nový typ nemovitosti </a>
+    </ul>
+    <ul>
         {% for property in property_types %}
             <li>
             {{ property }}
@@ -11,5 +15,8 @@
             {% endif %}
             </li>
         {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
     </ul>
 {% endblock %}

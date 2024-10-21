@@ -3,7 +3,11 @@
 {% load group_tags %}
 
 {% block content %}
-<h1>Města</h1>
+<h1>Okresy</h1>
+    <ul>
+    <a href="{% url 'insert_cities' %}" class="btn btn-primary">
+     Vložit nový okres </a>
+    </ul>
     <ul>
         {% for city in cities %}
             <li>
@@ -13,5 +17,8 @@
             {% endif %}
             </li>
         {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
     </ul>
 {% endblock %}

@@ -30,9 +30,9 @@ class SignUpForm(UserCreationForm):
     first_name = CharField(label="Křestní jméno")
     last_name = CharField(label="Příjmení")
     date_of_birth = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum narození", required=True)
-    birth_nr = CharField(max_length=10, label="Rodné číslo (bez lomítka)")
-    document_type = ChoiceField(choices=[('0', 'Občanský průkaz'), ('4', 'Cestovní pas')], label="Typ dokladu")
-    document_number = CharField(max_length=15, label="Číslo dokladu")
+    birth_nr = CharField(max_length=10, label="Rodné číslo (bez lomítka)", required=True)
+    document_type = ChoiceField(choices=[('0', 'Občanský průkaz'), ('4', 'Cestovní pas')], label="Typ dokladu", required=True)
+    document_number = CharField(max_length=15, label="Číslo dokladu", required=True)
     document_expiry = DateField(widget=NumberInput(attrs={'type': 'date'}), label="Datum platnosti dokladu", required=True)
     phone_number = IntegerField(label="Mobilní telefon")
     password1 = CharField(widget=PasswordInput,

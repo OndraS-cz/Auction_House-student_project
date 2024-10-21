@@ -1,7 +1,11 @@
 {% extends 'base.html' %}
 
 {% block content %}
-<h1>Typy bytů</h1>
+<h1>Kategorie bytů</h1>
+    <ul>
+    <a href="{% url 'insert_apartment_types' %}" class="btn btn-primary">
+     Vložit novou kategorii </a>
+    </ul>
     <ul>
         {% for apartment_type in apartment_types %}
             <li>
@@ -11,5 +15,8 @@
             {% endif %}
             </li>
         {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
     </ul>
 {% endblock %}

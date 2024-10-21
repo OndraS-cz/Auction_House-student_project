@@ -3,6 +3,10 @@
 {% block content %}
 <h1>Byty</h1>
     <ul>
+    <a href="{% url 'insert_apartments' %}" class="btn btn-primary">
+     Vložit nový byt </a>
+    </ul>
+    <ul>
         {% for apartment in apartments %}
             <li>
                 <a href="{% url 'apartment' apartment.id %}"> {{ apartment }} </a>
@@ -12,5 +16,8 @@
             {% endif %}
             </li>
         {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
     </ul>
 {% endblock %}

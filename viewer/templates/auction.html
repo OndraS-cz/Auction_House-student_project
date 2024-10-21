@@ -413,20 +413,29 @@ map.on('load', function () {
 </p>
 
 <div>
-    {% if auction.end %}
+    {% if auction.end and last_one.anonymization_name %}
         <strong>Vydražil: </strong>
             {{ last_one.anonymization_name }}
         <p></p>
         <strong>Vydraženo za: </strong>
             {{ auction.act_value|custom_intcomma }} Kč
     {% endif %}
+    {% if auction.end and last_one.anonymization_name == None %}
+        <strong>Žádný výherce</strong>
+    {% endif %}
 </div>
 
 <div>
     {% if auction.in_progress %}
         <strong>Aktuální dražená cena: </strong>
-                {{ auction.act_value|custom_intcomma }} Kč
+        {% if auction.act_value is None %}
+            {{ auction.min_value }}
+        {% else %}
+            {{ auction.act_value|custom_intcomma }} Kč
+        {% endif %}
+
     {% endif %}
+
 </div>
 
 <div>

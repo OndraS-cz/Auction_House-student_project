@@ -20,6 +20,12 @@ class Cities(Model):
         verbose_name_plural = "Cities"
         ordering = ['name']
 
+    def clean(self):
+        if not self.name[0].isupper():
+            raise ValidationError({
+                'name': ('Město je s velkým počátečním písmenem.')
+            })
+
     def __repr__(self):
         return f"City(name={self.name})"
 
@@ -121,13 +127,42 @@ class PropertyType(Model):
     ground = ForeignKey(Ground, null=True, blank=True, on_delete=SET_NULL, related_name='ground')
     apartment = ForeignKey(Apartment, null=True, blank=True, on_delete=SET_NULL, related_name='apartment')
 
+    def clean(self):
+        if self.house == None and self.ground == None and self.apartment == None:
+            raise ValidationError({
+                'house': ('Nezadali jste nemovitost.'),
+                'ground': ('Nezadali jste nemovitost.'),
+                'apartment': ('Nezadali jste nemovitost.'),
+            })
+        if self.house == None and self.ground and self.apartment:
+            raise ValidationError({
+                'ground': ('Zadali jste více nemovitostí.'),
+                'apartment': ('Zadali jste více nemovitostí.'),
+            })
+        if self.ground == None and self.apartment and self.house:
+            raise ValidationError({
+                'house': ('Zadali jste více nemovitostí.'),
+                'apartment': ('Zadali jste více nemovitostí.'),
+            })
+        if self.apartment == None and self.house and self.ground:
+            raise ValidationError({
+                'ground': ('Zadali jste více nemovitostí.'),
+                'house': ('Zadali jste více nemovitostí.'),
+            })
+        if self.apartment and self.house and self.ground:
+            raise ValidationError({
+                'ground': ('Zadali jste více nemovitostí.'),
+                'house': ('Zadali jste více nemovitostí.'),
+                'apartment': ('Zadali jste více nemovitostí.'),
+            })
     def __str__(self):
         if self.house:
-            return f"{self.house}"
-        if self.ground:
-            return f"{self.ground}"
-        if self.apartment:
-            return f"{self.apartment}"
+            return str(self.house)
+        elif self.ground:
+            return str(self.ground)
+        elif self.apartment:
+            return str(self.apartment)
+        return "Nedefinováno"
 
 
 class Auction(Model):
@@ -142,7 +177,7 @@ class Auction(Model):
     date_auction = DateTimeField(null=False)
     date_end_auction = DateTimeField(null=False)
     description = TextField(null=True, blank=True)
-    image = ImageField(upload_to='auctions/', blank=True, null=True)
+    image = ImageField(upload_to='images/', blank=True, null=True)
 
     def clean(self):
         if self.date_auction > self.date_end_auction:
@@ -152,17 +187,17 @@ class Auction(Model):
             })
         if self.min_bid > self.estimate_value or self.min_bid > self.min_value:
             raise ValidationError({
-                'min_bid': ('Hodnota je příliž velká.'),
+                'min_bid': ('Hodnota je příliš velká.'),
             })
         if self.min_value > self.estimate_value:
             raise ValidationError({
-                'min_value': ('Hodnota je příliž velká.'),
-                'estimate_value': ('Hodnota je příliž velká.')
+                'min_value': ('Hodnota je příliš velká.'),
+                'estimate_value': ('Hodnota je příliš velká.')
             })
         if self.auction_assurance > self.estimate_value:
             raise ValidationError({
-                'auction_assurance': ('Hodnota je příliž velká.'),
-                'estimate_value': ('Hodnota je příliž velká.')
+                'auction_assurance': ('Hodnota je příliš velká.'),
+                'estimate_value': ('Hodnota je příliš velká.')
             })
 
     def loc_time(self):
@@ -195,7 +230,7 @@ class Auction(Model):
 
     def in_progress(self):
         auction_start = self.date_auction.replace(tzinfo=pytz.utc)
-        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        actual_time = timezone.now().replace(tzinfo=pytz.utc)
         auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
         if actual_time > auction_start and actual_time < auction_end:
             return True
@@ -204,14 +239,14 @@ class Auction(Model):
 
     def isnot_start(self):
         auction_start = self.date_auction.replace(tzinfo=pytz.utc)
-        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        actual_time = timezone.now().replace(tzinfo=pytz.utc)
         if actual_time < auction_start:
             return True
         else:
             return False
 
     def end(self):
-        actual_time = datetime.datetime.now().replace(tzinfo=pytz.utc)
+        actual_time = timezone.now().replace(tzinfo=pytz.utc)
         auction_end = self.date_end_auction.replace(tzinfo=pytz.utc)
         if actual_time > auction_end:
             return True
@@ -241,10 +276,10 @@ class Bid(Model):
         self.clean()
         is_new = self.pk is None
         super().save(*args, **kwargs)
-
+        if self.auction.act_value is None:
+            self.auction.act_value = self.auction.min_value
+            self.auction.save()
         if is_new:
-            if self.auction.act_value == None:
-                self.auction.act_value = self.auction.min_value
             self.auction.act_value = int(self.auction.act_value) + int(self.bid_amount)
             self.auction.save()
             time = self.auction.date_end_auction.replace(tzinfo=pytz.utc) - datetime.datetime.now().replace(tzinfo=pytz.utc)
