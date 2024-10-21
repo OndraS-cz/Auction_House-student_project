@@ -1,7 +1,7 @@
-
 from django.test import TestCase
 
 from viewer.forms import CitiesModelForm, HouseForm, AuctionModelForm, HouseTypeModelForm, GroundTypeModelForm
+
 from viewer.models import HouseType, Cities, PropertyType
 
 
@@ -44,7 +44,7 @@ class CreatorFormTest(TestCase):
             'plot_area': 300,
             'garden_area': 50,
             'description': 'Krásný cihlový dům s velkou zahradou',
-            'property_type': house_type.id
+            'house_type': house_type.id
         })
 
         self.assertTrue(form.is_valid())
@@ -64,7 +64,7 @@ class CreatorFormTest(TestCase):
                 'property_type': '3+1'
         }
         )
-        print(f"\ntest_cities_is_valid: {form.data}")
+        print(f"\ntest_house_is_valid: {form.data}")
         self.assertTrue(form.is_valid())
 
     def test_ground_type_model_form(self):
@@ -73,6 +73,5 @@ class CreatorFormTest(TestCase):
                 'property_type': 'Les'
         }
         )
-        print(f"\ntest_cities_is_valid: {form.data}")
+        print(f"\ntest_ground_type_is_valid: {form.data}")
         self.assertTrue(form.is_valid())
-
