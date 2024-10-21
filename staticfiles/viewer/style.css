@@ -11,24 +11,23 @@
 
 @media (max-width: 991.98px) {
     .navbar-light .navbar-nav .nav-link {
-        color: white; /* Bílý text pro lepší čitelnost */
-        background-color: #3498db; /* Modré pozadí pro navigační odkazy */
-        z-index: 1001; /* Zajištění vrchní vrstvy pro odkazy */
+        color: white;
+        background-color: #3498db;
+        z-index: 1001;
     }
 
-    /* Dropdown menu položky */
     .navbar-light .navbar-nav .dropdown-menu {
-        background-color: #3498db; /* Modré pozadí */
-        z-index: 1001; /* Vrstva pro dropdown menu */
+        background-color: #3498db;
+        z-index: 1001;
     }
 
     .navbar-light .navbar-nav .dropdown-item {
-        color: white; /* Bílý text pro dropdown */
-        z-index: 1002; /* Vyšší vrstva pro položky dropdownu */
+        color: white;
+        z-index: 1002;
     }
 
     .navbar-light .navbar-nav .dropdown-item:hover {
-        background-color: #2980b9; /* Tmavší modrá při hoveru */
+        background-color: #2980b9;
         color: white;
     }
 }
@@ -287,7 +286,7 @@ button:hover {
 }
 
 .carousel-item {
-    height: 300px;
+    height: 500px;
     background-color: #f0f0f0;
 }
 
@@ -303,11 +302,27 @@ button:hover {
 
 .carousel-item img {
     width: 100%;
-    height: auto;
+    height: 100%;
     object-fit: cover;
     border-radius: 10px;
 }
 
+.carousel-control-prev, .carousel-control-next {
+    width: 5%;
+}
+
+.carousel-control-prev-icon, .carousel-control-next-icon {
+    background-color: rgba(0, 0, 0, 0.8);
+    border-radius: 30%;
+    width: 50px;
+    height: 50px;
+}
+
+.carousel-control-prev-icon:hover, .carousel-control-next-icon:hover {
+    background-color: rgba(0, 0, 0, 1);
+    transform: scale(1.1);
+    transition: transform 0.3s ease;
+}
 
 .btn {
     transition: background-color 0.3s ease, box-shadow 0.3s ease;
