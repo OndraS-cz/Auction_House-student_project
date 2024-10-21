@@ -12,7 +12,9 @@ from django.views import View
 
 from accounts.models import Profile
 
-from viewer.forms import CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, GroundTypeModelForm, BidModelForm, ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm
+from viewer.forms import CitiesModelForm, HouseTypeModelForm, ApartmentTypeModelForm, GroundTypeModelForm, BidModelForm, \
+    ImageModelForm, ApartmentModelForm, GroundModelForm, HouseModelForm, AuctionModelForm, PropertyTypeModelForm, \
+    PropertyTypeForm, HouseForm, ApartmentForm, GroundForm
 from viewer.models import House, Apartment, Ground, Auction, Image, Bid, HouseType, ApartmentType, Cities, GroundType, \
     PropertyType
 
@@ -27,6 +29,84 @@ def home(request):
         'auctions': auctions
     }
     return render(request, "home.html", context)
+
+
+def select_property_type(request):
+    if request.method == 'POST':
+        form = PropertyTypeForm(request.POST)
+        if form.is_valid():
+            property_type = form.cleaned_data['property_type']
+
+            if property_type == 'house':
+                return redirect('create_house')
+            elif property_type == 'apartment':
+                return redirect('create_apartment')
+            elif property_type == 'ground':
+                return redirect('create_ground')
+    else:
+        form = PropertyTypeForm()
+
+    return render(request, 'form_select.html', {'form': form})
+
+
+def create_house(request):
+    if request.method == 'POST':
+        form = HouseForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('insert_property_type')
+    else:
+        form = HouseForm()
+
+    return render(request, 'form_create.html', {'form': form})
+
+
+def create_apartment(request):
+    if request.method == 'POST':
+        form = ApartmentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('insert_property_type')
+    else:
+        form = ApartmentForm()
+
+    return render(request, 'form_create.html', {'form': form})
+
+
+def create_ground(request):
+    if request.method == 'POST':
+        form = GroundForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('insert_property_type')
+    else:
+        form = GroundForm()
+
+    return render(request, 'form_create.html', {'form': form})
+
+
+def create_auction(request):
+    if request.method == 'POST':
+        form = AuctionModelForm(request.POST, request.FILES)
+        if form.is_valid():
+            auction = form.save(commit=False)
+
+            auction.estimate_value = form.cleaned_data['estimate_value']
+            auction.min_value = form.cleaned_data['min_value']
+            auction.auction_assurance = form.cleaned_data['auction_assurance']
+            auction.min_bid = form.cleaned_data['min_bid']
+            auction.date_auction = form.cleaned_data['date_auction']
+            auction.date_end_auction = form.cleaned_data['date_end_auction']
+            auction.auction_description = form.cleaned_data['auction_description']
+            auction.preview_image = form.cleaned_data['preview_image']
+
+            auction.save()
+
+            return redirect('insert_data')
+    else:
+        form = AuctionModelForm()
+
+    return render(request, 'form_create.html', {'form': form})
 
 
 def houses(request):
@@ -87,11 +167,11 @@ def auction_houses(request):
     past_auctions = Auction.objects.filter(property_type__house__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
     ongoing_auctions = Auction.objects.filter(property_type__house__isnull=False, date_end_auction__gte=current_date,
                                               date_auction__lte=current_date).order_by('date_auction')
-
-    return render(request, 'auction_houses.html', {'auction_houses': auction_houses,
-                                                       'future_auctions': future_auctions,
-                                                       'past_auctions': past_auctions,
-                                                        'ongoing_auctions': ongoing_auctions})
+    return render(request, 'auction_houses.html',
+                  {'auction_houses': auction_houses,
+                   'future_auctions': future_auctions,
+                   'past_auctions': past_auctions,
+                   'ongoing_auctions': ongoing_auctions})
 
 
 class InsertDataListView(ListView):
@@ -101,7 +181,7 @@ class InsertDataListView(ListView):
 
 
 class InsertHouse(PermissionRequiredMixin, CreateView):
-    template_name = 'form.html'
+    template_name = 'form_create.html'
     form_class = HouseModelForm
     success_url = reverse_lazy('insert_property_type')
     permission_required = 'viewer.add_house'
@@ -112,7 +192,7 @@ class InsertHouse(PermissionRequiredMixin, CreateView):
 
 
 class UpdateHouse(PermissionRequiredMixin, UpdateView):
-    template_name = 'form.html'
+    template_name = 'form_create_back.html'
     form_class = HouseModelForm
     success_url = reverse_lazy('insert_data')
     model = House
@@ -131,7 +211,7 @@ class DeleteHouse(PermissionRequiredMixin, DeleteView):
 
 
 class InsertApartments(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_create.html"
     form_class = ApartmentModelForm
     success_url = reverse_lazy('insert_property_type')
     permission_required = 'viewer.add_apartment'
@@ -142,7 +222,7 @@ class InsertApartments(PermissionRequiredMixin, CreateView):
 
 
 class UpdateApartments(PermissionRequiredMixin, UpdateView):
-    template_name = 'form.html'
+    template_name = 'form_create_back.html'
     form_class = ApartmentModelForm
     success_url = reverse_lazy('insert_data')
     model = Apartment
@@ -161,7 +241,7 @@ class DeleteApartments(PermissionRequiredMixin, DeleteView):
 
 
 class InsertGrounds(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_create.html"
     form_class = GroundModelForm
     success_url = reverse_lazy('insert_property_type')
     permission_required = 'viewer.add_ground'
@@ -172,7 +252,7 @@ class InsertGrounds(PermissionRequiredMixin, CreateView):
 
 
 class UpdateGrounds(PermissionRequiredMixin, UpdateView):
-    template_name = 'form.html'
+    template_name = 'form_create_back.html'
     form_class = GroundModelForm
     success_url = reverse_lazy('insert_data')
     model = Ground
@@ -191,7 +271,7 @@ class DeleteGrounds(PermissionRequiredMixin, DeleteView):
 
 
 class InsertPropertyType(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_create.html"
     form_class = PropertyTypeModelForm
     success_url = reverse_lazy('insert_auction')
     permission_required = 'viewer.add_propertytype'
@@ -202,9 +282,9 @@ class InsertPropertyType(PermissionRequiredMixin, CreateView):
 
 
 class InsertAuction(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_create.html"
     form_class = AuctionModelForm
-    success_url = reverse_lazy('insert_data')
+    success_url = reverse_lazy('image_create')
     permission_required = 'viewer.add_auction'
 
     def form_invalid(self, form):
@@ -213,7 +293,7 @@ class InsertAuction(PermissionRequiredMixin, CreateView):
 
 
 class UpdateAuction(PermissionRequiredMixin, UpdateView):
-    template_name = 'form.html'
+    template_name = 'form_create_back.html'
     form_class = AuctionModelForm
     success_url = reverse_lazy('insert_data')
     model = Auction
@@ -240,6 +320,7 @@ class InsertBid(CreateView):
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data updating.')
         return super().form_invalid(form)
+
 
 def apartment(request, pk):
     if Apartment.objects.filter(id=pk).exists():
@@ -270,16 +351,16 @@ class ApartmentsView(View):
 
 def auction_apartments(request):
     current_date = datetime.datetime.now()
-    auction_aparmtnets = Auction.objects.filter(property_type__apartment__isnull=False).order_by('date_auction')
+    auction_apartments = Auction.objects.filter(property_type__apartment__isnull=False).order_by('date_auction')
     future_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_auction__gte=current_date).order_by('date_auction')
     past_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
     ongoing_auctions = Auction.objects.filter(property_type__apartment__isnull=False, date_end_auction__gte=current_date,
                                               date_auction__lte=current_date).order_by('date_auction')
-
-    return render(request, 'auction_apartments.html', {'auction_apartments': auction_aparmtnets,
-                                                       'future_auctions': future_auctions,
-                                                       'past_auctions': past_auctions,
-                                                       'ongoing_auctions': ongoing_auctions})
+    return render(request, 'auction_apartments.html',
+                  {'auction_apartments': auction_apartments,
+                   'future_auctions': future_auctions,
+                   'past_auctions': past_auctions,
+                   'ongoing_auctions': ongoing_auctions})
 
 
 class DeleteApartmentType(PermissionRequiredMixin, DeleteView):
@@ -328,10 +409,18 @@ class DeleteGroundType(PermissionRequiredMixin, DeleteView):
 
 
 class InsertGroundType(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_create.html"
     form_class = GroundTypeModelForm
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.add_groundtype'
+
+
+class GroundsView(View):
+    def get(self, request):
+        grounds_ = Ground.objects.all()
+        context = {'grounds': grounds_}
+        return render(request, "grounds.html", context)
+
 
 def auction_grounds(request):
     current_date = datetime.datetime.now()
@@ -340,11 +429,11 @@ def auction_grounds(request):
     past_auctions = Auction.objects.filter(property_type__ground__isnull=False, date_end_auction__lt=current_date).order_by('date_auction')
     ongoing_auctions = Auction.objects.filter(property_type__ground__isnull=False, date_end_auction__gte=current_date,
                                               date_auction__lte=current_date).order_by('date_auction')
-    return render(request, 'auction_grounds.html', {'auction_grounds': auction_grounds,
-                                                                      'future_auctions': future_auctions,
-                                                                      'past_auctions': past_auctions,
-                                                                      'ongoing_auctions': ongoing_auctions})
-
+    return render(request, 'auction_grounds.html',
+                  {'auction_grounds': auction_grounds,
+                   'future_auctions': future_auctions,
+                   'past_auctions': past_auctions,
+                   'ongoing_auctions': ongoing_auctions})
 
 
 class GroundsTemplateView(TemplateView):
@@ -402,25 +491,6 @@ class InsertImage(PermissionRequiredMixin, CreateView):
         return super().form_invalid(form)
 
 
-class UpdateImage(PermissionRequiredMixin, UpdateView):
-    template_name = 'form_image.html'
-    form_class = ImageModelForm
-    success_url = reverse_lazy('images')
-    model = Image
-    permission_required = 'viewer.change_image'
-
-    def form_invalid(self, form):
-        LOGGER.warning('User provided invalid data while updating a creator.')
-        return super().form_invalid(form)
-
-
-class DeleteImage(PermissionRequiredMixin, DeleteView):
-    template_name = 'confirm_delete.html'
-    model = Image
-    success_url = reverse_lazy('images')
-    permission_required = 'viewer.delete_image'
-
-
 class ImageDetailView(DetailView):
     model = Image
     template_name = 'image.html'
@@ -433,7 +503,7 @@ def cities(request):
 
 
 class InsertCity(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_select.html"
     form_class = CitiesModelForm
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.add_cities'
@@ -460,11 +530,11 @@ class DeletePropertyType(PermissionRequiredMixin, DeleteView):
     template_name = 'confirm_delete.html'
     model = PropertyType
     success_url = reverse_lazy('insert_data')
-    permission_required = 'viewer.delete_propertytypes'
+    permission_required = 'viewer.delete_propertytype'
 
 
 class InsertHouseType(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_select.html"
     form_class = HouseTypeModelForm
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.add_housetype'
@@ -475,7 +545,7 @@ class InsertHouseType(PermissionRequiredMixin, CreateView):
 
 
 class InsertApartmentType(PermissionRequiredMixin, CreateView):
-    template_name = "form.html"
+    template_name = "form_create.html"
     form_class = ApartmentTypeModelForm
     success_url = reverse_lazy('insert_data')
     permission_required = 'viewer.add_apartmenttype'
@@ -483,6 +553,7 @@ class InsertApartmentType(PermissionRequiredMixin, CreateView):
     def form_invalid(self, form):
         LOGGER.warning('User provided invalid data updating.')
         return super().form_invalid(form)
+
 
 def auction_bids(request, pk):
     bids = Bid.objects.filter(auction_id = pk)

@@ -25,21 +25,31 @@ from accounts.views import SignUpView, user_logout
 from viewer.views import home, InsertHouse, ApartmentsListView, apartment, InsertImage, \
     ImageDetailView, InsertApartments, InsertGrounds, InsertAuction, HousesListView, house, \
     GroundsTemplateView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
-    UpdateAuction, DeleteAuction, UpdateImage, DeleteImage, InsertPropertyType, AuctionTemplateView, \
+    UpdateAuction, DeleteAuction, InsertPropertyType, AuctionTemplateView, \
+    GroundsListView, ground, UpdateHouse, DeleteHouse, UpdateApartments, DeleteApartments, UpdateGrounds, DeleteGrounds, \
+    UpdateAuction, DeleteAuction, InsertPropertyType, AuctionTemplateView, \
     InsertCity, InsertHouseType, HouseTypesListView, DeleteHouseType, apartment_types, InsertApartmentType, \
     DeleteApartmentType, cities, DeleteCity, InsertGroundType, ground_types, DeleteGroundType, InsertBid, \
     InsertDataListView, AuctionsTemplateView, auction_bids, won_auctions_view, auctions_list_view, auction_houses, \
-    auction_apartments, auction_grounds, PropertyTypesListView, DeletePropertyType
+    auction_apartments, auction_grounds, PropertyTypesListView, DeletePropertyType, select_property_type, \
+    create_auction, create_apartment, create_house, create_ground
 
 urlpatterns = [
     path('admin/', admin.site.urls),
 
     path('', home, name='home'),
 
+    path('insert/', InsertDataListView.as_view(), name="insert_data"),
+
+    path('insert/property/', select_property_type, name="insert_property"),
+
+    path('image/create', ImageCreateView.as_view(), name='image_create'),
+
     path('insert/bid', InsertBid.as_view(), name='insert_bid'),
 
     path('insert/', InsertDataListView.as_view(), name="insert_data"),
 
+    path('create/house/', create_house, name='create_house'),
     path('insert/houses', InsertHouse.as_view(), name="insert_houses"),
     path('update/houses/<pk>', UpdateHouse.as_view(), name="update_houses"),
     path('delete/houses/<pk>', DeleteHouse.as_view(), name="delete_houses"),
@@ -51,6 +61,7 @@ urlpatterns = [
     path('insert/house_types', InsertHouseType.as_view(), name="insert_house_type"),
     path('delete/house_type/<pk>', DeleteHouseType.as_view(), name="delete_house_type"),
 
+    path('create/apartment/', create_apartment, name='create_apartment'),
     path('insert/apartments', InsertApartments.as_view(), name="insert_apartments"),
     path('update/apartments/<pk>', UpdateApartments.as_view(), name="update_apartments"),
     path('delete/apartments/<pk>', DeleteApartments.as_view(), name="delete_apartments"),
@@ -69,6 +80,7 @@ urlpatterns = [
     path('grounds/', GroundsTemplateView.as_view(), name='grounds'),
     path('ground/<pk>/', ground, name='ground'),
 
+    path('create/ground/', create_ground, name='create_ground'),
     path('insert/ground_type', InsertGroundType.as_view(), name="insert_ground_type"),
     path('ground_types/', ground_types, name= 'ground_types'),
     path('delete/ground_type/<pk>', DeleteGroundType.as_view(), name="delete_ground_type"),
@@ -81,6 +93,7 @@ urlpatterns = [
     path('insert/cities', InsertCity.as_view(), name="insert_cities"),
     path('cities/', cities, name='cities'),
 
+    path('create/auction', create_auction, name="create_auction"),
     path('insert/auction', InsertAuction.as_view(), name='insert_auction'),
     path('update/auction/<pk>', UpdateAuction.as_view(), name='update_auction'),
     path('delete/auction/<pk>', DeleteAuction.as_view(), name="delete_auction"),
@@ -92,9 +105,6 @@ urlpatterns = [
 
     path('images/', ImageDetailView.as_view(), name='images'),
     path('image/create/', InsertImage.as_view(), name='image_create'),
-    path('image/update/<pk>/', UpdateImage.as_view(), name='image_update'),
-    path('image/delete/<pk>/', DeleteImage.as_view(), name='image_delete'),
-    path('image/<pk>/', ImageDetailView.as_view(), name='image'),
 
     path('accounts/signup/', SignUpView.as_view(), name='signup'),
     path('accounts/logout/', user_logout, name='logout'),

@@ -1,18 +1,27 @@
 {% extends 'base.html' %}
 
-{% load static %}
 {% load group_tags %}
 
 {% block content %}
-    <h1>Pozemky</h1>
-        {% for ground in grounds %}
-            <li>
-                <a href="{% url 'ground' ground.id %}"> {{ ground }} </a>
-            {% if user.is_authenticated %}
-                <a href="{% url 'update_grounds' ground.id %}"> 🔧 </a>
-                <a href="{% url 'delete_grounds' ground.id %}"> ❌ </a>
-            {% endif %}
-            </li>
-        {% endfor %}
+
+    <h1>Aukce</h1>
+    <ul>
+    <a href="{% url 'insert_grounds' %}" class="btn btn-primary">
+     Vložit nový pozemek </a>
+    </ul>
+    <ul>
+    {% for ground in grounds %}
+        <li>
+            <a href="{% url 'ground' ground.id %}"> {{ ground }} </a>
+        {% if user|has_group:"Admins" %}
+            <a href="{% url 'update_grounds' ground.id %}"> 🔧 </a>
+            <a href="{% url 'delete_grounds' ground.id %}"> ❌ </a>
+        {% endif %}
+        </li>
+    {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
+    </ul>
 
 {% endblock %}

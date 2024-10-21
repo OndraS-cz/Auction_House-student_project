@@ -3,7 +3,11 @@
 {% load group_tags %}
 
 {% block content %}
-<h1>Typy pozemků</h1>
+<h1>Kategorie pozemků</h1>
+    <ul>
+    <a href="{% url 'insert_ground_type' %}" class="btn btn-primary">
+     Vložit novou kategorii </a>
+    </ul>
     <ul>
         {% for ground_type in ground_types %}
             <li>
@@ -13,5 +17,8 @@
             {% endif %}
             </li>
         {% endfor %}
+    </ul>
+    <ul>
+    <input type="button" value="Zpět" class="btn btn-primary" onClick="javascript:history.back()">
     </ul>
 {% endblock %}
