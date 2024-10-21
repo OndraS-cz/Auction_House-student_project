@@ -1,11 +1,8 @@
-
-from django.contrib.auth.decorators import user_passes_test
 from django.db.models.functions import datetime
-from django.utils import timezone
-from django.utils.timezone import now
+
 from django.contrib.auth.mixins import PermissionRequiredMixin
-from django.db.models import Max, F, Q, Subquery, OuterRef
-from django.shortcuts import render, get_object_or_404, redirect
+from django.db.models import Q, Subquery, OuterRef
+from django.shortcuts import render, redirect
 from django.urls import reverse_lazy
 from django.views.generic import UpdateView, DeleteView, TemplateView, ListView, CreateView, DetailView
 from django.views import View

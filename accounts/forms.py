@@ -1,13 +1,12 @@
+import datetime
 from datetime import date
 
 from django.contrib.auth.forms import UserCreationForm, UsernameField
 from django.core.exceptions import ValidationError
 from django.db.transaction import atomic
 from django.forms import DateField, NumberInput, IntegerField, CharField, ChoiceField, PasswordInput
-from django.http import HttpResponseRedirect
-from django.shortcuts import render
+
 from django.utils.translation import gettext_lazy as _
-from requests import request
 
 from accounts.models import Profile
 from accounts.check_document import check_document
@@ -142,7 +141,6 @@ class SignUpForm(UserCreationForm):
             month -= 50
 
         try:
-            import datetime
             date_of_birth = datetime.date(year + (1900 if year >= 54 else 2000), month, day)
         except ValueError:
             raise ValidationError('Neplatné datum narození!')

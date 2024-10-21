@@ -1,10 +1,8 @@
 import datetime
 
-
 from django.test import TestCase
 
-from viewer.models import House, HouseType, PropertyType, Auction, Cities, ApartmentType, GroundType, Apartment, Ground, \
-    Bid
+from viewer.models import House, HouseType, Auction
 
 
 class AuctionModelTest(TestCase):
@@ -32,7 +30,6 @@ class AuctionModelTest(TestCase):
             description = 'Podrobný popis'
         )
 
-
     def test_house_str(self):
         house = House.objects.get(id=1)
         self.assertEqual(house.__str__(), 'Cihlový dům')
@@ -42,7 +39,6 @@ class AuctionModelTest(TestCase):
         house = House.objects.get(id=1)
         self.assertEqual(house.__repr__(), 'House(name=Cihlový dům)')
         print("Test house repr pass")
-
 
     def test_house_type_str(self):
         house_type = HouseType.objects.get(id=1)
@@ -60,4 +56,3 @@ class AuctionModelTest(TestCase):
         number_of_auctions = auctions.count()
         self.assertEqual(number_of_auctions, 1)
         print("Test number of auctions pass")
-
