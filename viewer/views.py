@@ -593,3 +593,7 @@ def auctions_list_view(request):
         'auctions': auctions,
     }
     return render(request, 'auction_search.html', context)
+
+
+def contact(request):
+    return render(request, 'contact.html')
