@@ -1,8 +1,10 @@
 # Auction House - Dražby nemovitostí
 
-## Popis projektu
-Studentský projekt tříčlenné skupiny (origin git: https://github.com/LadisV/Auction_House_Team_One.git). Po úspěšné obhajobě projektu jsem se jej rozhodnul rozvíjet samostatně.
+## Úvod
+Studentský projekt tříčlenné skupiny (origin git: https://github.com/LadisV/Auction_House_Team_One.git). Po úspěšné obhajobě projektu jsem se jej rozhodnul rozvíjet samostatně za účelem samostudia.
+V týmu jsem měl na starosti back-end, primárně pak Users/Admins profily a postup pro tvorbu nových aukcí.
 
+## Popis projektu
 Tento projekt je webová aplikace pro aukční dům postavená na frameworku Django. Umožňuje uživatelům (dle přiřazených práv) přidávat a spravovat aukce, podávat nabídky a spravovat svůj účet. Aukční dům je určen pouze pro uživatele s českým občanstvím.
 
 ## Instalace
