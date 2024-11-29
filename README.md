@@ -24,11 +24,6 @@ python manage.py migrate
 python manage.py runserver
 ```
 
-## Požadavky
-Python 3.10+
-
-Django 5.1.1
-
 ## Použití
 Aukce jsou rozdělené do tří sekcí - domy, byty a pozemky. Při registraci je nový uživatel automaticky zařazen do skupiny práv "Users", což mu umožňuje účastnit se aukcí a spravovat svůj účet. Pokud je registrovaný uživatel následně zařazen do skupiny práv "Admins", pak se účastnit aukcí nesmí, ale může aukce přidávat a spravovat. Z důvodu bezpečnosti jsou provedené příhozy vždy anonymizované.
 
